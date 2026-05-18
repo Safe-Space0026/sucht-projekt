@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-Content \"C:\\\\Users\\\\jerem.LAPTOP_RUJ\\\\.claude\\\\projects\\\\C--Users-jerem-LAPTOP-RUJ-Desktop-mein-erstes-projekt\\\\897ec657-5003-481e-a4c3-22cb8fb093ff.jsonl\" -Tail 100)",
+      "Bash(Out-String)"
+    ]
+  }
+}

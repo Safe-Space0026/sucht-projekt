@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, shrink-to-fit=no">
+<meta name="color-scheme" content="light">
+<title>Sucht &amp; Schulstress – Dein Weg durch den Abiturdruck</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+<style>
+:root {
+  --primary: #FF0066;
+  --primary-dark: #CC0052;
+  --secondary: #FF6600;
+  --gradient: linear-gradient(135deg, #FF0066, #FF6600);
+  --white: #ffffff;
+  --light-bg: #FFF0F5;
+  --text: #2D2D2D;
+  --text-light: #666;
+  --card-shadow: 0 8px 32px rgba(255,0,102,0.12);
+  --radius: 16px;
+  --sidebar-w: 270px;
+  --shadow: 0 4px 24px rgba(255,0,102,0.12);
+  --admin-bg: #FFF0F5;
+  --admin-nav-w: 230px;
+  --admin-radius: 14px;
+  --success: #27AE60;
+  --warning: #F39C12;
+  --danger: #E74C3C;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#fff;color:var(--text);line-height:1.6;padding-right:var(--sidebar-w);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 2px 20px rgba(255,0,102,0.1);padding:0 1.5rem;height:calc(70px + env(safe-area-inset-top,0px));padding-top:env(safe-area-inset-top,0px);display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-size:1.2rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;cursor:pointer;}
+.nav-links{display:flex;gap:.3rem;list-style:none;}
+.nav-links a{text-decoration:none;color:var(--text);font-weight:500;font-size:.88rem;padding:.45rem .9rem;border-radius:50px;transition:background-color .3s,color .3s;cursor:pointer;}
+.nav-links a:hover,.nav-links a.active{background:var(--gradient);color:#fff;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:5px;}
+.hamburger span{width:25px;height:3px;background:var(--primary);border-radius:3px;transition:transform .3s,opacity .3s;}
+
+/* LAYOUT */
+section{display:none;min-height:100vh;padding-top:calc(70px + env(safe-area-inset-top,0px));}
+section.active{display:block;}
+
+/* AD SIDEBAR */
+.ad-sidebar{position:fixed;top:calc(70px + env(safe-area-inset-top,0px));right:0;width:var(--sidebar-w);height:calc(100vh - 70px - env(safe-area-inset-top,0px));overflow-y:auto;background:#FAFAFA;border-left:1px solid rgba(255,0,102,0.1);padding:1.2rem .9rem;display:flex;flex-direction:column;gap:1rem;z-index:900;}
+.ad-sidebar-title{font-size:.7rem;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:.2rem;}
+.ad-card{background:#fff;border-radius:12px;padding:1rem;box-shadow:0 4px 16px rgba(255,0,102,0.08);border:1px solid rgba(255,0,102,0.08);transition:transform .3s,box-shadow .3s;overflow:hidden;}
+.ad-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(255,0,102,0.18);}
+.ad-card-label{font-size:.65rem;font-weight:700;color:#bbb;text-transform:uppercase;letter-spacing:.8px;margin-bottom:.5rem;}
+.ad-card a{display:block;text-decoration:none;color:inherit;}
+.ad-img-placeholder{width:100%;height:100px;border-radius:8px;background:linear-gradient(135deg,#e8e0ff,#ddf0ff);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:.7rem;overflow:hidden;}
+.ad-img-placeholder img{width:100%;height:100%;object-fit:cover;}
+.ad-card-title{font-size:.85rem;font-weight:700;color:var(--primary-dark);margin-bottom:.3rem;}
+.ad-card-sub{font-size:.75rem;color:var(--text-light);}
+.ad-card-btn{display:block;margin-top:.7rem;padding:.4rem .8rem;background:var(--gradient);color:#fff;border-radius:50px;font-size:.75rem;font-weight:700;text-align:center;text-decoration:none;}
+
+/* HERO */
+.hero{background:var(--gradient);color:#fff;padding:6rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(255,255,255,.1) 0%,transparent 50%),radial-gradient(circle at 70% 80%,rgba(255,255,255,.05) 0%,transparent 40%);pointer-events:none;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);padding:.35rem 1.2rem;border-radius:50px;font-size:.82rem;font-weight:600;margin-bottom:1.5rem;letter-spacing:.5px;}
+.hero h1{font-size:clamp(1.8rem,4vw,3.2rem);font-weight:900;line-height:1.2;margin-bottom:1.5rem;}
+.hero p{font-size:clamp(.95rem,1.8vw,1.15rem);max-width:580px;margin:0 auto 2.5rem;opacity:.9;line-height:1.7;}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.8rem;border-radius:50px;font-size:.95rem;font-weight:700;cursor:pointer;border:none;transition:transform .3s,box-shadow .3s,background-color .3s,color .3s;text-decoration:none;}
+.btn-white{background:#fff;color:var(--primary);}
+.btn-white:hover{background:var(--light-bg);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2);}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6);}
+.btn-outline:hover{background:rgba(255,255,255,.15);transform:translateY(-2px);}
+.btn-primary{background:var(--gradient);color:#fff;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,0,102,.4);}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1.2rem;max-width:860px;margin:3rem auto 0;padding:0 1.5rem;}
+.stat-card{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:var(--radius);padding:1.3rem;text-align:center;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);}
+.stat-number{font-size:2.2rem;font-weight:900;display:block;}
+.stat-label{font-size:.8rem;opacity:.85;margin-top:.3rem;line-height:1.4;}
+
+/* CONTAINER / CARDS */
+.container{max-width:1000px;margin:0 auto;padding:2rem 1.5rem;}
+.section-header{text-align:center;margin-bottom:2.5rem;}
+.section-header h2{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.8rem;}
+.section-header p{color:var(--text-light);font-size:1rem;max-width:580px;margin:0 auto;}
+.card{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:var(--card-shadow);border:1px solid rgba(255,0,102,.08);transition:transform .3s,box-shadow .3s;}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(255,0,102,.2);}
+
+/* QUICK-NAV */
+.quick-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.3rem;margin-top:1.5rem;}
+.qnav-card{background:#fff;border-radius:var(--radius);padding:1.8rem;text-align:center;box-shadow:var(--card-shadow);cursor:pointer;transition:transform .3s,box-shadow .3s,border-color .3s;border:1px solid rgba(255,0,102,.1);}
+.qnav-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(255,0,102,.25);border-color:var(--primary);}
+.qnav-card .icon{font-size:2.8rem;margin-bottom:.8rem;display:block;}
+.qnav-card h3{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:.4rem;}
+.qnav-card p{font-size:.85rem;color:var(--text-light);line-height:1.5;}
+
+/* INFO */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.3rem;margin-bottom:2.5rem;}
+.info-card{background:#fff;border-radius:var(--radius);padding:1.6rem;box-shadow:var(--card-shadow);border-left:4px solid var(--primary);}
+.info-card h3{font-size:1.05rem;font-weight:700;color:var(--primary);margin-bottom:.8rem;display:flex;align-items:center;gap:.4rem;}
+.info-card p,.info-card li{color:var(--text-light);font-size:.9rem;line-height:1.7;}
+.info-card ul{padding-left:1.2rem;}
+.info-card li{margin-bottom:.35rem;}
+.warning-box{background:linear-gradient(135deg,#fff3cd,#ffeaa7);border:1px solid #f39c12;border-radius:var(--radius);padding:1.5rem 1.8rem;margin:2rem 0;}
+.warning-box h3{color:#856404;font-weight:700;margin-bottom:.7rem;}
+.warning-box ul{padding-left:1.5rem;}
+.warning-box li{color:#664d03;margin-bottom:.35rem;font-size:.9rem;}
+
+/* SUBSTANCE CARDS */
+.substance-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.3rem;margin:1.5rem 0;}
+.sub-card{background:#fff;border-radius:var(--radius);padding:1.6rem;box-shadow:var(--card-shadow);border:1px solid rgba(255,0,102,.1);text-align:center;}
+.sub-card .emoji{font-size:2.3rem;margin-bottom:.7rem;display:block;}
+.sub-card h3{font-weight:700;color:var(--primary-dark);margin-bottom:.4rem;}
+.risk-badge{display:inline-block;padding:.2rem .7rem;border-radius:50px;font-size:.72rem;font-weight:700;margin-bottom:.7rem;}
+.risk-high{background:#FFE4E4;color:#C0392B;}
+.risk-med{background:#FFF3CD;color:#856404;}
+.sub-card p{font-size:.83rem;color:var(--text-light);line-height:1.6;}
+
+/* QUIZ */
+.quiz-wrap{max-width:720px;margin:0 auto;}
+.quiz-progress{background:#e9ecef;border-radius:50px;height:8px;margin-bottom:2rem;overflow:hidden;}
+.quiz-prog-bar{height:100%;background:var(--gradient);border-radius:50px;transition:width .5s ease;}
+.quiz-q{background:#fff;border-radius:var(--radius);padding:2.2rem;box-shadow:var(--card-shadow);display:none;}
+.quiz-q.visible{display:block;}
+.quiz-q h3{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:1.3rem;line-height:1.5;}
+.q-num{display:inline-flex;align-items:center;justify-content:center;background:var(--gradient);color:#fff;width:30px;height:30px;border-radius:50%;font-size:.8rem;font-weight:700;margin-right:.7rem;flex-shrink:0;}
+.quiz-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;}
+.quiz-opt{padding:.8rem 1rem;border:2px solid #FFD6E7;border-radius:12px;cursor:pointer;font-size:.88rem;font-weight:500;background:#fff;color:var(--text);transition:border-color .2s,background-color .2s,color .2s;text-align:left;}
+.quiz-opt:hover{border-color:var(--primary);background:var(--light-bg);color:var(--primary);}
+.quiz-opt.selected{border-color:var(--primary);background:var(--gradient);color:#fff;}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.3rem;}
+.quiz-counter{font-size:.85rem;color:var(--text-light);font-weight:500;}
+
+/* QUIZ RESULT */
+.quiz-result{display:none;text-align:center;padding:2.5rem 1.5rem;}
+.result-circle{width:150px;height:150px;border-radius:50%;margin:0 auto 1.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;}
+.result-circle.green{background:linear-gradient(135deg,#27AE60,#2ECC71);color:#fff;box-shadow:0 0 60px rgba(39,174,96,.4);}
+.result-circle.yellow{background:linear-gradient(135deg,#F39C12,#F1C40F);color:#fff;box-shadow:0 0 60px rgba(243,156,18,.4);}
+.result-circle.red{background:linear-gradient(135deg,#C0392B,#E74C3C);color:#fff;box-shadow:0 0 60px rgba(192,57,43,.4);}
+.result-circle .sc{font-size:2.3rem;line-height:1;}
+.result-circle .sc-lbl{font-size:.72rem;opacity:.9;}
+.result-title{font-size:1.7rem;font-weight:800;margin-bottom:.8rem;}
+.result-text{color:var(--text-light);font-size:1rem;max-width:520px;margin:0 auto 1.5rem;line-height:1.7;}
+.result-tips{background:var(--light-bg);border-radius:var(--radius);padding:1.8rem;text-align:left;max-width:520px;margin:0 auto 1.5rem;}
+.result-tips h4{font-weight:700;color:var(--primary);margin-bottom:.8rem;}
+.result-tips li{color:var(--text);margin-bottom:.5rem;font-size:.92rem;line-height:1.6;}
+
+/* HELP */
+.help-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.3rem;margin-bottom:2.5rem;}
+.help-card{background:#fff;border-radius:var(--radius);padding:1.8rem;box-shadow:var(--card-shadow);border:1px solid rgba(255,0,102,.08);transition:transform .3s,box-shadow .3s;}
+.help-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(255,0,102,.2);}
+.help-hdr{display:flex;align-items:center;gap:.9rem;margin-bottom:1rem;}
+.help-icon{width:46px;height:46px;border-radius:12px;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
+.help-card h3{font-size:1.05rem;font-weight:700;color:var(--primary-dark);}
+.help-card .sub{font-size:.77rem;color:var(--text-light);}
+.phone-num{font-size:1.5rem;font-weight:900;color:var(--primary);display:block;margin-bottom:.3rem;}
+.help-card p{font-size:.87rem;color:var(--text-light);margin-bottom:.8rem;line-height:1.6;}
+.help-tag{display:inline-block;background:var(--light-bg);color:var(--primary);font-size:.72rem;font-weight:700;padding:.2rem .65rem;border-radius:50px;margin:.2rem;}
+.help-link{display:inline-flex;align-items:center;gap:.4rem;color:var(--primary);font-weight:700;font-size:.9rem;text-decoration:none;margin-top:.8rem;padding:.5rem 1.1rem;border:2px solid var(--primary);border-radius:50px;transition:background-color .3s,color .3s;}
+.help-link:hover{background:var(--primary);color:#fff;}
+.emergency-banner{background:linear-gradient(135deg,#C0392B,#E74C3C);color:#fff;border-radius:var(--radius);padding:1.8rem;text-align:center;margin:1.5rem 0;}
+.emergency-banner h3{font-size:1.2rem;font-weight:800;margin-bottom:.4rem;}
+.emerg-num{font-size:2.5rem;font-weight:900;display:block;margin:.4rem 0;}
+.emergency-banner p{font-size:.87rem;opacity:.9;}
+
+/* SOCIAL MEDIA */
+.social-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin:1.5rem 0;}
+.social-card{background:#fff;border-radius:var(--radius);padding:1.8rem;box-shadow:var(--card-shadow);border:1px solid rgba(255,0,102,.08);}
+.social-hdr{display:flex;align-items:center;gap:.9rem;margin-bottom:1.3rem;}
+.plat-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
+.plat-icon.tiktok{background:linear-gradient(135deg,#000,#333);}
+.plat-icon.instagram{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);}
+.plat-icon.youtube{background:linear-gradient(135deg,#FF0000,#cc0000);}
+.embed-placeholder{background:var(--light-bg);border:2px dashed rgba(255,0,102,.3);border-radius:12px;padding:2rem 1.2rem;text-align:center;margin-bottom:1rem;}
+.embed-placeholder .p-icon{font-size:2.2rem;margin-bottom:.6rem;opacity:.5;}
+.embed-placeholder h4{color:var(--primary);font-weight:700;margin-bottom:.3rem;}
+.embed-placeholder p{font-size:.82rem;color:var(--text-light);line-height:1.5;}
+.social-input{width:100%;padding:.75rem 1.1rem;border:2px solid rgba(255,0,102,.2);border-radius:50px;font-size:.88rem;color:var(--text);outline:none;transition:border-color .3s;background:var(--light-bg);}
+.social-input:focus{border-color:var(--primary);background:#fff;}
+.yt-embed-wrap{border-radius:12px;overflow:hidden;margin-bottom:1rem;display:none;aspect-ratio:16/9;position:relative;}
+.yt-embed-wrap iframe{width:100%;height:100%;position:absolute;top:0;left:0;display:block;border:none;}
+
+/* STEP LIST */
+.step-list{counter-reset:steps;list-style:none;padding:0;}
+.step-list li{counter-increment:steps;display:flex;gap:1rem;margin-bottom:1.3rem;align-items:flex-start;}
+.step-list li::before{content:counter(steps);min-width:34px;height:34px;background:var(--gradient);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0;margin-top:2px;}
+.step-list li div h4{font-weight:700;color:var(--primary-dark);margin-bottom:.25rem;}
+.step-list li div p{color:var(--text-light);font-size:.9rem;line-height:1.6;}
+
+/* MISC */
+.divider{height:2px;background:linear-gradient(90deg,transparent,var(--primary),transparent);margin:2.5rem 0;opacity:.15;}
+.section-intro{background:var(--light-bg);border-radius:var(--radius);padding:1.8rem;margin-bottom:2.5rem;border-left:4px solid var(--primary);}
+.section-intro p{color:var(--text);font-size:1rem;line-height:1.8;}
+.pill{display:inline-block;background:var(--light-bg);color:var(--primary);font-size:.78rem;font-weight:700;padding:.3rem .9rem;border-radius:50px;margin:.2rem;}
+.section-top{padding:2.5rem 0 .5rem;}
+
+/* FOOTER */
+footer{background:linear-gradient(135deg,#1a1a2e,#16213e);color:rgba(255,255,255,.7);text-align:center;padding:2.5rem 2rem;margin-top:3rem;}
+footer h3{color:#fff;font-size:1.2rem;font-weight:800;margin-bottom:.8rem;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+footer p{font-size:.88rem;max-width:500px;margin:0 auto .8rem;line-height:1.6;}
+.footer-links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:.8rem;}
+.footer-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.82rem;transition:color .3s;cursor:pointer;}
+.footer-links a:hover{color:#fff;}
+.footer-admin{color:rgba(255,255,255,.25);font-size:.72rem;background:none;border:none;text-decoration:none;margin-top:1rem;display:inline-block;transition:color .3s;cursor:pointer;}
+.footer-admin:hover{color:rgba(255,255,255,.5);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  body{padding-right:0;}
+  .ad-sidebar{display:none;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:#fff;flex-direction:column;padding:1rem;box-shadow:0 8px 24px rgba(0,0,0,.1);gap:.2rem;}
+  .nav-links.open{display:flex;}
+  .nav-links a{display:block;padding:.75rem 1.1rem;}
+  .hamburger{display:flex;}
+  .hero{padding:4rem 1.2rem 2.5rem;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .quiz-opts{grid-template-columns:1fr;}
+  .container{padding:1.5rem 1rem;}
+}
+@-webkit-keyframes fadeInUp{from{opacity:0;-webkit-transform:translateY(25px);transform:translateY(25px);}to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0);}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(25px);}to{opacity:1;transform:translateY(0);}}
+.fade-in{-webkit-animation:fadeInUp .6s ease forwards;animation:fadeInUp .6s ease forwards;}
+.fade-d1{-webkit-animation:fadeInUp .6s ease .2s forwards;animation:fadeInUp .6s ease .2s forwards;opacity:0;}
+.fade-d2{-webkit-animation:fadeInUp .6s ease .4s forwards;animation:fadeInUp .6s ease .4s forwards;opacity:0;}
+
+/* ===================== ADMIN STYLES ===================== */
+section#admin{padding-top:0;}
+body.admin-mode{background:var(--admin-bg);padding-right:0 !important;}
+
+/* LOGIN */
+.login-page{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--gradient);padding:1.5rem;}
+.login-box{background:#fff;border-radius:20px;padding:2.8rem 2.5rem;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center;}
+.login-logo{font-size:2.8rem;margin-bottom:.8rem;}
+.login-box h2{font-size:1.6rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.3rem;}
+.login-box p{color:var(--text-light);font-size:.9rem;margin-bottom:2rem;}
+#admin .form-group{text-align:left;margin-bottom:1.1rem;}
+#admin .form-group label{display:block;font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:.4rem;}
+#admin .form-input{width:100%;padding:.82rem 1.15rem;border:2px solid #FFD6E7;border-radius:10px;font-size:.93rem;outline:none;transition:border-color .3s;background:#fff;}
+#admin .form-input:focus{border-color:var(--primary);}
+.login-btn{width:100%;padding:.9rem;background:var(--gradient);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity .3s;margin-top:.5rem;}
+.login-btn:hover{opacity:.9;}
+.login-err{color:var(--danger);font-size:.85rem;margin-top:.8rem;display:none;}
+
+/* ADMIN LAYOUT */
+.admin-layout{display:flex;min-height:100vh;}
+.sidebar{width:var(--admin-nav-w);background:#1E0B14;color:#fff;flex-shrink:0;display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;z-index:200;overflow-y:auto;}
+.sidebar-logo{padding:1.5rem 1.2rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.sidebar-logo h2{font-size:1rem;font-weight:800;color:#fff;line-height:1.3;}
+.sidebar-logo span{font-size:.72rem;color:rgba(255,255,255,.4);}
+.sidebar-nav{padding:1rem 0;flex:1;}
+.nav-section-title{font-size:.65rem;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;padding:.8rem 1.2rem .3rem;}
+.nav-item{display:flex;align-items:center;gap:.8rem;padding:.8rem 1.2rem;cursor:pointer;transition:background-color .25s,color .25s,border-color .25s;border-left:3px solid transparent;color:rgba(255,255,255,.65);font-size:.88rem;font-weight:500;}
+.nav-item:hover{background:rgba(255,255,255,.07);color:#fff;}
+.nav-item.active{background:rgba(255,0,102,.3);border-left-color:var(--primary);color:#fff;}
+.nav-item .icon{font-size:1.1rem;width:20px;text-align:center;}
+.sidebar-footer{padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,.07);}
+.sidebar-footer a{color:rgba(255,255,255,.4);font-size:.8rem;text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:color .3s;cursor:pointer;}
+.sidebar-footer a:hover{color:#fff;}
+.main-content{margin-left:var(--admin-nav-w);flex:1;padding:2rem;max-width:calc(100vw - var(--admin-nav-w));}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
+.topbar h1{font-size:1.6rem;font-weight:800;color:var(--text);}
+.topbar-right{display:flex;align-items:center;gap:1rem;}
+.admin-badge{background:var(--gradient);color:#fff;padding:.4rem 1rem;border-radius:50px;font-size:.8rem;font-weight:700;}
+.logout-btn{background:transparent;border:1.5px solid #ddd;color:var(--text-light);padding:.4rem .9rem;border-radius:50px;font-size:.8rem;cursor:pointer;transition:border-color .3s,color .3s;}
+.logout-btn:hover{border-color:var(--danger);color:var(--danger);}
+.admin-page{display:none;}
+.admin-page.active{display:block;}
+
+/* ADMIN CARDS */
+#admin .card{padding:1.6rem;box-shadow:var(--shadow);border-color:rgba(255,0,102,.07);}
+#admin .card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,0,102,.18);}
+#admin .card h3{font-size:1.05rem;font-weight:700;color:var(--primary-dark);margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem;}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-bottom:2rem;}
+.save-btn{padding:.7rem 1.5rem;background:var(--gradient);color:#fff;border:none;border-radius:9px;font-size:.9rem;font-weight:700;cursor:pointer;transition:opacity .3s;display:inline-flex;align-items:center;gap:.5rem;}
+.save-btn:hover{opacity:.85;}
+.save-msg{display:none;color:var(--success);font-size:.82rem;margin-top:.5rem;font-weight:600;}
+.section-divider{height:1.5px;background:linear-gradient(90deg,transparent,rgba(255,0,102,.2),transparent);margin:2rem 0;}
+
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;margin-bottom:2rem;}
+.kpi-card{background:#fff;border-radius:var(--admin-radius);padding:1.4rem 1.6rem;box-shadow:var(--shadow);border:1px solid rgba(255,0,102,.07);transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden;}
+.kpi-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(255,0,102,.2);}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi-card.kpi-purple::before{background:var(--gradient);}
+.kpi-card.kpi-blue::before{background:linear-gradient(135deg,#4A90D9,#56CCF2);}
+.kpi-card.kpi-green::before{background:linear-gradient(135deg,#27AE60,#2ECC71);}
+.kpi-card.kpi-orange::before{background:linear-gradient(135deg,#F39C12,#F1C40F);}
+.kpi-card.kpi-red::before{background:linear-gradient(135deg,#E74C3C,#C0392B);}
+.kpi-icon{font-size:1.6rem;margin-bottom:.6rem;}
+.kpi-value{font-size:2rem;font-weight:900;color:var(--text);line-height:1.1;}
+.kpi-label{font-size:.78rem;color:var(--text-light);margin-top:.2rem;font-weight:500;}
+.kpi-trend{font-size:.75rem;font-weight:700;margin-top:.5rem;}
+.kpi-trend.up{color:var(--success);}
+.kpi-trend.down{color:var(--danger);}
+
+/* CHARTS */
+.chart-row{display:grid;grid-template-columns:2fr 1fr;gap:1.2rem;margin-bottom:1.2rem;}
+.chart-row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:1.2rem;}
+.chart-card{background:#fff;border-radius:var(--admin-radius);padding:1.5rem;box-shadow:var(--shadow);border:1px solid rgba(255,0,102,.07);}
+.chart-card h4{font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem;}
+.chart-card canvas{max-height:240px;}
+
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+.data-table th{background:var(--admin-bg);color:var(--text-light);font-weight:700;font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;padding:.8rem 1rem;text-align:left;}
+.data-table td{padding:.8rem 1rem;border-bottom:1px solid #ffe6f0;color:var(--text);}
+.data-table tr:hover td{background:#fff5f8;}
+.data-table tr:last-child td{border-bottom:none;}
+.page-bar{height:8px;background:#e9ecef;border-radius:4px;overflow:hidden;margin-top:.3rem;}
+.page-bar-fill{height:100%;background:var(--gradient);border-radius:4px;}
+
+/* REALTIME */
+.realtime-dot{width:8px;height:8px;background:#27AE60;border-radius:50%;display:inline-block;margin-right:.4rem;-webkit-animation:pulse 2s infinite;animation:pulse 2s infinite;}
+@-webkit-keyframes pulse{0%,100%{opacity:1;-webkit-transform:scale(1);transform:scale(1);}50%{opacity:.6;-webkit-transform:scale(1.3);transform:scale(1.3);}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.6;transform:scale(1.3);}}
+
+/* REGION LIST */
+.region-list{list-style:none;padding:0;}
+.region-item{display:flex;align-items:center;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid #ffe6f0;}
+.region-item:last-child{border-bottom:none;}
+.region-bar{flex:1;height:6px;background:#e9ecef;border-radius:3px;margin:0 .8rem;overflow:hidden;}
+.region-bar-fill{height:100%;background:var(--gradient);border-radius:3px;}
+.region-name{font-size:.85rem;font-weight:600;min-width:80px;}
+.region-val{font-size:.82rem;color:var(--text-light);min-width:50px;text-align:right;}
+
+/* EXPORT BTN */
+.export-btn{padding:.65rem 1.3rem;border:2px solid var(--primary);color:var(--primary);background:transparent;border-radius:9px;font-size:.85rem;font-weight:700;cursor:pointer;transition:background-color .3s,color .3s;display:inline-flex;align-items:center;gap:.4rem;}
+.export-btn:hover{background:var(--primary);color:#fff;}
+.ad-preview{width:100%;height:80px;border-radius:8px;object-fit:cover;display:block;margin-top:.5rem;background:#ffe6f0;}
+
+/* ADMIN RESPONSIVE */
+@media(max-width:900px){
+  .sidebar{width:60px;overflow:hidden;}
+  .sidebar-logo h2,.sidebar-logo span,.nav-item span,.nav-section-title,.sidebar-footer a span{display:none;}
+  .main-content{margin-left:60px;max-width:calc(100vw - 60px);}
+  .chart-row,.chart-row-3{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .main-content{padding:1rem;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .topbar{flex-direction:column;align-items:flex-start;gap:.8rem;}
+}
+
+/* ===== SAFARI / iOS FIXES ===== */
+
+/* FIX 1: Body 100vh – iOS Safari address bar pushes content.
+   -webkit-fill-available belongs on html/body, NOT on child elements. */
+html { height: -webkit-fill-available; }
+body { min-height: 100vh; min-height: -webkit-fill-available;
+       cursor: pointer; /* enables click delegation on iOS */ }
+
+/* FIX 2: Safe-area insets for iPhone X/11/12/13/14/15 notch + home bar */
+body { padding-bottom: env(safe-area-inset-bottom, 0px); }
+nav  { padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
+       padding-right: max(1.5rem, env(safe-area-inset-right, 0px)); }
+footer { padding-bottom: calc(2.5rem + env(safe-area-inset-bottom, 0px)); }
+
+/* FIX 3: Remove iOS default input/button styling */
+input,button,select,textarea {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* FIX 4: Restore border-radius for ALL styled inputs and buttons */
+.form-input, #admin .form-input { border-radius: 10px !important; }
+.login-btn                      { border-radius: 10px !important; }
+.save-btn                       { border-radius: 9px  !important; }
+.btn                            { border-radius: 50px !important; }
+.export-btn                     { border-radius: 9px  !important; }
+.quiz-opt                       { border-radius: 12px !important; }
+.logout-btn                     { border-radius: 50px !important; }
+.nav-links a                    { border-radius: 50px !important; }
+.ad-card-btn                    { border-radius: 50px !important; }
+.help-link                      { border-radius: 50px !important; }
+.help-tag                       { border-radius: 50px !important; }
+.risk-badge, .pill, .hero-badge { border-radius: 50px !important; }
+.admin-badge                    { border-radius: 50px !important; }
+.q-num                          { border-radius: 50%  !important; }
+.hamburger span                 { border-radius: 3px  !important; }
+/* The reset button in settings */
+#page-settings button[onclick="resetAll()"] { border-radius: 9px !important; }
+
+/* FIX 5: iOS input font-size ≥ 16px prevents auto-zoom on focus */
+@media (max-width: 1024px) {
+  input, textarea, select, .form-input, .social-input {
+    font-size: 16px !important;
+  }
+}
+
+/* FIX 6: touch-action:manipulation eliminates 300ms tap delay */
+a, button, [onclick],
+.nav-item, .qnav-card, .quiz-opt, .hamburger,
+.footer-links a, .footer-admin, .nav-logo,
+.sidebar-footer a { touch-action: manipulation; }
+
+/* FIX 7: Minimum 44px touch targets (iOS HIG) */
+.nav-links a   { min-height: 44px; display: flex; align-items: center; }
+.nav-item      { min-height: 44px; }
+.quiz-opt      { min-height: 44px; }
+.footer-admin  { min-height: 44px; display: inline-flex; align-items: center; }
+.hamburger     { min-height: 44px; min-width: 44px; align-items: center; justify-content: center; }
+.logout-btn    { min-height: 44px; }
+.save-btn      { min-height: 44px; }
+.export-btn    { min-height: 44px; }
+
+/* FIX 8: Remove tap highlight on all interactive elements */
+*, *::before, *::after { -webkit-tap-highlight-color: transparent; }
+
+/* FIX 9: Scrollable containers with iOS momentum scrolling */
+.ad-sidebar, .sidebar, .main-content {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* FIX 10: a[href="#"] gets href replaced dynamically; default "#" is safe */
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <span class="nav-logo" onclick="showSection('home')">🎓 Sucht &amp; Stress</span>
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="showSection('home')" data-section="home">🏠 Start</a></li>
+    <li><a onclick="showSection('info')" data-section="info">📚 Info</a></li>
+    <li><a onclick="showSection('test')" data-section="test">✅ Selbsttest</a></li>
+    <li><a onclick="showSection('help')" data-section="help">🤝 Hilfe</a></li>
+    <li><a onclick="showSection('social')" data-section="social">📱 Social Media</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- AD SIDEBAR -->
+<aside class="ad-sidebar" id="adSidebar">
+  <p class="ad-sidebar-title">Anzeigen</p>
+  <div class="ad-card" id="adCard1">
+    <p class="ad-card-label">Anzeige 1</p>
+    <a id="adLink1" href="javascript:void(0)" target="_blank">
+      <div class="ad-img-placeholder" id="adImg1">📣</div>
+      <div class="ad-card-title" id="adTitle1">Suchtberatung Online</div>
+      <div class="ad-card-sub" id="adSub1">Kostenlose Beratung für Jugendliche – anonym &amp; sofort.</div>
+      <span class="ad-card-btn">Mehr erfahren →</span>
+    </a>
+  </div>
+  <div class="ad-card" id="adCard2">
+    <p class="ad-card-label">Anzeige 2</p>
+    <a id="adLink2" href="javascript:void(0)" target="_blank">
+      <div class="ad-img-placeholder" id="adImg2">📚</div>
+      <div class="ad-card-title" id="adTitle2">Lernhilfe &amp; Stressmanagement</div>
+      <div class="ad-card-sub" id="adSub2">Prüfungsangst überwinden – Tipps von Experten.</div>
+      <span class="ad-card-btn">Jetzt entdecken →</span>
+    </a>
+  </div>
+  <div class="ad-card" id="adCard3">
+    <p class="ad-card-label">Anzeige 3</p>
+    <a id="adLink3" href="javascript:void(0)" target="_blank">
+      <div class="ad-img-placeholder" id="adImg3">💬</div>
+      <div class="ad-card-title" id="adTitle3">Telefonseelsorge</div>
+      <div class="ad-card-sub" id="adSub3">0800 111 0 111 – kostenlos, anonym, 24/7 erreichbar.</div>
+      <span class="ad-card-btn">Anrufen →</span>
+    </a>
+  </div>
+</aside>
+
+<!-- ===== STARTSEITE ===== -->
+<section id="home" class="active">
+  <div class="hero">
+    <div class="hero-badge fade-in">🎓 Schulprojekt – Suchtprävention</div>
+    <h1 class="fade-in">Sucht durch<br><span style="text-decoration:underline;text-decoration-color:rgba(255,255,255,.5)">Schulstress</span><br>erkennen &amp; handeln</h1>
+    <p class="fade-d1">Der Druck durch das Abitur kann gefährlich werden. Lerne Warnsignale zu erkennen, mache den Selbsttest und finde Hilfe – bevor es zu spät ist.</p>
+    <div class="hero-btns fade-d2">
+      <button class="btn btn-white" onclick="showSection('test')">✅ Zum Selbsttest</button>
+      <button class="btn btn-outline" onclick="showSection('info')">📚 Mehr erfahren</button>
+    </div>
+    <div class="stats">
+      <div class="stat-card fade-in"><span class="stat-number">42%</span><span class="stat-label">der Abiturienten berichten von erhöhtem Alkoholkonsum in der Prüfungsphase</span></div>
+      <div class="stat-card fade-d1"><span class="stat-number">3h+</span><span class="stat-label">verbringen Schüler täglich auf Social Media – oft als Flucht vor Stress</span></div>
+      <div class="stat-card fade-d2"><span class="stat-number">1 von 5</span><span class="stat-label">Schüler greifen in Stresssituationen zu Energydrinks oder anderen Mitteln</span></div>
+      <div class="stat-card"><span class="stat-number">116 111</span><span class="stat-label">Kostenlose Nummer gegen Kummer – 24/7 für dich da</span></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="section-top">
+      <div class="section-header">
+        <h2>Was findest du hier?</h2>
+        <p>Diese Website wurde erstellt, um Schülerinnen und Schüler aufzuklären und zu unterstützen.</p>
+      </div>
+    </div>
+    <div class="quick-nav">
+      <div class="qnav-card" onclick="showSection('info')"><span class="icon">📚</span><h3>Infobereich</h3><p>Erfahre alles über Suchtverhalten, Warnsignale und wie Schulstress zur Sucht führen kann.</p></div>
+      <div class="qnav-card" onclick="showSection('test')"><span class="icon">✅</span><h3>Selbsttest</h3><p>10 Fragen, die zeigen, ob dein Verhalten problematisch ist – mit sofortiger Auswertung.</p></div>
+      <div class="qnav-card" onclick="showSection('help')"><span class="icon">🤝</span><h3>Hilfe &amp; Beratung</h3><p>Kostenlose Hotlines, Online-Beratung und echte Anlaufstellen für Jugendliche in Deutschland.</p></div>
+      <div class="qnav-card" onclick="showSection('social')"><span class="icon">📱</span><h3>Social Media</h3><p>Folge uns auf TikTok, Instagram und YouTube für mehr Infos und Erfahrungsberichte.</p></div>
+    </div>
+    <div class="divider"></div>
+    <div class="card" style="background:var(--gradient);color:#fff;text-align:center;padding:2.5rem;">
+      <h3 style="font-size:1.5rem;font-weight:800;margin-bottom:.8rem;">Du brauchst sofort Hilfe?</h3>
+      <p style="opacity:.9;margin-bottom:1.3rem;max-width:480px;margin-left:auto;margin-right:auto;">Die <strong>Telefonseelsorge</strong> ist kostenlos, anonym und 24 Stunden erreichbar.</p>
+      <a href="tel:08001110111" class="btn btn-white">📞 0800 111 0 111 – Jetzt anrufen</a>
+    </div>
+  </div>
+  <footer>
+    <h3>Sucht &amp; Schulstress</h3>
+    <p>Dieses Schulprojekt wurde erstellt, um auf Suchtgefahren durch Schulstress aufmerksam zu machen.</p>
+    <div class="footer-links">
+      <a onclick="showSection('home')">Start</a>
+      <a onclick="showSection('info')">Info</a>
+      <a onclick="showSection('test')">Selbsttest</a>
+      <a onclick="showSection('help')">Hilfe</a>
+      <a onclick="showSection('social')">Social Media</a>
+    </div>
+    <br><button class="footer-admin" onclick="showSection('admin')">⚙ Admin</button>
+    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;">Schulprojekt · Aufklärung · Keine medizinische Beratung</p>
+  </footer>
+</section>
+
+<!-- ===== INFOBEREICH ===== -->
+<section id="info">
+  <div class="container">
+    <div class="section-top">
+      <div class="section-header">
+        <h2>📚 Suchtgefahren durch Schulstress</h2>
+        <p>Hintergrundwissen, Warnsignale und warum das Abitur eine kritische Phase ist.</p>
+      </div>
+    </div>
+    <div class="section-intro">
+      <p>Der <strong>Abiturdruck</strong> ist für viele Schüler eine der stressigsten Phasen ihres Lebens. Schlafmangel, Prüfungsangst und sozialer Druck können dazu führen, dass Jugendliche nach Mitteln suchen, um diesen Stress zu bewältigen – manchmal mit gefährlichen Folgen. Sucht entsteht oft schleichend und wird erst erkannt, wenn es bereits zu spät ist.</p>
+    </div>
+    <div class="section-header"><h2>Was ist Suchtverhalten?</h2></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>🧠 Definition: Sucht</h3>
+        <p>Sucht ist ein zwanghaftes, unkontrollierbares Verlangen nach einem Stoff oder Verhalten. Man spricht von Sucht, wenn:</p>
+        <ul>
+          <li>Der Konsum schwer kontrollierbar ist</li>
+          <li>Entzugserscheinungen auftreten</li>
+          <li>Konsum trotz negativer Folgen fortgesetzt wird</li>
+          <li>Soziale und schulische Bereiche vernachlässigt werden</li>
+          <li>Toleranz entsteht (mehr nötig für gleichen Effekt)</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>😰 Warum ist das Abitur besonders riskant?</h3>
+        <p>Das Abitur stellt extreme psychische Anforderungen. Typische Auslöser:</p>
+        <ul>
+          <li>Extreme Prüfungsangst und Versagensangst</li>
+          <li>Schlafmangel durch intensives Lernen</li>
+          <li>Sozialer Vergleich und Leistungsdruck</li>
+          <li>Zukunftsangst (Studium, Beruf)</li>
+          <li>Fehlende Entspannung und Freizeitausgleich</li>
+          <li>Gefühl der Überforderung</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>🔄 Wie entsteht Sucht durch Stress?</h3>
+        <ul>
+          <li><strong>Phase 1:</strong> Gelegentlicher Konsum zur Entspannung</li>
+          <li><strong>Phase 2:</strong> Regelmäßiger Konsum als Gewohnheit</li>
+          <li><strong>Phase 3:</strong> Abhängigkeit – ohne Konsum keine Entspannung mehr</li>
+          <li><strong>Phase 4:</strong> Sucht mit negativen Konsequenzen</li>
+        </ul>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section-header"><h2>Typische Suchtmittel bei Schülerinnen und Schülern</h2></div>
+    <div class="substance-grid">
+      <div class="sub-card"><span class="emoji">🍺</span><h3>Alkohol</h3><span class="risk-badge risk-high">Hohes Risiko</span><p>Wird als „Belohnung" oder zur Stressreduktion konsumiert. Verschlechtert die Gedächtnisleistung – kontraproduktiv fürs Lernen.</p></div>
+      <div class="sub-card"><span class="emoji">⚡</span><h3>Energydrinks</h3><span class="risk-badge risk-med">Mittleres Risiko</span><p>Als „Lernhilfe" missbraucht. Verursachen Schlafstörungen und Herzrasen. Mehr als 2 Dosen täglich sind für Jugendliche schädlich.</p></div>
+      <div class="sub-card"><span class="emoji">📱</span><h3>Social Media</h3><span class="risk-badge risk-med">Mittleres Risiko</span><p>Aktiviert das Belohnungszentrum im Gehirn. In Stressphasen als Ablenkung genutzt, was Prokrastination und Stress erhöht.</p></div>
+      <div class="sub-card"><span class="emoji">🎮</span><h3>Gaming</h3><span class="risk-badge risk-med">Mittleres Risiko</span><p>Bietet schnelle Belohnungsmomente. Die WHO erkennt Spielsucht als offizielle Erkrankung an. Kritisch: mehr als 4–6h täglich.</p></div>
+      <div class="sub-card"><span class="emoji">🚬</span><h3>Nikotin / Vaping</h3><span class="risk-badge risk-high">Hohes Risiko</span><p>E-Zigaretten werden als harmlos gesehen – sind aber hochgradig nikotinhaltig und suchtbildend.</p></div>
+      <div class="sub-card"><span class="emoji">🌿</span><h3>Cannabis</h3><span class="risk-badge risk-high">Hohes Risiko</span><p>Beeinträchtigt Gedächtnis, Konzentration und Motivation – besonders im sich entwickelnden Gehirn unter 25 Jahren erheblich.</p></div>
+    </div>
+    <div class="warning-box">
+      <h3>⚠️ Warnsignale erkennen</h3>
+      <ul>
+        <li>Konsum wird heimlich gehalten oder verleugnet</li>
+        <li>Schlechte Stimmung ohne Konsum (Reizbarkeit, Unruhe)</li>
+        <li>Vernachlässigung von Freundschaften, Hobbys, Schule</li>
+        <li>Starke Stimmungsschwankungen je nach Konsumverhalten</li>
+        <li>Kontrollverlust: „Ich wollte nur kurz, aber dann …"</li>
+        <li>Schuldgefühle nach dem Konsum, aber Weitermachen trotzdem</li>
+      </ul>
+    </div>
+    <div class="divider"></div>
+    <div class="section-header"><h2>So schützt du dich</h2></div>
+    <div class="card">
+      <ul class="step-list">
+        <li><div><h4>Strukturierter Lernplan</h4><p>Feste Lernzeiten und regelmäßige Pausen (z.B. Pomodoro: 25 Min lernen, 5 Min Pause) helfen gegen Überforderung.</p></div></li>
+        <li><div><h4>Ausreichend Schlaf</h4><p>7–9 Stunden pro Nacht sind Investition, nicht Verschwendung. Schlaf festigt Gelerntes im Gedächtnis.</p></div></li>
+        <li><div><h4>Sport und Bewegung</h4><p>30 Minuten täglich senken Cortisol und verbessern die Konzentration nachhaltig – kein Energydrink ist so wirksam.</p></div></li>
+        <li><div><h4>Soziale Unterstützung suchen</h4><p>Gespräche mit Freunden, Familie oder dem Schulberater helfen, Druck abzubauen.</p></div></li>
+        <li><div><h4>Professionelle Hilfe bei Bedarf</h4><p>Wenn du merkst, dass du Suchtmittel brauchst, um zu funktionieren: Hol dir Hilfe. Das ist Stärke, nicht Schwäche.</p></div></li>
+      </ul>
+    </div>
+    <div style="text-align:center;margin:2.5rem 0;">
+      <button class="btn btn-primary" onclick="showSection('test')" style="font-size:1rem;padding:.9rem 2.2rem;">✅ Jetzt den Selbsttest machen →</button>
+    </div>
+  </div>
+  <footer>
+    <h3>Sucht &amp; Schulstress</h3>
+    <p>Schulprojekt zur Aufklärung über Suchtgefahren durch Schulstress.</p>
+    <div class="footer-links"><a onclick="showSection('home')">Start</a><a onclick="showSection('test')">Selbsttest</a><a onclick="showSection('help')">Hilfe</a></div>
+    <br><button class="footer-admin" onclick="showSection('admin')">⚙ Admin</button>
+    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;">Schulprojekt · Keine medizinische Beratung</p>
+  </footer>
+</section>
+
+<!-- ===== SELBSTTEST ===== -->
+<section id="test">
+  <div class="container">
+    <div class="section-top">
+      <div class="section-header">
+        <h2>✅ Selbsttest: Wie gefährdet bist du?</h2>
+        <p>Beantworte ehrlich alle 10 Fragen. Die Auswertung ist anonym und hilft dir, deinen Umgang mit Stress einzuschätzen.</p>
+      </div>
+    </div>
+    <div class="quiz-wrap">
+      <div class="quiz-progress"><div class="quiz-prog-bar" id="progressBar" style="width:10%"></div></div>
+      <div id="quizDisplay"></div>
+      <div class="quiz-result" id="quizResult">
+        <div id="resultCircle" class="result-circle"></div>
+        <div id="resultEmoji" style="font-size:2.8rem;margin-bottom:.8rem;"></div>
+        <h3 id="resultTitle" class="result-title"></h3>
+        <p id="resultText" class="result-text"></p>
+        <div class="result-tips" id="resultTips"></div>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;">
+          <button class="btn btn-primary" onclick="resetQuiz()">🔄 Test wiederholen</button>
+          <button class="btn btn-outline" style="color:var(--primary);border-color:var(--primary);" onclick="showSection('help')">🤝 Zur Hilfe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <h3>Sucht &amp; Schulstress</h3>
+    <p>Dieser Test ersetzt keine professionelle Beratung.</p>
+    <br><button class="footer-admin" onclick="showSection('admin')">⚙ Admin</button>
+    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;">Schulprojekt · Keine medizinische Beratung</p>
+  </footer>
+</section>
+
+<!-- ===== HILFE & BERATUNG ===== -->
+<section id="help">
+  <div class="container">
+    <div class="section-top">
+      <div class="section-header">
+        <h2>🤝 Hilfe &amp; Beratung</h2>
+        <p>Du bist nicht allein. Hier findest du kostenlose, anonyme und professionelle Unterstützung.</p>
+      </div>
+    </div>
+    <div class="emergency-banner">
+      <h3>🚨 Du bist in einer Notlage?</h3>
+      <span class="emerg-num">📞 112</span>
+      <p>Für medizinische Notfälle: Ruf sofort den Notruf an. Kostenlos, 24/7.</p>
+    </div>
+    <div class="section-header" style="margin-top:2.5rem;"><h2>Telefonhotlines</h2><p>Alle Nummern sind kostenlos und anonym.</p></div>
+    <div class="help-grid">
+      <div class="help-card">
+        <div class="help-hdr"><div class="help-icon">📞</div><div><h3>Telefonseelsorge</h3><span class="sub">Für alle in Krisensituationen</span></div></div>
+        <span class="phone-num">0800 111 0 111</span>
+        <span class="phone-num" style="font-size:1.2rem;color:var(--secondary);">oder: 0800 111 0 222</span>
+        <p>Professionelle Beratung, kostenlos, anonym, rund um die Uhr erreichbar.</p>
+        <span class="help-tag">✅ Kostenlos</span><span class="help-tag">🕐 24/7</span><span class="help-tag">🔒 Anonym</span>
+      </div>
+      <div class="help-card">
+        <div class="help-hdr"><div class="help-icon">💚</div><div><h3>Nummer gegen Kummer</h3><span class="sub">Speziell für Jugendliche</span></div></div>
+        <span class="phone-num">116 111</span>
+        <p>Kinder- und Jugendhotline mit vertraulicher Beratung bei allen Problemen – auch Sucht, Druck und Schulstress.</p>
+        <span class="help-tag">✅ Kostenlos</span><span class="help-tag">👶 Für Jugendliche</span><span class="help-tag">🔒 Vertraulich</span>
+      </div>
+      <div class="help-card">
+        <div class="help-hdr"><div class="help-icon">🍺</div><div><h3>BZgA Sucht-Hotline</h3><span class="sub">Bundeszentrale für gesundheitliche Aufklärung</span></div></div>
+        <span class="phone-num">0800 1 31 20 00</span>
+        <p>Spezialisierte Beratung zu Alkohol und Suchtmitteln durch Fachpersonal. Auch für Eltern und Angehörige.</p>
+        <span class="help-tag">✅ Kostenlos</span><span class="help-tag">🎯 Sucht-Fokus</span><span class="help-tag">👨‍👩‍👧 Für alle</span>
+      </div>
+      <div class="help-card">
+        <div class="help-hdr"><div class="help-icon">💬</div><div><h3>Online-Beratung NRK</h3><span class="sub">Chat und Mail für Jugendliche</span></div></div>
+        <p>Wenn du lieber schreibst als redest: Die Online-Beratung der Nummer gegen Kummer ist vertraulich und kostenlos.</p>
+        <span class="help-tag">✅ Kostenlos</span><span class="help-tag">💬 Chat &amp; Mail</span>
+        <a href="https://www.nummergegenkummer.de" target="_blank" class="help-link">🌐 Zur Website →</a>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section-header"><h2>Online-Beratungsstellen</h2></div>
+    <div class="help-grid">
+      <div class="help-card">
+        <div class="help-hdr"><div class="help-icon">🌍</div><div><h3>drugcom.de</h3><span class="sub">BZgA – Alle Suchtmittel</span></div></div>
+        <p>Umfangreiche Informationen, Selbsttests, Erfahrungsberichte und Online-Beratung für Jugendliche und junge Erwachsene.</p>
+        <a href="https://www.drugcom.de" target="_blank" class="help-link">🌐 drugcom.de →</a>
+      </div>
+      <div class="help-card">
+        <div class="help-hdr"><div class="help-icon">🔒</div><div><h3>klicksafe.de</h3><span class="sub">Mediensucht &amp; Social Media</span></div></div>
+        <p>Speziell für digitale Sucht: Social Media, Gaming, Smartphone. Tipps und Beratung für Jugendliche und Eltern.</p>
+        <a href="https://www.klicksafe.de" target="_blank" class="help-link">🌐 klicksafe.de →</a>
+      </div>
+      <div class="help-card">
+        <div class="help-hdr"><div class="help-icon">🍷</div><div><h3>kenn-dein-limit.de</h3><span class="sub">Alkoholprävention – BZgA</span></div></div>
+        <p>Informationsseite zum Thema Alkohol mit Selbsttest, Tipps und Beratungsangeboten für Jugendliche.</p>
+        <a href="https://www.kenn-dein-limit.de" target="_blank" class="help-link">🌐 kenn-dein-limit.de →</a>
+      </div>
+      <div class="help-card">
+        <div class="help-hdr"><div class="help-icon">🏥</div><div><h3>bzga.de</h3><span class="sub">Bundeszentrale für Aufklärung</span></div></div>
+        <p>Offizielle Gesundheitsinformationen mit Beratungsstellensuche, Infomaterialien und Präventionsprogrammen.</p>
+        <a href="https://www.bzga.de" target="_blank" class="help-link">🌐 bzga.de →</a>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <h3>Sucht &amp; Schulstress</h3>
+    <p>Alle aufgeführten Stellen sind seriös und werden von Fachleuten betrieben.</p>
+    <div class="footer-links"><a onclick="showSection('home')">Start</a><a onclick="showSection('test')">Selbsttest</a></div>
+    <br><button class="footer-admin" onclick="showSection('admin')">⚙ Admin</button>
+    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;">Schulprojekt · Keine medizinische Beratung</p>
+  </footer>
+</section>
+
+<!-- ===== SOCIAL MEDIA ===== -->
+<section id="social">
+  <div class="container">
+    <div class="section-top">
+      <div class="section-header">
+        <h2>📱 Folg uns auf Social Media</h2>
+        <p>Aktuelle Beiträge, Erfahrungsberichte und Tipps zum Thema Sucht &amp; Schulstress.</p>
+      </div>
+    </div>
+    <div class="social-grid">
+      <div class="social-card">
+        <div class="social-hdr">
+          <div class="plat-icon tiktok">🎵</div>
+          <div><h3 style="font-weight:700;">TikTok</h3><span style="font-size:.78rem;color:var(--text-light);">Kurze Videos &amp; Aufklärung</span></div>
+        </div>
+        <div class="embed-placeholder" id="ttPlaceholder">
+          <div class="p-icon">🎵</div>
+          <h4>TikTok-Kanal</h4>
+          <p id="ttPlaceholderText">Noch kein Kanal verbunden.<br>Im Admin-Bereich eintragen.</p>
+        </div>
+        <div id="ttEmbedWrap" style="display:none;margin-bottom:1rem;"></div>
+        <a id="ttProfileLink" href="https://www.tiktok.com" target="_blank" class="help-link">🎵 TikTok öffnen →</a>
+      </div>
+      <div class="social-card">
+        <div class="social-hdr">
+          <div class="plat-icon instagram">📸</div>
+          <div><h3 style="font-weight:700;">Instagram</h3><span style="font-size:.78rem;color:var(--text-light);">Bilder, Stories &amp; Reels</span></div>
+        </div>
+        <div class="embed-placeholder" id="igPlaceholder">
+          <div class="p-icon">📸</div>
+          <h4>Instagram-Profil</h4>
+          <p id="igPlaceholderText">Noch kein Kanal verbunden.<br>Im Admin-Bereich eintragen.</p>
+        </div>
+        <div id="igEmbedWrap" style="display:none;margin-bottom:1rem;"></div>
+        <a id="igProfileLink" href="https://www.instagram.com" target="_blank" class="help-link">📸 Instagram öffnen →</a>
+      </div>
+      <div class="social-card">
+        <div class="social-hdr">
+          <div class="plat-icon youtube">▶️</div>
+          <div><h3 style="font-weight:700;">YouTube</h3><span style="font-size:.78rem;color:var(--text-light);">Videos &amp; Dokumentationen</span></div>
+        </div>
+        <div class="embed-placeholder" id="ytPlaceholder">
+          <div class="p-icon">▶️</div>
+          <h4>YouTube-Video</h4>
+          <p>Noch kein Video verbunden.<br>Im Admin-Bereich eintragen.</p>
+        </div>
+        <div class="yt-embed-wrap" id="ytEmbedWrap"><iframe id="ytIframe" src="" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"></iframe></div>
+        <a id="ytProfileLink" href="https://www.youtube.com" target="_blank" class="help-link">▶️ YouTube öffnen →</a>
+      </div>
+    </div>
+    <div class="card" style="background:var(--light-bg);text-align:center;margin-top:1.5rem;">
+      <h3 style="font-weight:800;color:var(--primary);margin-bottom:.8rem;">📢 Kanäle verbinden</h3>
+      <p style="color:var(--text-light);margin-bottom:1rem;line-height:1.7;">Trage deine Social-Media-Links im <strong>Admin-Bereich</strong> ein – sie erscheinen dann automatisch hier.</p>
+      <button class="btn btn-primary" onclick="showSection('admin')">⚙ Zum Admin-Bereich →</button>
+    </div>
+  </div>
+  <footer>
+    <h3>Sucht &amp; Schulstress</h3>
+    <p>Folge uns für regelmäßige Updates und Tipps.</p>
+    <br><button class="footer-admin" onclick="showSection('admin')">⚙ Admin</button>
+    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;">Schulprojekt · Keine medizinische Beratung</p>
+  </footer>
+</section>
+
+<!-- ===== ADMIN ===== -->
+<section id="admin">
+
+  <!-- LOGIN -->
+  <div class="login-page" id="loginPage">
+    <div class="login-box">
+      <div class="login-logo">🔐</div>
+      <h2>Admin-Bereich</h2>
+      <p>Sucht &amp; Schulstress – Website-Verwaltung</p>
+      <div class="form-group">
+        <label>Passwort</label>
+        <input type="password" class="form-input" id="pwInput" placeholder="Admin-Passwort eingeben" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="login-btn" onclick="doLogin()">🔓 Einloggen</button>
+      <div class="login-err" id="loginErr">Falsches Passwort. Bitte versuche es erneut.</div>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div class="admin-layout" id="adminPanel" style="display:none;">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <h2>🎓 Sucht &amp; Stress</h2>
+        <span>Admin-Bereich</span>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Dashboard</div>
+        <div class="nav-item active" onclick="showAdminPage('analytics')">
+          <span class="icon">📊</span><span>Analytics</span>
+        </div>
+        <div class="nav-section-title">Verwaltung</div>
+        <div class="nav-item" onclick="showAdminPage('social')">
+          <span class="icon">📱</span><span>Social Media</span>
+        </div>
+        <div class="nav-item" onclick="showAdminPage('ads')">
+          <span class="icon">📣</span><span>Werbeanzeigen</span>
+        </div>
+        <div class="nav-section-title">System</div>
+        <div class="nav-item" onclick="showAdminPage('settings')">
+          <span class="icon">⚙️</span><span>Einstellungen</span>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <a onclick="showSection('home')"><span>🏠</span><span>Zur Website</span></a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+      <div class="topbar">
+        <h1 id="pageTitle">Analytics Dashboard</h1>
+        <div class="topbar-right">
+          <span style="font-size:.82rem;color:var(--text-light);"><span class="realtime-dot"></span><span id="realtimeCount">0</span> aktive Besucher</span>
+          <span class="admin-badge">Admin</span>
+          <button class="logout-btn" onclick="doLogout()">Abmelden</button>
+        </div>
+      </div>
+
+      <!-- ANALYTICS -->
+      <div class="admin-page active" id="page-analytics">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.8rem;">
+          <p style="color:var(--text-light);font-size:.88rem;">Letzte Aktualisierung: <span id="lastUpdate"></span></p>
+          <button class="export-btn" onclick="exportPDF()">📄 PDF-Bericht exportieren</button>
+        </div>
+        <div id="noDataBanner" style="background:linear-gradient(135deg,#fff0f5,#fff8f0);border:2px solid rgba(255,0,102,0.2);border-radius:14px;padding:1.4rem 1.8rem;margin-bottom:1.8rem;display:flex;align-items:center;gap:1rem;">
+          <span style="font-size:2rem;flex-shrink:0;">📭</span>
+          <div>
+            <div style="font-weight:700;color:var(--primary-dark);margin-bottom:.25rem;font-size:.95rem;">Noch keine Daten vorhanden</div>
+            <div style="color:var(--text-light);font-size:.85rem;line-height:1.5;">Besucher werden gezählt, sobald die Website online ist. Alle Werte starten bei 0.</div>
+          </div>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card kpi-purple"><div class="kpi-icon">👁️</div><div class="kpi-value" id="kpiToday">0</div><div class="kpi-label">Besucher heute</div><div class="kpi-trend" id="kpiTodayTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
+          <div class="kpi-card kpi-blue"><div class="kpi-icon">📅</div><div class="kpi-value" id="kpiWeek">0</div><div class="kpi-label">Besucher diese Woche</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
+          <div class="kpi-card kpi-green"><div class="kpi-icon">🌍</div><div class="kpi-value" id="kpiTotal">0</div><div class="kpi-label">Gesamtbesucher</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
+          <div class="kpi-card kpi-orange"><div class="kpi-icon">⏱️</div><div class="kpi-value">0:00</div><div class="kpi-label">Ø Verweildauer (min)</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
+          <div class="kpi-card kpi-red"><div class="kpi-icon">🚪</div><div class="kpi-value">0%</div><div class="kpi-label">Absprungrate</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-card"><h4>📈 Besucherverlauf – letzte 30 Tage</h4><canvas id="chartLine"></canvas></div>
+          <div class="chart-card"><h4>🍩 Traffic-Quellen</h4><canvas id="chartDoughnut"></canvas><div style="margin-top:1rem;" id="doughnutLegend"></div></div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-card"><h4>📊 Besucher nach Wochentag</h4><canvas id="chartBar"></canvas></div>
+          <div class="chart-card"><h4>📍 Besucher nach Region</h4><ul class="region-list" id="regionList"></ul></div>
+        </div>
+        <div class="chart-card" style="margin-bottom:1.2rem;">
+          <h4>🏆 Top 5 meistbesuchte Seiten</h4>
+          <table class="data-table">
+            <thead><tr><th>#</th><th>Seite</th><th>Besuche</th><th>Anteil</th><th>Trend</th></tr></thead>
+            <tbody id="topPagesTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SOCIAL MEDIA -->
+      <div class="admin-page" id="page-social">
+        <div class="card">
+          <h3>📱 Social-Media-Kanäle verwalten</h3>
+          <p style="color:var(--text-light);font-size:.88rem;margin-bottom:1.5rem;">Die eingetragenen Links erscheinen automatisch auf der Hauptseite im Social-Media-Bereich.</p>
+          <div class="form-group"><label>🎵 TikTok – Benutzername</label><input type="text" class="form-input" id="adminTT" placeholder="@dein-tiktok-username"></div>
+          <div class="form-group"><label>📸 Instagram – Benutzername</label><input type="text" class="form-input" id="adminIG" placeholder="@dein-instagram-username"></div>
+          <div class="form-group"><label>▶️ YouTube – Video-ID oder URL</label><input type="text" class="form-input" id="adminYT" placeholder="z.B. dQw4w9WgXcQ oder youtube.com/watch?v=..."></div>
+          <button class="save-btn" onclick="saveSocial()">💾 Speichern</button>
+          <div class="save-msg" id="socialSaveMsg">✅ Gespeichert! Änderungen erscheinen auf der Website.</div>
+        </div>
+      </div>
+
+      <!-- ADS -->
+      <div class="admin-page" id="page-ads">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;">
+          <div class="card">
+            <h3>📣 Werbeplatz 1</h3>
+            <div class="form-group"><label>Titel</label><input type="text" class="form-input" id="ad1Title" placeholder="z.B. Suchtberatung Online"></div>
+            <div class="form-group"><label>Untertitel</label><input type="text" class="form-input" id="ad1Sub" placeholder="Kurze Beschreibung"></div>
+            <div class="form-group"><label>Link (URL)</label><input type="url" class="form-input" id="ad1Link" placeholder="https://..."></div>
+            <div class="form-group"><label>Bild-URL (optional)</label><input type="url" class="form-input" id="ad1Img" placeholder="https://...jpg" oninput="previewImg(1)"></div>
+            <img id="adPreview1" class="ad-preview" src="" alt="" style="display:none;">
+            <button class="save-btn" style="margin-top:.8rem;" onclick="saveAd(1)">💾 Speichern</button>
+            <div class="save-msg" id="adSaveMsg1">✅ Werbeplatz 1 gespeichert!</div>
+          </div>
+          <div class="card">
+            <h3>📣 Werbeplatz 2</h3>
+            <div class="form-group"><label>Titel</label><input type="text" class="form-input" id="ad2Title" placeholder="z.B. Lernhilfe Online"></div>
+            <div class="form-group"><label>Untertitel</label><input type="text" class="form-input" id="ad2Sub" placeholder="Kurze Beschreibung"></div>
+            <div class="form-group"><label>Link (URL)</label><input type="url" class="form-input" id="ad2Link" placeholder="https://..."></div>
+            <div class="form-group"><label>Bild-URL (optional)</label><input type="url" class="form-input" id="ad2Img" placeholder="https://...jpg" oninput="previewImg(2)"></div>
+            <img id="adPreview2" class="ad-preview" src="" alt="" style="display:none;">
+            <button class="save-btn" style="margin-top:.8rem;" onclick="saveAd(2)">💾 Speichern</button>
+            <div class="save-msg" id="adSaveMsg2">✅ Werbeplatz 2 gespeichert!</div>
+          </div>
+          <div class="card">
+            <h3>📣 Werbeplatz 3</h3>
+            <div class="form-group"><label>Titel</label><input type="text" class="form-input" id="ad3Title" placeholder="z.B. Telefonseelsorge"></div>
+            <div class="form-group"><label>Untertitel</label><input type="text" class="form-input" id="ad3Sub" placeholder="Kurze Beschreibung"></div>
+            <div class="form-group"><label>Link (URL)</label><input type="url" class="form-input" id="ad3Link" placeholder="https://..."></div>
+            <div class="form-group"><label>Bild-URL (optional)</label><input type="url" class="form-input" id="ad3Img" placeholder="https://...jpg" oninput="previewImg(3)"></div>
+            <img id="adPreview3" class="ad-preview" src="" alt="" style="display:none;">
+            <button class="save-btn" style="margin-top:.8rem;" onclick="saveAd(3)">💾 Speichern</button>
+            <div class="save-msg" id="adSaveMsg3">✅ Werbeplatz 3 gespeichert!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="admin-page" id="page-settings">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;">
+          <div class="card">
+            <h3>🔐 Admin-Passwort ändern</h3>
+            <div class="form-group"><label>Neues Passwort</label><input type="password" class="form-input" id="newPw1" placeholder="Neues Passwort"></div>
+            <div class="form-group"><label>Passwort wiederholen</label><input type="password" class="form-input" id="newPw2" placeholder="Passwort bestätigen"></div>
+            <button class="save-btn" onclick="changePw()">🔑 Passwort ändern</button>
+            <div class="save-msg" id="pwSaveMsg">✅ Passwort wurde geändert.</div>
+            <div style="color:var(--danger);font-size:.82rem;margin-top:.5rem;display:none;" id="pwErrMsg">Passwörter stimmen nicht überein.</div>
+          </div>
+          <div class="card">
+            <h3>🌐 Website-Einstellungen</h3>
+            <div class="form-group"><label>Website-Titel (Browser-Tab)</label><input type="text" class="form-input" id="siteTitle" placeholder="Sucht &amp; Schulstress"></div>
+            <div class="form-group"><label>Kontakt-E-Mail</label><input type="email" class="form-input" id="contactEmail" placeholder="deine@email.de"></div>
+            <button class="save-btn" onclick="saveSiteSettings()">💾 Speichern</button>
+            <div class="save-msg" id="siteSaveMsg">✅ Einstellungen gespeichert.</div>
+          </div>
+          <div class="card">
+            <h3>🗑️ Daten zurücksetzen</h3>
+            <p style="color:var(--text-light);font-size:.88rem;margin-bottom:1.2rem;line-height:1.6;">Setzt alle Einstellungen (Social Media, Werbeanzeigen, Analytics-Daten) zurück. Diese Aktion kann nicht rückgängig gemacht werden.</p>
+            <button onclick="resetAll()" style="padding:.7rem 1.4rem;background:var(--danger);color:#fff;border:none;border-radius:9px;font-size:.9rem;font-weight:700;cursor:pointer;">⚠️ Alle Daten zurücksetzen</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div><!-- end adminPanel -->
+</section><!-- end #admin -->
+
+<script>
+// ===== SAFARI: requestAnimationFrame Polyfill =====
+window.requestAnimationFrame = window.requestAnimationFrame
+  || window.webkitRequestAnimationFrame
+  || function(cb){ return setTimeout(cb, 16); };
+
+// ===== SAFARI: NodeList.forEach Polyfill (Safari < 12) =====
+if (typeof NodeList !== 'undefined' && NodeList.prototype && !NodeList.prototype.forEach) {
+  NodeList.prototype.forEach = Array.prototype.forEach;
+}
+
+// ===== SAFARI: Safe localStorage (throws in Private Mode) =====
+const _ls = (function() {
+  try {
+    localStorage.setItem('__safari_test__', '1');
+    localStorage.removeItem('__safari_test__');
+    return localStorage;
+  } catch(e) {
+    const mem = {};
+    return {
+      getItem:    function(k)    { return mem.hasOwnProperty(k) ? mem[k] : null; },
+      setItem:    function(k, v) { mem[k] = String(v); },
+      removeItem: function(k)    { delete mem[k]; }
+    };
+  }
+})();
+
+// ===== SAFARI: Smooth-Scroll Polyfill =====
+function smoothScrollTo(target, duration) {
+  if (duration === undefined) duration = 400;
+  var start = window.pageYOffset;
+  var distance = target - start;
+  var startTime = null;
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    var progress = Math.min((timestamp - startTime) / duration, 1);
+    var ease = progress < 0.5 ? 2*progress*progress : -1+(4-2*progress)*progress;
+    window.scrollTo(0, start + distance * ease);
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function smoothScrollIntoView(el) {
+  var rect = el.getBoundingClientRect();
+  var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  smoothScrollTo(rect.top + scrollTop - 80, 400);
+}
+
+// ===== NAVIGATION =====
+let adminLoggedIn = false;
+
+function showSection(id) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+
+  if (id === 'admin') {
+    document.getElementById('navbar').style.display = 'none';
+    document.getElementById('adSidebar').style.display = 'none';
+    document.body.classList.add('admin-mode');
+    if (adminLoggedIn) {
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('adminPanel').style.display = 'flex';
+    } else {
+      document.getElementById('loginPage').style.display = 'flex';
+      document.getElementById('adminPanel').style.display = 'none';
+      document.getElementById('pwInput').value = '';
+      document.getElementById('loginErr').style.display = 'none';
+    }
+  } else {
+    document.getElementById('navbar').style.display = '';
+    document.getElementById('adSidebar').style.display = '';
+    document.body.classList.remove('admin-mode');
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.classList.toggle('active', a.dataset.section === id);
+    });
+    document.getElementById('navLinks').classList.remove('open');
+    smoothScrollTo(0, 300);
+  }
+}
+
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+// iOS Safari: click events don't bubble to document for taps on non-interactive
+// elements → also listen for touchstart with passive flag
+function _closeMenuIfOutside(e) {
+  var nav = document.getElementById('navbar');
+  if (nav && !nav.contains(e.target))
+    document.getElementById('navLinks').classList.remove('open');
+}
+document.addEventListener('click',      _closeMenuIfOutside);
+document.addEventListener('touchstart', _closeMenuIfOutside, {passive: true});
+
+// ===== LOAD SETTINGS (ads + social for public site) =====
+function loadSettings() {
+  [1,2,3].forEach(n => {
+    const t = _ls.getItem('sucht_ad'+n+'_title');
+    const s = _ls.getItem('sucht_ad'+n+'_sub');
+    const l = _ls.getItem('sucht_ad'+n+'_link');
+    const img = _ls.getItem('sucht_ad'+n+'_img');
+    if(t) document.getElementById('adTitle'+n).textContent = t;
+    if(s) document.getElementById('adSub'+n).textContent = s;
+    if(l) document.getElementById('adLink'+n).href = l;
+    if(img) {
+      const el = document.getElementById('adImg'+n);
+      el.innerHTML = `<img src="${img}" alt="Anzeige ${n}" onerror="this.parentElement.innerHTML='📣'">`;
+    }
+  });
+  const tt = _ls.getItem('sucht_social_tiktok');
+  const ig = _ls.getItem('sucht_social_instagram');
+  const yt = _ls.getItem('sucht_social_youtube');
+  if(tt) {
+    document.getElementById('ttProfileLink').href = 'https://www.tiktok.com/@' + tt.replace('@','');
+    document.getElementById('ttPlaceholderText').innerHTML = `Kanal: <strong>@${tt.replace('@','')}</strong><br>Klicke unten zum Öffnen.`;
+  }
+  if(ig) {
+    document.getElementById('igProfileLink').href = 'https://www.instagram.com/' + ig.replace('@','');
+    document.getElementById('igPlaceholderText').innerHTML = `Profil: <strong>@${ig.replace('@','')}</strong><br>Klicke unten zum Öffnen.`;
+  }
+  if(yt) {
+    const ytId = extractYtId(yt);
+    if(ytId) {
+      document.getElementById('ytPlaceholder').style.display = 'none';
+      const wrap = document.getElementById('ytEmbedWrap');
+      wrap.style.display = 'block';
+      document.getElementById('ytIframe').src = 'https://www.youtube-nocookie.com/embed/' + ytId;
+      document.getElementById('ytProfileLink').href = 'https://www.youtube.com/watch?v=' + ytId;
+    }
+  }
+  const title = _ls.getItem('sucht_site_title');
+  if(title) document.title = title;
+}
+
+function extractYtId(input) {
+  const m = input.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  if(m) return m[1];
+  if(/^[a-zA-Z0-9_-]{11}$/.test(input)) return input;
+  return null;
+}
+
+// ===== QUIZ =====
+const questions = [
+  {text:"Greifst du während intensiver Lernphasen zu Energydrinks oder Koffeinprodukten?",opts:["Nie","Manchmal (1–2×/Woche)","Oft (3–4×/Woche)","Fast täglich"]},
+  {text:"Nutzt du Alkohol, Gaming oder Social Media, um Schulstress oder Prüfungsangst zu vergessen?",opts:["Nie","Manchmal","Häufig","Fast immer"]},
+  {text:"Wie viele Stunden verbringst du täglich auf Social Media – auch während Lernphasen?",opts:["Unter 1 Stunde","1–2 Stunden","3–4 Stunden","Mehr als 4 Stunden"]},
+  {text:"Hast du das Gefühl, ohne Handy oder bestimmte Mittel nicht lernen oder entspannen zu können?",opts:["Nein, gar nicht","Gelegentlich","Oft","Fast immer"]},
+  {text:"Schläfst du wegen Lernen oder Medienkonsum regelmäßig weniger als 6 Stunden pro Nacht?",opts:["Nein","Selten (1–2×/Monat)","Manchmal (1–2×/Woche)","Häufig / fast täglich"]},
+  {text:"Vernachlässigst du Freundschaften oder Hobbys aufgrund von Stress oder Medienkonsum?",opts:["Nein","Selten","Manchmal","Oft / sehr oft"]},
+  {text:"Wirst du unruhig oder gereizt, wenn du dein Handy nicht nutzen kannst?",opts:["Nein, gar nicht","Selten und nur leicht","Manchmal spürbar","Ja, deutlich / sehr oft"]},
+  {text:"Hast du schon versucht, deinen Konsum zu reduzieren – aber hattest Schwierigkeiten dabei?",opts:["Nie nötig gehabt","Einmal, es gelang gut","Versucht, aber schwer","Oft versucht, meistens gescheitert"]},
+  {text:"Denkst du häufig an Ablenkungen (Gaming, Social Media), wenn du eigentlich lernen solltest?",opts:["Nein","Gelegentlich","Häufig","Fast ständig"]},
+  {text:"Beeinflussen Stress und dein Umgang damit deine Leistungen oder dein Wohlbefinden negativ?",opts:["Nein, gar nicht","Leicht, aber ok","Ja, merklich","Ja, sehr stark"]}
+];
+let curQ = 0, answers = new Array(10).fill(null);
+const emojis = ['😌','🤔','😟','😰'];
+
+function renderQuiz() {
+  const d = document.getElementById('quizDisplay');
+  d.innerHTML = questions.map((q,i) => `
+    <div class="quiz-q${i===0?' visible':''}" id="q${i}">
+      <h3><span class="q-num">${i+1}</span>${q.text}</h3>
+      <div class="quiz-opts">
+        ${q.opts.map((o,j) => `<button class="quiz-opt${answers[i]===j?' selected':''}" onclick="selectAns(${i},${j})">${emojis[j]} ${o}</button>`).join('')}
+      </div>
+      <div class="quiz-nav">
+        <button class="btn btn-outline" style="color:var(--primary);border-color:var(--primary);${i===0?'visibility:hidden':''}" onclick="prevQ()">← Zurück</button>
+        <span class="quiz-counter">Frage ${i+1} von ${questions.length}</span>
+        ${i<questions.length-1
+          ? `<button class="btn btn-primary" onclick="nextQ()" id="nextBtn${i}" ${answers[i]===null?'disabled style="opacity:.5;cursor:not-allowed"':''}>Weiter →</button>`
+          : `<button class="btn btn-primary" onclick="showResult()" id="nextBtn${i}" ${answers[i]===null?'disabled style="opacity:.5;cursor:not-allowed"':''}>Auswertung →</button>`}
+      </div>
+    </div>`).join('');
+}
+
+function selectAns(qi, ai) {
+  answers[qi] = ai;
+  document.getElementById('q'+qi).querySelectorAll('.quiz-opt').forEach((b,j) => b.classList.toggle('selected',j===ai));
+  const nb = document.getElementById('nextBtn'+qi);
+  if(nb){nb.disabled=false;nb.style.opacity='1';nb.style.cursor='pointer';}
+  setTimeout(() => { if(qi < questions.length-1) nextQ(); }, 450);
+}
+function showQ(i) {
+  document.querySelectorAll('.quiz-q').forEach(q => q.classList.remove('visible'));
+  document.getElementById('q'+i).classList.add('visible');
+  curQ = i;
+  const ans = answers.filter(a=>a!==null).length;
+  document.getElementById('progressBar').style.width = Math.max(10,(ans/questions.length)*100)+'%';
+}
+function nextQ() { if(answers[curQ]!==null && curQ<questions.length-1) showQ(curQ+1); }
+function prevQ() { if(curQ>0) showQ(curQ-1); }
+
+function showResult() {
+  const total = answers.reduce((s,a) => s+(a||0), 0);
+  let level, emoji, title, text, tips;
+  if(total<=9){
+    level='green';emoji='✅';title='Kein auffälliges Suchtverhalten';
+    text='Dein Ergebnis zeigt keine besorgniserregenden Anzeichen. Du scheinst einen gesunden Umgang mit Stress zu haben.';
+    tips='<h4>✅ Deine Tipps:</h4><ul><li>Behalte deinen gesunden Lebensstil bei</li><li>Achte weiterhin auf 7–9h Schlaf und regelmäßige Bewegung</li><li>Sprich mit Freunden über gesunden Stressabbau</li></ul>';
+  } else if(total<=19){
+    level='yellow';emoji='⚠️';title='Erste Warnsignale erkennbar';
+    text='Dein Ergebnis zeigt erste Anzeichen, die Aufmerksamkeit verdienen. Noch keine ausgewachsene Sucht – aber du solltest deinen Umgang mit Stress bewusster betrachten.';
+    tips='<h4>⚠️ Deine Tipps:</h4><ul><li>Führe 1 Woche ein Konsum-Tagebuch – Bewusstsein ist der erste Schritt</li><li>Ersetze eine Stressreaktion durch Sport oder Atemübungen</li><li>Setze dir klare Screen-Time-Limits (z.B. kein Handy nach 22 Uhr)</li><li>Erwäge ein anonymes Beratungsgespräch</li></ul>';
+  } else {
+    level='red';emoji='🆘';title='Bitte suche dir Hilfe';
+    text='Dein Ergebnis zeigt deutliche Anzeichen. Das ist kein Grund zur Panik, aber ein klares Signal: Hol dir professionelle Unterstützung – das ist Mut, nicht Schwäche.';
+    tips='<h4>🆘 Deine nächsten Schritte:</h4><ul><li><strong>Heute noch:</strong> Ruf die Telefonseelsorge an: <strong>0800 111 0 111</strong></li><li><strong>Für Jugendliche:</strong> Nummer gegen Kummer: <strong>116 111</strong></li><li>Sprich mit Eltern oder dem Schulberater</li><li>Besuche drugcom.de für Online-Beratung</li></ul>';
+  }
+  document.getElementById('quizDisplay').style.display='none';
+  const r = document.getElementById('quizResult');
+  r.style.display='block';
+  document.getElementById('resultCircle').className='result-circle '+level;
+  document.getElementById('resultCircle').innerHTML=`<span class="sc">${total}</span><span class="sc-lbl">von 30 Pkt.</span>`;
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultText').textContent=text;
+  document.getElementById('resultTips').innerHTML=tips;
+  document.getElementById('progressBar').style.width='100%';
+  smoothScrollIntoView(r);
+}
+function resetQuiz() {
+  curQ=0; answers=new Array(10).fill(null);
+  document.getElementById('quizResult').style.display='none';
+  document.getElementById('quizDisplay').style.display='block';
+  renderQuiz(); showQ(0);
+  document.getElementById('progressBar').style.width='10%';
+}
+
+// ===== INIT (public site) =====
+window.addEventListener('DOMContentLoaded', () => {
+  renderQuiz();
+  showQ(0);
+  loadSettings();
+});
+
+// ===================== ADMIN JS =====================
+
+const DEFAULT_PW = 'admin123';
+function getPw() { return _ls.getItem('sucht_admin_pw') || DEFAULT_PW; }
+
+function doLogin() {
+  const v = document.getElementById('pwInput').value;
+  if(v === getPw()) {
+    adminLoggedIn = true;
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'flex';
+    initAdmin();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+function doLogout() {
+  adminLoggedIn = false;
+  showSection('home');
+}
+
+const pageTitles = {analytics:'Analytics Dashboard',social:'Social-Media-Verwaltung',ads:'Werbeanzeigen',settings:'Einstellungen'};
+function showAdminPage(id) {
+  document.querySelectorAll('.admin-page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if(n.getAttribute('onclick') && n.getAttribute('onclick').includes("'"+id+"'")) n.classList.add('active');
+  });
+  document.getElementById('pageTitle').textContent = pageTitles[id];
+}
+
+// ===== ANALYTICS =====
+function buildEmptyDays() {
+  const data = [];
+  const today = new Date();
+  for(let i=29;i>=0;i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate()-i);
+    data.push({date:d, value:0});
+  }
+  return data;
+}
+const storedVisits = buildEmptyDays();
+const adminCharts = {};
+
+function initCharts() {
+  if (typeof Chart === 'undefined') {
+    document.querySelectorAll('.chart-card canvas').forEach(c => {
+      c.style.display='none';
+      c.insertAdjacentHTML('afterend','<p style="color:var(--text-light);font-size:.82rem;text-align:center;padding:1rem;">Charts nicht verfügbar (kein Internet).</p>');
+    });
+    return;
+  }
+  ['chartLine','chartDoughnut','chartBar'].forEach(id => {
+    if(adminCharts[id]) { adminCharts[id].destroy(); delete adminCharts[id]; }
+  });
+  const labels = storedVisits.map(d => new Date(d.date).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}));
+  const zeros30 = new Array(30).fill(0);
+  const zeros7  = new Array(7).fill(0);
+
+  adminCharts.chartLine = new Chart(document.getElementById('chartLine'), {
+    type:'line',
+    data:{labels,datasets:[{label:'Besucher',data:zeros30,borderColor:'rgba(255,0,102,0.4)',backgroundColor:'rgba(255,0,102,0.04)',borderWidth:2,pointRadius:0,tension:0.4,fill:true}]},
+    options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{grid:{display:false},ticks:{maxTicksLimit:8,font:{size:10}}},y:{min:0,max:10,grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{size:10}}}}}
+  });
+
+  adminCharts.chartDoughnut = new Chart(document.getElementById('chartDoughnut'), {
+    type:'doughnut',
+    data:{labels:['Keine Daten'],datasets:[{data:[1],backgroundColor:['#e9ecef'],borderWidth:0}]},
+    options:{responsive:true,cutout:'68%',plugins:{legend:{display:false},tooltip:{enabled:false}}}
+  });
+  document.getElementById('doughnutLegend').innerHTML = '<div style="font-size:.78rem;color:var(--text-light);text-align:center;padding:.5rem 0;">Noch keine Traffic-Daten</div>';
+
+  adminCharts.chartBar = new Chart(document.getElementById('chartBar'), {
+    type:'bar',
+    data:{labels:['Mo','Di','Mi','Do','Fr','Sa','So'],datasets:[{label:'Besucher',data:zeros7,backgroundColor:'rgba(255,0,102,0.2)',borderRadius:6,borderSkipped:false}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{min:0,max:10,grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{size:10}}}}}
+  });
+
+  document.getElementById('regionList').innerHTML = '<li style="padding:1.2rem 0;color:var(--text-light);font-size:.85rem;text-align:center;list-style:none;">Noch keine Regionaldaten vorhanden.</li>';
+
+  const pages = [
+    {name:'🏠 Startseite',path:'#home'},
+    {name:'📚 Infobereich',path:'#info'},
+    {name:'✅ Selbsttest',path:'#test'},
+    {name:'🤝 Hilfe & Beratung',path:'#help'},
+    {name:'📱 Social Media',path:'#social'}
+  ];
+  document.getElementById('topPagesTable').innerHTML = pages.map((p,i)=>`
+    <tr>
+      <td style="font-weight:700;color:var(--primary)">${i+1}</td>
+      <td>${p.name}<br><span style="font-size:.75rem;color:var(--text-light);">${p.path}</span></td>
+      <td style="font-weight:700;">0</td>
+      <td style="min-width:100px;"><div class="page-bar"><div class="page-bar-fill" style="width:0%"></div></div></td>
+      <td style="color:var(--text-light);">—</td>
+    </tr>`).join('');
+}
+
+function updateKPIs() {
+  document.getElementById('kpiToday').textContent = '0';
+  document.getElementById('kpiWeek').textContent  = '0';
+  document.getElementById('kpiTotal').textContent = '0';
+  document.getElementById('kpiTodayTrend').textContent = '— noch keine Daten';
+  document.getElementById('kpiTodayTrend').className   = 'kpi-trend';
+  document.getElementById('kpiTodayTrend').style.color = 'var(--text-light)';
+  document.getElementById('lastUpdate').textContent = new Date().toLocaleString('de-DE');
+}
+
+function simulateRealtime() {
+  document.getElementById('realtimeCount').textContent = Math.floor(Math.random()*4);
+}
+
+// ===== SOCIAL (admin) =====
+function loadSocialInputs() {
+  document.getElementById('adminTT').value = _ls.getItem('sucht_social_tiktok')||'';
+  document.getElementById('adminIG').value = _ls.getItem('sucht_social_instagram')||'';
+  document.getElementById('adminYT').value = _ls.getItem('sucht_social_youtube')||'';
+}
+function saveSocial() {
+  _ls.setItem('sucht_social_tiktok', document.getElementById('adminTT').value.trim());
+  _ls.setItem('sucht_social_instagram', document.getElementById('adminIG').value.trim());
+  _ls.setItem('sucht_social_youtube', document.getElementById('adminYT').value.trim());
+  loadSettings();
+  showMsg('socialSaveMsg');
+}
+
+// ===== ADS (admin) =====
+function loadAdInputs() {
+  for(let n=1;n<=3;n++) {
+    document.getElementById('ad'+n+'Title').value = _ls.getItem('sucht_ad'+n+'_title')||'';
+    document.getElementById('ad'+n+'Sub').value   = _ls.getItem('sucht_ad'+n+'_sub')||'';
+    document.getElementById('ad'+n+'Link').value  = _ls.getItem('sucht_ad'+n+'_link')||'';
+    document.getElementById('ad'+n+'Img').value   = _ls.getItem('sucht_ad'+n+'_img')||'';
+    previewImg(n);
+  }
+}
+function saveAd(n) {
+  _ls.setItem('sucht_ad'+n+'_title', document.getElementById('ad'+n+'Title').value);
+  _ls.setItem('sucht_ad'+n+'_sub',   document.getElementById('ad'+n+'Sub').value);
+  _ls.setItem('sucht_ad'+n+'_link',  document.getElementById('ad'+n+'Link').value);
+  _ls.setItem('sucht_ad'+n+'_img',   document.getElementById('ad'+n+'Img').value);
+  loadSettings();
+  showMsg('adSaveMsg'+n);
+}
+function previewImg(n) {
+  const url = document.getElementById('ad'+n+'Img').value.trim();
+  const el  = document.getElementById('adPreview'+n);
+  if(url){el.src=url;el.style.display='block';}
+  else{el.style.display='none';}
+}
+
+// ===== SETTINGS (admin) =====
+function loadSettingsInputs() {
+  document.getElementById('siteTitle').value    = _ls.getItem('sucht_site_title')||'';
+  document.getElementById('contactEmail').value = _ls.getItem('sucht_contact_email')||'';
+}
+function changePw() {
+  const p1 = document.getElementById('newPw1').value;
+  const p2 = document.getElementById('newPw2').value;
+  const err = document.getElementById('pwErrMsg');
+  if(!p1||p1!==p2){err.style.display='block';return;}
+  err.style.display='none';
+  _ls.setItem('sucht_admin_pw', p1);
+  showMsg('pwSaveMsg');
+  document.getElementById('newPw1').value='';
+  document.getElementById('newPw2').value='';
+}
+function saveSiteSettings() {
+  _ls.setItem('sucht_site_title',    document.getElementById('siteTitle').value);
+  _ls.setItem('sucht_contact_email', document.getElementById('contactEmail').value);
+  loadSettings();
+  showMsg('siteSaveMsg');
+}
+function resetAll() {
+  if(!confirm('Alle gespeicherten Daten wirklich zurücksetzen?')) return;
+  ['sucht_social_tiktok','sucht_social_instagram','sucht_social_youtube',
+   'sucht_ad1_title','sucht_ad1_sub','sucht_ad1_link','sucht_ad1_img',
+   'sucht_ad2_title','sucht_ad2_sub','sucht_ad2_link','sucht_ad2_img',
+   'sucht_ad3_title','sucht_ad3_sub','sucht_ad3_link','sucht_ad3_img',
+   'sucht_site_title','sucht_contact_email','sucht_visits','sucht_total','sucht_admin_pw'
+  ].forEach(k=>_ls.removeItem(k));
+  alert('Alle Daten wurden zurückgesetzt.');
+  adminLoggedIn = false;
+  showSection('home');
+}
+
+// ===== EXPORT PDF =====
+function exportPDF() {
+  const w = window.open('','_blank');
+  if (!w) { alert('Bitte Pop-ups für diese Seite erlauben und erneut versuchen.'); return; }
+  w.document.write(`<!DOCTYPE html><html><head><title>Analytics-Bericht</title><style>
+    body{font-family:Arial,sans-serif;padding:2rem;color:#333;max-width:800px;margin:0 auto;}
+    h1{color:#FF0066;border-bottom:3px solid #FF0066;padding-bottom:.5rem;}
+    h2{color:#CC0052;margin-top:1.5rem;font-size:1rem;}
+    .notice{background:#fff0f5;border:2px solid rgba(255,0,102,0.2);border-radius:8px;padding:1rem 1.2rem;margin:1rem 0;color:#CC0052;font-size:.88rem;}
+    .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1rem 0;}
+    .kpi{background:#fff0f5;border-radius:8px;padding:1rem;text-align:center;}
+    .kpi-v{font-size:2rem;font-weight:900;color:#FF0066;}
+    .kpi-l{font-size:.75rem;color:#666;}
+    table{width:100%;border-collapse:collapse;margin-top:.5rem;}
+    th{background:#FF0066;color:#fff;padding:.5rem;text-align:left;font-size:.8rem;}
+    td{padding:.5rem;border-bottom:1px solid #eee;font-size:.85rem;}
+    @media print{body{padding:.5rem;}}
+  </style></head><body>
+    <h1>📊 Analytics-Bericht – Sucht &amp; Schulstress</h1>
+    <p>Erstellt: ${new Date().toLocaleString('de-DE')}</p>
+    <div class="notice">📭 Noch keine Daten vorhanden – Besucher werden gezählt, sobald die Website online ist.</div>
+    <h2>Wichtigste Kennzahlen</h2>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">Besucher heute</div></div>
+      <div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">Diese Woche</div></div>
+      <div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">Gesamt</div></div>
+    </div>
+    <h2>Traffic-Quellen</h2>
+    <table><tr><th>Quelle</th><th>Anteil</th></tr>
+      <tr><td>Direkt</td><td>—</td></tr><tr><td>Social Media</td><td>—</td></tr>
+      <tr><td>Google</td><td>—</td></tr><tr><td>Sonstige</td><td>—</td></tr>
+    </table>
+    <h2>Top-Seiten</h2>
+    <table><tr><th>Seite</th><th>Besuche</th></tr>
+      <tr><td>Startseite</td><td>0</td></tr><tr><td>Infobereich</td><td>0</td></tr>
+      <tr><td>Selbsttest</td><td>0</td></tr><tr><td>Hilfe &amp; Beratung</td><td>0</td></tr>
+      <tr><td>Social Media</td><td>0</td></tr>
+    </table>
+    <p style="margin-top:2rem;font-size:.75rem;color:#999;">Schulprojekt – Sucht &amp; Schulstress | Daten werden erst nach Veröffentlichung gezählt.</p>
+  </body></html>`);
+  w.document.close();
+  // Safari needs longer delay before print dialog
+  var printDelay = /iP(hone|ad|od)|Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent) ? 1200 : 500;
+  setTimeout(function() { w.focus(); w.print(); }, printDelay);
+}
+
+// ===== HELPERS =====
+function showMsg(id) {
+  const el = document.getElementById(id);
+  el.style.display = 'block';
+  setTimeout(() => el.style.display='none', 3000);
+}
+
+function initAdmin() {
+  _ls.removeItem('sucht_visits');
+  _ls.removeItem('sucht_total');
+  updateKPIs();
+  initCharts();
+  loadSocialInputs();
+  loadAdInputs();
+  loadSettingsInputs();
+  setInterval(simulateRealtime, 5000);
+  simulateRealtime();
+}
+</script>
+</body>
+</html>
