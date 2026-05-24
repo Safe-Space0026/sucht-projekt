@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(Get-Content \"C:\\\\Users\\\\jerem.LAPTOP_RUJ\\\\.claude\\\\projects\\\\C--Users-jerem-LAPTOP-RUJ-Desktop-mein-erstes-projekt\\\\897ec657-5003-481e-a4c3-22cb8fb093ff.jsonl\" -Tail 100)",
-      "Bash(Out-String)"
+      "Bash(Out-String)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(Copy-Item \"WhatsApp Image 2026-05-22 at 12.19.32.jpeg\" \"logo.png\")",
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ]
   }
 }
