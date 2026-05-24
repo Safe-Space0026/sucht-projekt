@@ -7,7 +7,9 @@
       "Bash(git push *)",
       "Bash(Copy-Item \"WhatsApp Image 2026-05-22 at 12.19.32.jpeg\" \"logo.png\")",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(python3 -c ' *)",
+      "Read(//tmp/**)"
     ]
   }
 }
