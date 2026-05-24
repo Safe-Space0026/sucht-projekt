@@ -32,7 +32,7 @@ html{}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#fff;color:var(--text);line-height:1.6;padding-right:var(--sidebar-w);}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 2px 20px rgba(255,0,102,0.1);padding:0 1.5rem;height:calc(90px + env(safe-area-inset-top,0px));padding-top:env(safe-area-inset-top,0px);display:flex;align-items:center;justify-content:space-between;}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:#ffffff;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 2px 20px rgba(255,0,102,0.12),0 4px 12px rgba(0,0,0,0.07);padding:0 1.5rem;height:calc(90px + env(safe-area-inset-top,0px));padding-top:env(safe-area-inset-top,0px);display:flex;align-items:center;justify-content:space-between;}
 .nav-logo{font-size:1.2rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;cursor:pointer;}
 .nav-links{display:flex;gap:.3rem;list-style:none;}
 .nav-links a{text-decoration:none;color:var(--text);font-weight:500;font-size:.88rem;padding:.45rem .9rem;border-radius:50px;transition:background-color .3s,color .3s;cursor:pointer;}
@@ -414,6 +414,11 @@ a, button, [onclick],
 }
 
 /* FIX 10: a[href="#"] gets href replaced dynamically; default "#" is safe */
+
+/* BACK TO TOP */
+.back-to-top{position:fixed;bottom:1.8rem;right:1.8rem;z-index:998;width:50px;height:50px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:1.4rem;font-weight:700;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(255,0,102,0.45);transition:transform .25s,box-shadow .25s,opacity .25s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.back-to-top.visible{display:flex;}
+.back-to-top:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(255,0,102,0.55);}
 </style>
 </head>
 <body><svg width="0" height="0" style="position:absolute;overflow:hidden;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><mask id="logoCircleMask"><rect width="340" height="160" fill="white"/><rect x="45" y="55" width="250" height="45" fill="black"/></mask></defs></svg>
@@ -429,8 +434,6 @@ a, button, [onclick],
     <rect x="210" y="140" width="260" height="45" fill="black"/>
   </mask>
 </defs>
-
-<rect width="680" height="320" fill="white" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
 <circle cx="340" cy="150" r="95" fill="none" stroke="#FF0066" stroke-width="2.5" mask="url(#circleMask)" style="fill:none;stroke:rgb(255, 0, 102);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
@@ -1147,6 +1150,8 @@ a, button, [onclick],
   </div><!-- end adminPanel -->
 </section><!-- end #admin -->
 
+<button class="back-to-top" id="backToTop" onclick="smoothScrollTo(0,400)" aria-label="Nach oben scrollen">↑</button>
+
 <script>
 // ===== SAFARI: requestAnimationFrame Polyfill =====
 window.requestAnimationFrame = window.requestAnimationFrame
@@ -1682,6 +1687,12 @@ function exportPDF() {
   var printDelay = /iP(hone|ad|od)|Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent) ? 1200 : 500;
   setTimeout(function() { w.focus(); w.print(); }, printDelay);
 }
+
+// ===== BACK TO TOP =====
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('backToTop');
+  if (btn) btn.classList.toggle('visible', (window.pageYOffset || document.documentElement.scrollTop) > 300);
+}, {passive: true});
 
 // ===== HELPERS =====
 function showMsg(id) {
