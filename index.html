@@ -572,6 +572,7 @@ body.dark .notfall-card{background:linear-gradient(135deg,#2a0a0a,#1e0808);borde
 body.dark .community-textarea{background:#12121e;border-color:rgba(255,0,102,.2);color:#e0e0f0;}
 body.dark .lang-btn,body.dark .dark-toggle{border-color:rgba(255,0,102,.25);color:#e0e0f0;}
 body.dark .lang-btn:hover,body.dark .lang-btn.active,body.dark .dark-toggle:hover{background:#1e1e38;}
+body.dark .nav-dark-btn{color:#e0e0f0;}
 body.dark .chat-suggestions .chat-chip{background:#1e1e38;border-color:rgba(255,0,102,.2);color:#e0e0f0;}
 body.dark .stat-card{background:rgba(0,0,0,.2);}
 
@@ -620,7 +621,10 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
 .lang-btn:hover,.lang-btn.active{background:var(--light-bg);border-color:var(--primary);}
 .dark-toggle{background:transparent;border:1.5px solid rgba(255,0,102,.15);border-radius:8px;padding:.28rem .55rem;font-size:1rem;cursor:pointer;touch-action:manipulation;transition:background-color .2s,border-color .2s;line-height:1;}
 .dark-toggle:hover{background:var(--light-bg);border-color:var(--primary);}
-@media(max-width:820px){.lang-switcher{display:none;}}
+.nav-dark-li{display:none;}
+.nav-dark-btn{display:block;width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:.75rem 1.1rem;font-size:.88rem;font-weight:500;color:var(--text);border-radius:50px;transition:background-color .3s,color .3s;touch-action:manipulation;}
+.nav-dark-btn:hover{background:var(--gradient);color:#fff;}
+@media(max-width:820px){.lang-switcher{display:none;}.nav-dark-li{display:block;}}
 @media(max-width:600px){.notfall-fab{padding:.6rem 1rem;font-size:.8rem;left:1rem;}}
 </style>
 </head>
@@ -645,6 +649,7 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
 
 </svg></span>
   <ul class="nav-links" id="navLinks">
+    <li class="nav-dark-li"><button class="nav-dark-btn" id="darkToggle" onclick="toggleDark()" aria-label="Dark Mode">🌙 Dark Mode</button></li>
     <li><a onclick="showSection('home')" data-section="home">🏠 Start</a></li>
     <li><a onclick="showSection('info')" data-section="info">📚 Info</a></li>
     <li><a onclick="showSection('test')" data-section="test">✅ Selbsttest</a></li>
@@ -661,7 +666,6 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
       <button class="lang-btn" data-lang="en" onclick="setLang('en')">🇬🇧</button>
       <button class="lang-btn" data-lang="tr" onclick="setLang('tr')">🇹🇷</button>
     </div>
-    <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" aria-label="Dark Mode">🌙</button>
   </div>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -2641,7 +2645,7 @@ function toggleDark() {
   const isDark = document.body.classList.contains('dark');
   localStorage.setItem('sucht_dark', isDark ? '1' : '0');
   const btn = document.getElementById('darkToggle');
-  if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+  if (btn) btn.textContent = isDark ? '☀️ Dark Mode' : '🌙 Dark Mode';
 }
 
 // ===================== NOTFALL MODAL =====================
@@ -2933,7 +2937,7 @@ function setLang(lang) {
   if (localStorage.getItem('sucht_dark') === '1') {
     document.body.classList.add('dark');
     const btn = document.getElementById('darkToggle');
-    if (btn) btn.textContent = '☀️';
+    if (btn) btn.textContent = '☀️ Dark Mode';
   }
   const savedLang = localStorage.getItem('sucht_lang') || 'de';
   if (savedLang !== 'de') setLang(savedLang);
