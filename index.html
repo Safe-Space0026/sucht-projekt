@@ -2330,8 +2330,7 @@ async function loadNewsFromAPI() {
   if (btn) { btn.disabled = true; btn.textContent = '⏳ Lädt News...'; }
   if (statusEl) statusEl.style.display = 'none';
   try {
-    const q = encodeURIComponent('Sucht Jugendliche OR Schulstress OR Abitur Stress');
-    const res = await fetch(`https://gnews.io/api/v4/search?q=${q}&lang=de&max=6&apikey=3fba90bccd236f18a2a25be0cfa15d88`);
+    const res = await fetch('https://api.allorigins.win/raw?url=https://gnews.io/api/v4/search?q=Sucht+Jugendliche+OR+Schulstress+OR+Abitur+Stress&lang=de&max=6&apikey=3fba90bccd236f18a2a25be0cfa15d88');
     if (!res.ok) throw new Error('API-Fehler: Status ' + res.status);
     const data = await res.json();
     if (!data.articles || data.articles.length === 0) throw new Error('Keine Artikel gefunden.');
