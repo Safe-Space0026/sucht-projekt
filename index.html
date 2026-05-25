@@ -535,6 +535,93 @@ a, button, [onclick],
 .back-to-top{position:fixed;bottom:calc(1.8rem + env(safe-area-inset-bottom,0px));right:1.8rem;z-index:998;width:50px;height:50px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:1.4rem;font-weight:700;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(255,0,102,0.45);transition:transform .25s,box-shadow .25s,opacity .25s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 .back-to-top.visible{display:flex;}
 .back-to-top:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(255,0,102,0.55);}
+
+/* ===== DARK MODE ===== */
+body.dark{background:#0f0f1a;}
+body.dark{--light-bg:#1a1a2e;--text:#e0e0f0;--text-light:#8888aa;--card-shadow:0 8px 32px rgba(0,0,0,.5);}
+body.dark nav{background:#1a1a2e;box-shadow:0 2px 20px rgba(0,0,0,.4);}
+body.dark .nav-links{background:#1a1a2e;}
+body.dark .nav-links a{color:#e0e0f0;}
+body.dark .ad-sidebar{background:#1a1a2e;border-left-color:rgba(255,0,102,.15);}
+body.dark .ad-card,body.dark .card,body.dark .qnav-card,body.dark .blog-card,body.dark .help-card,body.dark .info-card,body.dark .sub-card,body.dark .social-card{background:#1e1e38;border-color:rgba(255,0,102,.12);}
+body.dark .quiz-q{background:#1e1e38;}
+body.dark .quiz-opt{background:#1e1e38;border-color:rgba(255,0,102,.2);color:#e0e0f0;}
+body.dark .result-tips,body.dark .section-intro{background:#1e1e38;}
+body.dark .warning-box{background:linear-gradient(135deg,#2a1a00,#1a1200);border-color:#7a5c00;}
+body.dark .warning-box h3{color:#f0c060;}
+body.dark .warning-box li{color:#d0a040;}
+body.dark footer{background:linear-gradient(135deg,#08080f,#0f0f1a);}
+body.dark .chat-messages{background:#12121e;border-color:rgba(255,0,102,.15);}
+body.dark .chat-msg.bot .chat-bubble{background:#1e1e38;border-color:rgba(255,0,102,.15);color:#e0e0f0;}
+body.dark .chat-input,body.dark .map-search-input,body.dark .form-input,body.dark #admin .form-input,body.dark .social-input{background:#1e1e38;border-color:rgba(255,0,102,.2);color:#e0e0f0;}
+body.dark .map-result-item{background:#1e1e38;border-color:rgba(255,0,102,.15);}
+body.dark .admin-layout{background:#0f0f1a;}
+body.dark .admin-topbar{background:#1a1a2e;border-bottom-color:rgba(255,0,102,.15);}
+body.dark .admin-nav-btn{background:#1e1e38;color:#e0e0f0;border-color:rgba(255,0,102,.2);}
+body.dark .kpi-card,body.dark .chart-card,body.dark #admin .card{background:#1e1e38;}
+body.dark .admin-content{background:#0f0f1a;}
+body.dark .data-table td{border-bottom-color:rgba(255,0,102,.1);color:#e0e0f0;}
+body.dark .data-table th{background:#12121e;color:#8888aa;}
+body.dark .data-table tr:hover td{background:#1e1e38;}
+body.dark .login-box,body.dark .blog-modal{background:#1e1e38;}
+body.dark .blog-modal-bdy p,body.dark .blog-modal-bdy li{color:#e0e0f0;}
+body.dark .embed-placeholder{background:#1e1e38;}
+body.dark .blog-title{color:#e0e0f0;}
+body.dark .notfall-modal,body.dark .challenge-card,body.dark .community-form-card,body.dark .community-card{background:#1e1e38;}
+body.dark .notfall-card{background:linear-gradient(135deg,#2a0a0a,#1e0808);border-color:rgba(192,57,43,.25);}
+body.dark .community-textarea{background:#12121e;border-color:rgba(255,0,102,.2);color:#e0e0f0;}
+body.dark .lang-btn,body.dark .dark-toggle{border-color:rgba(255,0,102,.25);color:#e0e0f0;}
+body.dark .lang-btn:hover,body.dark .lang-btn.active,body.dark .dark-toggle:hover{background:#1e1e38;}
+body.dark .chat-suggestions .chat-chip{background:#1e1e38;border-color:rgba(255,0,102,.2);color:#e0e0f0;}
+body.dark .stat-card{background:rgba(0,0,0,.2);}
+
+/* ===== NOTFALL FAB ===== */
+.notfall-fab{position:fixed;bottom:calc(1.8rem + env(safe-area-inset-bottom,0px));left:1.5rem;z-index:997;background:linear-gradient(135deg,#C0392B,#E74C3C);color:#fff;border:none;border-radius:50px;padding:.7rem 1.3rem;font-size:.88rem;font-weight:800;cursor:pointer;box-shadow:0 4px 20px rgba(192,57,43,.5);animation:notfallPulse 2.5s infinite;touch-action:manipulation;letter-spacing:.3px;white-space:nowrap;}
+.notfall-fab:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(192,57,43,.7);}
+@keyframes notfallPulse{0%,100%{box-shadow:0 4px 20px rgba(192,57,43,.5);}50%{box-shadow:0 4px 30px rgba(192,57,43,.9),0 0 0 8px rgba(192,57,43,.15);}}
+.notfall-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:11000;display:none;align-items:center;justify-content:center;padding:1.5rem;}
+.notfall-bg.open{display:flex;}
+.notfall-modal{background:#fff;border-radius:20px;max-width:480px;width:100%;padding:2.2rem 2rem;box-shadow:0 24px 80px rgba(0,0,0,.35);position:relative;text-align:center;}
+.notfall-modal-close{position:absolute;top:1rem;right:1rem;background:rgba(0,0,0,.08);border:none;font-size:1.1rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);touch-action:manipulation;}
+.notfall-modal h2{font-size:1.4rem;font-weight:800;color:#C0392B;margin-bottom:.5rem;}
+.notfall-modal>p{color:var(--text-light);font-size:.9rem;margin-bottom:1.5rem;line-height:1.6;}
+.notfall-cards{display:flex;flex-direction:column;gap:.9rem;}
+.notfall-card{display:block;text-decoration:none;background:linear-gradient(135deg,#fff5f5,#fff0f0);border:2px solid rgba(192,57,43,.2);border-radius:14px;padding:1rem 1.3rem;transition:transform .2s,box-shadow .2s;}
+.notfall-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(192,57,43,.2);}
+.notfall-num{display:block;font-size:1.6rem;font-weight:900;color:#C0392B;line-height:1.2;}
+.notfall-label{display:block;font-size:.8rem;color:var(--text-light);margin-top:.25rem;}
+
+/* ===== TAGES-CHALLENGE ===== */
+.challenge-wrapper{max-width:640px;margin:0 auto;}
+.challenge-card{background:#fff;border-radius:20px;padding:2.8rem 2.2rem;box-shadow:var(--card-shadow);border:2px solid rgba(255,0,102,.1);text-align:center;}
+.challenge-day{font-size:.8rem;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1px;background:var(--light-bg);display:inline-block;padding:.3rem .9rem;border-radius:50px;margin-bottom:1.2rem;}
+.challenge-emoji{font-size:4.5rem;margin:.5rem 0 .8rem;line-height:1;}
+.challenge-text{font-size:1.15rem;font-weight:600;color:var(--text);max-width:440px;margin:0 auto 1.8rem;line-height:1.65;}
+.challenge-cta{padding:.9rem 2.2rem;background:var(--gradient);color:#fff;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity .2s,transform .2s;touch-action:manipulation;}
+.challenge-cta:hover{opacity:.88;transform:translateY(-2px);}
+.challenge-done-msg{display:none;font-size:1.05rem;font-weight:700;color:var(--success);padding:1rem 1.5rem;background:rgba(39,174,96,.1);border-radius:12px;border:2px solid rgba(39,174,96,.2);}
+
+/* ===== COMMUNITY PINNWAND ===== */
+.community-form-card{background:#fff;border-radius:var(--radius);padding:1.6rem;box-shadow:var(--card-shadow);border:1px solid rgba(255,0,102,.08);margin-bottom:1.5rem;}
+.community-form-card h3{font-size:1rem;font-weight:700;color:var(--primary-dark);margin-bottom:1rem;}
+.community-textarea{width:100%;padding:.9rem 1.1rem;border:2px solid rgba(255,0,102,.2);border-radius:12px;font-size:.9rem;resize:none;font-family:inherit;outline:none;transition:border-color .2s;background:#fff;color:var(--text);}
+.community-textarea:focus{border-color:var(--primary);}
+.community-form-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.6rem;}
+.community-counter-txt{font-size:.78rem;color:var(--text-light);}
+.community-card{background:#fff;border-radius:14px;padding:1.1rem 1.3rem;box-shadow:0 4px 16px rgba(255,0,102,.07);border:1px solid rgba(255,0,102,.08);margin-bottom:.8rem;}
+.community-msg{font-size:.9rem;color:var(--text);line-height:1.6;margin-bottom:.4rem;word-break:break-word;}
+.community-date{font-size:.73rem;color:#bbb;}
+.community-feed-title{font-size:.85rem;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.6px;margin-bottom:1rem;}
+
+/* ===== NAV CONTROLS ===== */
+.nav-controls{display:flex;align-items:center;gap:.4rem;flex-shrink:0;}
+.lang-switcher{display:flex;gap:.2rem;}
+.lang-btn{background:transparent;border:1.5px solid rgba(255,0,102,.15);border-radius:8px;padding:.28rem .52rem;font-size:.82rem;cursor:pointer;transition:background-color .2s,border-color .2s;touch-action:manipulation;line-height:1;}
+.lang-btn:hover,.lang-btn.active{background:var(--light-bg);border-color:var(--primary);}
+.dark-toggle{background:transparent;border:1.5px solid rgba(255,0,102,.15);border-radius:8px;padding:.28rem .55rem;font-size:1rem;cursor:pointer;touch-action:manipulation;transition:background-color .2s,border-color .2s;line-height:1;}
+.dark-toggle:hover{background:var(--light-bg);border-color:var(--primary);}
+@media(max-width:820px){.lang-switcher{display:none;}}
+@media(max-width:600px){.notfall-fab{padding:.6rem 1rem;font-size:.8rem;left:1rem;}}
 </style>
 </head>
 <body><svg width="0" height="0" style="position:absolute;overflow:hidden;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><mask id="circleMask"><rect width="680" height="320" fill="white"/><rect x="210" y="140" width="260" height="45" fill="black"/></mask></defs></svg>
@@ -564,12 +651,48 @@ a, button, [onclick],
     <li><a onclick="showSection('help')" data-section="help">🤝 Hilfe</a></li>
     <li><a onclick="showSection('chat')" data-section="chat">💬 Chat</a></li>
     <li><a onclick="showSection('blog')" data-section="blog">📰 Blog</a></li>
+    <li><a onclick="showSection('challenge')" data-section="challenge">🎯 Challenge</a></li>
+    <li><a onclick="showSection('community')" data-section="community">📌 Community</a></li>
     <li><a onclick="showSection('social')" data-section="social">📱 Social Media</a></li>
   </ul>
+  <div class="nav-controls">
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="de" onclick="setLang('de')">🇩🇪</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">🇬🇧</button>
+      <button class="lang-btn" data-lang="tr" onclick="setLang('tr')">🇹🇷</button>
+    </div>
+    <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" aria-label="Dark Mode">🌙</button>
+  </div>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
 </nav>
+
+<!-- NOTFALL BUTTON (fixed, bottom-left) -->
+<button class="notfall-fab" onclick="openNotfall()">🆘 Notfall-Hilfe</button>
+
+<!-- NOTFALL MODAL -->
+<div class="notfall-bg" id="notfallBg" onclick="closeNotfall(event)">
+  <div class="notfall-modal">
+    <button class="notfall-modal-close" onclick="closeNotfall(true)" aria-label="Schließen">✕</button>
+    <h2>🆘 Notfall-Hilfe</h2>
+    <p>Du bist nicht allein. Hilfe ist kostenlos, anonym und rund um die Uhr erreichbar:</p>
+    <div class="notfall-cards">
+      <a href="tel:08001110111" class="notfall-card">
+        <span class="notfall-num">0800 111 0 111</span>
+        <span class="notfall-label">Telefonseelsorge · kostenlos · 24/7</span>
+      </a>
+      <a href="tel:08001110222" class="notfall-card">
+        <span class="notfall-num">0800 111 0 222</span>
+        <span class="notfall-label">Telefonseelsorge · kostenlos · 24/7</span>
+      </a>
+      <a href="tel:116111" class="notfall-card">
+        <span class="notfall-num">116 111</span>
+        <span class="notfall-label">Jugendnotruf · Nummer gegen Kummer</span>
+      </a>
+    </div>
+  </div>
+</div>
 
 <!-- AD SIDEBAR -->
 <aside class="ad-sidebar" id="adSidebar">
@@ -622,12 +745,12 @@ a, button, [onclick],
 <text x="340" y="278" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9" fill="#ffffff" letter-spacing="3" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">ERKENNEN. VERSTEHEN. VERÄNDERN.</text>
 
 </svg>
-    <div class="hero-badge fade-in">🛡️ Safe Space – Suchtprävention</div>
-    <h1 class="fade-in">Sucht durch<br><span style="text-decoration:underline;text-decoration-color:rgba(255,255,255,.5)">Schulstress</span><br>erkennen &amp; handeln</h1>
-    <p class="fade-d1">Der Druck durch das Abitur kann gefährlich werden. Lerne Warnsignale zu erkennen, mache den Selbsttest und finde Hilfe – bevor es zu spät ist.</p>
+    <div class="hero-badge fade-in" id="heroBadge">🛡️ Safe Space – Suchtprävention</div>
+    <h1 class="fade-in" id="heroTitle">Sucht durch<br><span style="text-decoration:underline;text-decoration-color:rgba(255,255,255,.5)">Schulstress</span><br>erkennen &amp; handeln</h1>
+    <p class="fade-d1" id="heroSubtext">Der Druck durch das Abitur kann gefährlich werden. Lerne Warnsignale zu erkennen, mache den Selbsttest und finde Hilfe – bevor es zu spät ist.</p>
     <div class="hero-btns fade-d2">
-      <button class="btn btn-white" onclick="showSection('test')">✅ Zum Selbsttest</button>
-      <button class="btn btn-outline" onclick="showSection('info')">📚 Mehr erfahren</button>
+      <button class="btn btn-white" id="heroBtn1" onclick="showSection('test')">✅ Zum Selbsttest</button>
+      <button class="btn btn-outline" id="heroBtn2" onclick="showSection('info')">📚 Mehr erfahren</button>
     </div>
     <div class="stats">
       <div class="stat-card fade-in"><span class="stat-number">42%</span><span class="stat-label">der Abiturienten berichten von erhöhtem Alkoholkonsum in der Prüfungsphase</span></div>
@@ -644,12 +767,12 @@ a, button, [onclick],
       </div>
     </div>
     <div class="quick-nav">
-      <div class="qnav-card" onclick="showSection('info')"><span class="icon">📚</span><h3>Infobereich</h3><p>Erfahre alles über Suchtverhalten, Warnsignale und wie Schulstress zur Sucht führen kann.</p></div>
-      <div class="qnav-card" onclick="showSection('test')"><span class="icon">✅</span><h3>Selbsttest</h3><p>10 Fragen, die zeigen, ob dein Verhalten problematisch ist – mit sofortiger Auswertung.</p></div>
-      <div class="qnav-card" onclick="showSection('help')"><span class="icon">🤝</span><h3>Hilfe &amp; Beratung</h3><p>Kostenlose Hotlines, Online-Beratung und echte Anlaufstellen für Jugendliche in Deutschland.</p></div>
-      <div class="qnav-card" onclick="showSection('social')"><span class="icon">📱</span><h3>Social Media</h3><p>Folge uns auf Instagram für mehr Infos und Erfahrungsberichte.</p></div>
-      <div class="qnav-card" onclick="showSection('chat')"><span class="icon">💬</span><h3>Anonymer Chat</h3><p>Schreib anonym über deine Sorgen und erhalte einfühlsame KI-Antworten – vertraulich und sicher.</p></div>
-      <div class="qnav-card" onclick="showSection('blog')"><span class="icon">📰</span><h3>Blog &amp; News</h3><p>Aktuelle Artikel und News zu Sucht, Schulstress und Abiturdruck – immer auf dem neuesten Stand.</p></div>
+      <div class="qnav-card" onclick="showSection('info')"><span class="icon">📚</span><h3 id="qnav_info_t">Infobereich</h3><p id="qnav_info_p">Erfahre alles über Suchtverhalten, Warnsignale und wie Schulstress zur Sucht führen kann.</p></div>
+      <div class="qnav-card" onclick="showSection('test')"><span class="icon">✅</span><h3 id="qnav_test_t">Selbsttest</h3><p id="qnav_test_p">10 Fragen, die zeigen, ob dein Verhalten problematisch ist – mit sofortiger Auswertung.</p></div>
+      <div class="qnav-card" onclick="showSection('help')"><span class="icon">🤝</span><h3 id="qnav_help_t">Hilfe &amp; Beratung</h3><p id="qnav_help_p">Kostenlose Hotlines, Online-Beratung und echte Anlaufstellen für Jugendliche in Deutschland.</p></div>
+      <div class="qnav-card" onclick="showSection('social')"><span class="icon">📱</span><h3 id="qnav_social_t">Social Media</h3><p id="qnav_social_p">Folge uns auf Instagram für mehr Infos und Erfahrungsberichte.</p></div>
+      <div class="qnav-card" onclick="showSection('chat')"><span class="icon">💬</span><h3 id="qnav_chat_t">Anonymer Chat</h3><p id="qnav_chat_p">Schreib anonym über deine Sorgen und erhalte einfühlsame KI-Antworten – vertraulich und sicher.</p></div>
+      <div class="qnav-card" onclick="showSection('blog')"><span class="icon">📰</span><h3 id="qnav_blog_t">Blog &amp; News</h3><p id="qnav_blog_p">Aktuelle Artikel und News zu Sucht, Schulstress und Abiturdruck – immer auf dem neuesten Stand.</p></div>
     </div>
     <div class="divider"></div>
     <div class="card" style="background:var(--gradient);color:#fff;text-align:center;padding:2.5rem;">
@@ -1086,6 +1209,73 @@ a, button, [onclick],
   </div>
 </div>
 
+<!-- ===== TAGES-CHALLENGE ===== -->
+<section id="challenge">
+  <div class="container">
+    <div class="section-top">
+      <div class="section-header">
+        <h2 id="challengeSectionTitle">🎯 Tages-Challenge</h2>
+        <p id="challengeSectionSub">Deine heutige Challenge für mehr Wohlbefinden und weniger Stress.</p>
+      </div>
+    </div>
+    <div class="challenge-wrapper">
+      <div class="challenge-card">
+        <div class="challenge-day">Tag <span id="challengeDayNum">1</span> / 30</div>
+        <div class="challenge-emoji" id="challengeEmoji">🎯</div>
+        <div class="challenge-text" id="challengeText">Wird geladen...</div>
+        <button class="challenge-cta" id="challengeBtn" onclick="completeChallenge()">✅ Challenge erledigt</button>
+        <div class="challenge-done-msg" id="challengeDoneMsg">🎉 Super gemacht! Du hast heute etwas für dich getan!</div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <svg width="100%" viewBox="0 0 690 330" role="img" style="width:220px;max-width:90%;height:auto;" xmlns="http://www.w3.org/2000/svg">
+<circle cx="340" cy="150" r="95" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" mask="url(#circleMask)"/>
+<text x="340" y="175" text-anchor="middle" font-family="'Segoe UI', Georgia, serif" font-size="52" letter-spacing="1"><tspan font-weight="300" fill="#ffffff">Safe</tspan><tspan font-weight="700" fill="#FF0066">Space</tspan></text>
+<circle cx="340" cy="72" r="4" fill="#FF0066"/><circle cx="340" cy="228" r="4" fill="#FF0066"/>
+<text x="340" y="278" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9" fill="rgba(255,255,255,0.6)" letter-spacing="3">ERKENNEN. VERSTEHEN. VERÄNDERN.</text>
+</svg>
+    <p>Kleine Schritte, große Wirkung – jeden Tag eine Challenge.</p>
+    <div class="footer-links"><a onclick="showSection('home')">Start</a><a onclick="showSection('chat')">Chat</a><a onclick="showSection('community')">Community</a><a onclick="showSection('impressum')">Impressum</a></div>
+    <br><button class="footer-admin" onclick="showSection('admin')">⚙ Admin</button>
+    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;">Schulprojekt · Keine medizinische Beratung</p>
+  </footer>
+</section>
+
+<!-- ===== COMMUNITY PINNWAND ===== -->
+<section id="community">
+  <div class="container">
+    <div class="section-top">
+      <div class="section-header">
+        <h2 id="communitySectionTitle">📌 Community-Pinnwand</h2>
+        <p id="communitySectionSub">Teile anonym deine Erfahrungen, Gedanken oder Mutmach-Worte.</p>
+      </div>
+    </div>
+    <div class="community-form-card">
+      <h3>💬 Neuen Beitrag verfassen</h3>
+      <textarea class="community-textarea" id="communityInput" maxlength="200" rows="3" placeholder="Schreib etwas (max. 200 Zeichen)..." oninput="updateCommunityCount()"></textarea>
+      <div class="community-form-footer">
+        <span class="community-counter-txt"><span id="communityCount">0</span> / 200 Zeichen</span>
+        <button class="save-btn" id="communityPostBtn" onclick="postCommunity()">📌 Posten</button>
+      </div>
+    </div>
+    <p class="community-feed-title">Letzte Beiträge der Community</p>
+    <div id="communityFeed"></div>
+  </div>
+  <footer>
+    <svg width="100%" viewBox="0 0 690 330" role="img" style="width:220px;max-width:90%;height:auto;" xmlns="http://www.w3.org/2000/svg">
+<circle cx="340" cy="150" r="95" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" mask="url(#circleMask)"/>
+<text x="340" y="175" text-anchor="middle" font-family="'Segoe UI', Georgia, serif" font-size="52" letter-spacing="1"><tspan font-weight="300" fill="#ffffff">Safe</tspan><tspan font-weight="700" fill="#FF0066">Space</tspan></text>
+<circle cx="340" cy="72" r="4" fill="#FF0066"/><circle cx="340" cy="228" r="4" fill="#FF0066"/>
+<text x="340" y="278" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9" fill="rgba(255,255,255,0.6)" letter-spacing="3">ERKENNEN. VERSTEHEN. VERÄNDERN.</text>
+</svg>
+    <p>Gemeinsam sind wir stärker – teile deine Gedanken anonym.</p>
+    <div class="footer-links"><a onclick="showSection('home')">Start</a><a onclick="showSection('chat')">Chat</a><a onclick="showSection('challenge')">Challenge</a><a onclick="showSection('impressum')">Impressum</a></div>
+    <br><button class="footer-admin" onclick="showSection('admin')">⚙ Admin</button>
+    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;">Schulprojekt · Keine medizinische Beratung</p>
+  </footer>
+</section>
+
 <!-- ===== IMPRESSUM ===== -->
 <section id="impressum">
   <div class="container">
@@ -1414,6 +1604,8 @@ function showSection(id) {
     if (id === 'chat') initChat();
     if (id === 'blog') renderBlog();
     if (id === 'help') setTimeout(initMap, 100);
+    if (id === 'challenge') initChallenge();
+    if (id === 'community') loadCommunityPosts();
   }
 }
 
@@ -2437,6 +2629,304 @@ function searchMap() {
   }
   resultsEl.classList.add('visible');
 }
+
+// ===================== DARK MODE =====================
+function toggleDark() {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  localStorage.setItem('sucht_dark', isDark ? '1' : '0');
+  const btn = document.getElementById('darkToggle');
+  if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+}
+
+// ===================== NOTFALL MODAL =====================
+function openNotfall() {
+  document.getElementById('notfallBg').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeNotfall(force) {
+  if (force === true || (force && force.target === document.getElementById('notfallBg'))) {
+    document.getElementById('notfallBg').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+// ===================== TAGES-CHALLENGE =====================
+const CHALLENGES = [
+  {emoji:'🚶',text:'Mach heute einen 10-minütigen Spaziergang an der frischen Luft.'},
+  {emoji:'✍️',text:'Schreib 3 Dinge auf, für die du heute dankbar bist.'},
+  {emoji:'💧',text:'Trink heute mindestens 2 Liter Wasser.'},
+  {emoji:'📵',text:'Leg dein Handy für 1 Stunde weg und mach etwas ohne Bildschirm.'},
+  {emoji:'😴',text:'Geh heute Abend um 22:30 Uhr ins Bett – nicht später.'},
+  {emoji:'🧘',text:'Mach 5 Minuten tiefes Atmen: 4 Sekunden ein, 7 halten, 8 aus.'},
+  {emoji:'📞',text:'Ruf heute jemanden an, dem du lange nicht mehr geschrieben hast.'},
+  {emoji:'🍎',text:'Iss heute eine Mahlzeit ohne Ablenkung durch Handy oder TV.'},
+  {emoji:'🏋️',text:'Mach 10 Liegestütze, 10 Kniebeugen und 10 Sit-ups.'},
+  {emoji:'🎵',text:'Hör 20 Minuten Musik, die dich entspannt – ohne andere Ablenkung.'},
+  {emoji:'🌿',text:'Geh für 15 Minuten in die Natur oder in einen Park.'},
+  {emoji:'📖',text:'Lies 15 Minuten in einem Buch – kein Handy daneben.'},
+  {emoji:'🧹',text:'Räum heute einen kleinen Bereich deines Zimmers auf.'},
+  {emoji:'🙂',text:'Lächle heute 3 Menschen an – auch wenn es schwerfällt.'},
+  {emoji:'💌',text:'Schick jemandem eine nette Nachricht, der sie verdient.'},
+  {emoji:'🎨',text:'Zeichne oder kritzel 10 Minuten lang irgendetwas – ohne Ziel.'},
+  {emoji:'🕯️',text:'Nimm heute ein entspannendes Bad oder eine lange Dusche.'},
+  {emoji:'🥗',text:'Bereite heute etwas Gesundes zum Essen vor.'},
+  {emoji:'🧠',text:'Lern 5 neue Wörter in einer Sprache, die dich interessiert.'},
+  {emoji:'🚫',text:'Vermeide heute Social Media komplett für 3 Stunden.'},
+  {emoji:'🌅',text:'Schau heute Abend den Sonnenuntergang an – egal wo.'},
+  {emoji:'🤸',text:'Streck dich 5 Minuten lang: Schultern, Nacken, Rücken.'},
+  {emoji:'💬',text:'Rede heute offen mit jemandem darüber, wie es dir wirklich geht.'},
+  {emoji:'📝',text:'Schreib einen Lernplan für die nächsten 3 Tage.'},
+  {emoji:'🎯',text:'Setz dir heute ein kleines, erreichbares Ziel und erledige es.'},
+  {emoji:'🌟',text:'Sag heute laut: "Ich schaffe das!" – und mein es ernst.'},
+  {emoji:'🧩',text:'Mach eine Lernpause und spiel 20 Minuten etwas Lustiges.'},
+  {emoji:'🫂',text:'Umarme heute jemanden, der dir wichtig ist.'},
+  {emoji:'🌙',text:'Leg dein Handy heute 1 Stunde vor dem Schlafen weg.'},
+  {emoji:'🏃',text:'Mach 20 Minuten Sport – egal was, Hauptsache bewegen.'}
+];
+
+function initChallenge() {
+  const start = new Date(new Date().getFullYear(), 0, 1);
+  const dayIdx = Math.floor((new Date() - start) / 86400000) % CHALLENGES.length;
+  const ch = CHALLENGES[dayIdx];
+  const displayDay = (dayIdx % 30) + 1;
+  const el = id => document.getElementById(id);
+  if (el('challengeEmoji')) el('challengeEmoji').textContent = ch.emoji;
+  if (el('challengeText'))  el('challengeText').textContent  = ch.text;
+  if (el('challengeDayNum')) el('challengeDayNum').textContent = displayDay;
+  const todayKey = 'sucht_ch_' + new Date().toDateString();
+  if (localStorage.getItem(todayKey) === '1') {
+    if (el('challengeBtn'))     el('challengeBtn').style.display     = 'none';
+    if (el('challengeDoneMsg')) el('challengeDoneMsg').style.display = 'block';
+  }
+}
+
+function completeChallenge() {
+  localStorage.setItem('sucht_ch_' + new Date().toDateString(), '1');
+  const el = id => document.getElementById(id);
+  if (el('challengeBtn'))     el('challengeBtn').style.display     = 'none';
+  if (el('challengeDoneMsg')) el('challengeDoneMsg').style.display = 'block';
+  launchConfetti();
+}
+
+function launchConfetti() {
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999;';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const colors = ['#FF0066','#FF6600','#27AE60','#4A90D9','#F39C12','#9B59B6'];
+  const particles = Array.from({length: 90}, () => ({
+    x: Math.random() * canvas.width,
+    y: -10 - Math.random() * 100,
+    r: Math.random() * 6 + 3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    vx: Math.random() * 4 - 2,
+    vy: Math.random() * 3 + 2,
+    opacity: 1
+  }));
+  let frame = 0;
+  const animate = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.y += p.vy; p.x += p.vx + Math.sin(frame * 0.05 + p.r) * 0.5;
+      p.opacity -= 0.008;
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+    });
+    frame++;
+    if (frame < 180) requestAnimationFrame(animate);
+    else { ctx.clearRect(0, 0, canvas.width, canvas.height); document.body.removeChild(canvas); }
+  };
+  animate();
+}
+
+// ===================== COMMUNITY PINNWAND =====================
+const BAD_WORDS = ['scheiße','scheisse','fick','arschloch','hurensohn','wichser','nutte','nazi','idiot','dummkopf'];
+
+function sanitizeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function hasBadWord(text) {
+  const lower = text.toLowerCase();
+  return BAD_WORDS.some(w => lower.includes(w));
+}
+function updateCommunityCount() {
+  const el = document.getElementById('communityInput');
+  const cnt = document.getElementById('communityCount');
+  if (el && cnt) cnt.textContent = el.value.length;
+}
+
+async function loadCommunityPosts() {
+  const feed = document.getElementById('communityFeed');
+  if (!feed) return;
+  feed.innerHTML = '<p style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:.88rem;">Lade Beiträge…</p>';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/community_posts?select=message,created_at&order=created_at.desc&limit=20`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    if (res.status === 404 || res.status === 400) {
+      feed.innerHTML = '<div style="text-align:center;padding:2.5rem 1rem;color:var(--text-light);font-size:.88rem;background:var(--light-bg);border-radius:14px;"><div style="font-size:2rem;margin-bottom:.7rem;">📋</div><strong>Tabelle noch nicht angelegt</strong><br>Bitte erstelle die Tabelle <code>community_posts</code> in Supabase mit den Spalten <code>message</code> (text) und <code>created_at</code> (timestamptz, default: now()).</div>';
+      return;
+    }
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    if (!data.length) {
+      feed.innerHTML = '<p style="text-align:center;padding:2.5rem 1rem;color:var(--text-light);font-size:.9rem;background:var(--light-bg);border-radius:14px;">Noch keine Beiträge. Sei der Erste! 💬</p>';
+      return;
+    }
+    feed.innerHTML = data.map(p => `
+      <div class="community-card">
+        <p class="community-msg">${sanitizeHtml(p.message)}</p>
+        <span class="community-date">📅 ${new Date(p.created_at).toLocaleDateString('de-DE', {day:'2-digit',month:'2-digit',year:'numeric'})}</span>
+      </div>`).join('');
+  } catch(e) {
+    feed.innerHTML = '<p style="text-align:center;padding:1rem;color:var(--danger);font-size:.85rem;">Beiträge konnten nicht geladen werden.</p>';
+  }
+}
+
+async function postCommunity() {
+  const input = document.getElementById('communityInput');
+  const btn   = document.getElementById('communityPostBtn');
+  const msg   = (input ? input.value.trim() : '');
+  if (!msg) return;
+  if (hasBadWord(msg)) { alert('Bitte keine beleidigenden Ausdrücke verwenden.'); return; }
+  if (btn) btn.disabled = true;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/community_posts`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ message: msg })
+    });
+    if (!res.ok) throw new Error();
+    input.value = '';
+    document.getElementById('communityCount').textContent = '0';
+    await loadCommunityPosts();
+  } catch(e) {
+    alert('Fehler beim Posten. Bitte versuche es erneut.');
+  }
+  if (btn) btn.disabled = false;
+}
+
+// ===================== MEHRSPRACHIGKEIT =====================
+const LANG_DATA = {
+  de: {
+    nav_home:'🏠 Start',nav_info:'📚 Info',nav_test:'✅ Selbsttest',nav_help:'🤝 Hilfe',nav_chat:'💬 Chat',
+    nav_blog:'📰 Blog',nav_challenge:'🎯 Challenge',nav_community:'📌 Community',nav_social:'📱 Social Media',
+    heroBadge:'🛡️ Safe Space – Suchtprävention',
+    heroTitle:'Sucht durch<br><span style="text-decoration:underline;text-decoration-color:rgba(255,255,255,.5)">Schulstress</span><br>erkennen &amp; handeln',
+    heroSubtext:'Der Druck durch das Abitur kann gefährlich werden. Lerne Warnsignale zu erkennen, mache den Selbsttest und finde Hilfe – bevor es zu spät ist.',
+    heroBtn1:'✅ Zum Selbsttest',heroBtn2:'📚 Mehr erfahren',
+    qnav_info_t:'Infobereich',qnav_info_p:'Erfahre alles über Suchtverhalten, Warnsignale und wie Schulstress zur Sucht führen kann.',
+    qnav_test_t:'Selbsttest',qnav_test_p:'10 Fragen, die zeigen, ob dein Verhalten problematisch ist – mit sofortiger Auswertung.',
+    qnav_help_t:'Hilfe & Beratung',qnav_help_p:'Kostenlose Hotlines, Online-Beratung und echte Anlaufstellen für Jugendliche in Deutschland.',
+    qnav_social_t:'Social Media',qnav_social_p:'Folge uns auf Instagram für mehr Infos und Erfahrungsberichte.',
+    qnav_chat_t:'Anonymer Chat',qnav_chat_p:'Schreib anonym über deine Sorgen und erhalte einfühlsame KI-Antworten – vertraulich und sicher.',
+    qnav_blog_t:'Blog & News',qnav_blog_p:'Aktuelle Artikel und News zu Sucht, Schulstress und Abiturdruck – immer auf dem neuesten Stand.',
+    challengeTitle:'🎯 Tages-Challenge',challengeSub:'Deine heutige Challenge für mehr Wohlbefinden und weniger Stress.',
+    challengeBtn:'✅ Challenge erledigt',challengeDone:'🎉 Super gemacht! Du hast heute etwas für dich getan!',
+    communityTitle:'📌 Community-Pinnwand',communitySub:'Teile anonym deine Erfahrungen, Gedanken oder Mutmach-Worte.',
+    communityPlaceholder:'Schreib etwas (max. 200 Zeichen)...',communityBtn:'📌 Posten'
+  },
+  en: {
+    nav_home:'🏠 Home',nav_info:'📚 Info',nav_test:'✅ Self-Test',nav_help:'🤝 Help',nav_chat:'💬 Chat',
+    nav_blog:'📰 Blog',nav_challenge:'🎯 Challenge',nav_community:'📌 Community',nav_social:'📱 Social Media',
+    heroBadge:'🛡️ Safe Space – Addiction Prevention',
+    heroTitle:'Recognize &amp; Act on<br><span style="text-decoration:underline;text-decoration-color:rgba(255,255,255,.5)">School Stress</span><br>Addiction',
+    heroSubtext:'Exam pressure can be dangerous. Learn to recognize warning signs, take the self-test and find help – before it\'s too late.',
+    heroBtn1:'✅ Take Self-Test',heroBtn2:'📚 Learn More',
+    qnav_info_t:'Information',qnav_info_p:'Learn everything about addictive behavior, warning signs and how school stress can lead to addiction.',
+    qnav_test_t:'Self-Test',qnav_test_p:'10 questions showing whether your behavior is problematic – with instant evaluation.',
+    qnav_help_t:'Help & Counseling',qnav_help_p:'Free hotlines, online counseling and real contact points for young people in Germany.',
+    qnav_social_t:'Social Media',qnav_social_p:'Follow us on Instagram for more info and reports.',
+    qnav_chat_t:'Anonymous Chat',qnav_chat_p:'Write anonymously about your worries and get empathetic AI responses – confidential and safe.',
+    qnav_blog_t:'Blog & News',qnav_blog_p:'Current articles and news on addiction, school stress and exam pressure.',
+    challengeTitle:'🎯 Daily Challenge',challengeSub:'Your daily challenge for more well-being and less stress.',
+    challengeBtn:'✅ Challenge done',challengeDone:'🎉 Great job! You did something for yourself today!',
+    communityTitle:'📌 Community Board',communitySub:'Anonymously share your experiences, thoughts or encouraging words.',
+    communityPlaceholder:'Write something (max. 200 characters)...',communityBtn:'📌 Post'
+  },
+  tr: {
+    nav_home:'🏠 Ana Sayfa',nav_info:'📚 Bilgi',nav_test:'✅ Öz-Test',nav_help:'🤝 Yardım',nav_chat:'💬 Sohbet',
+    nav_blog:'📰 Blog',nav_challenge:'🎯 Görev',nav_community:'📌 Topluluk',nav_social:'📱 Sosyal Medya',
+    heroBadge:'🛡️ Safe Space – Bağımlılık Önleme',
+    heroTitle:'<span style="text-decoration:underline;text-decoration-color:rgba(255,255,255,.5)">Okul Stresi</span><br>ile Bağımlılığı<br>Tanı &amp; Harekete Geç',
+    heroSubtext:'Sınav baskısı tehlikeli olabilir. Uyarı işaretlerini tanımayı öğren, öz-testi yap ve yardım bul – iş işten geçmeden önce.',
+    heroBtn1:'✅ Öz-Teste Git',heroBtn2:'📚 Daha Fazla',
+    qnav_info_t:'Bilgi Alanı',qnav_info_p:'Bağımlılık davranışı ve okul stresinin bağımlılığa nasıl yol açabileceği hakkında her şeyi öğren.',
+    qnav_test_t:'Öz-Test',qnav_test_p:'Davranışının sorunlu olup olmadığını gösteren 10 soru – anında değerlendirme ile.',
+    qnav_help_t:'Yardım & Danışmanlık',qnav_help_p:'Almanya\'daki gençler için ücretsiz hatlar, online danışmanlık ve gerçek destek noktaları.',
+    qnav_social_t:'Sosyal Medya',qnav_social_p:'Daha fazla bilgi için Instagram\'da bizi takip et.',
+    qnav_chat_t:'Anonim Sohbet',qnav_chat_p:'Endişelerini anonim olarak yaz ve empatik yapay zeka yanıtları al – gizli ve güvenli.',
+    qnav_blog_t:'Blog & Haberler',qnav_blog_p:'Bağımlılık, okul stresi ve sınav baskısı hakkında güncel makaleler.',
+    challengeTitle:'🎯 Günlük Görev',challengeSub:'Daha iyi hissetmek için günlük görevin.',
+    challengeBtn:'✅ Görevi tamamladım',challengeDone:'🎉 Harika! Bugün kendin için bir şey yaptın!',
+    communityTitle:'📌 Topluluk Panosu',communitySub:'Deneyimlerini, düşüncelerini veya teşvik edici sözlerini anonim olarak paylaş.',
+    communityPlaceholder:'Bir şeyler yaz (max. 200 karakter)...',communityBtn:'📌 Gönder'
+  }
+};
+
+let currentLang = 'de';
+
+function setLang(lang) {
+  if (!LANG_DATA[lang]) return;
+  currentLang = lang;
+  localStorage.setItem('sucht_lang', lang);
+  const t = LANG_DATA[lang];
+  const el = id => document.getElementById(id);
+  const set = (id, val, html) => { const e = el(id); if (e) { if (html) e.innerHTML = val; else e.textContent = val; } };
+
+  // Nav links
+  document.querySelectorAll('.nav-links a[data-section]').forEach(a => {
+    const k = 'nav_' + a.dataset.section;
+    if (t[k]) a.innerHTML = t[k];
+  });
+
+  // Hero
+  set('heroBadge',   t.heroBadge,   false);
+  set('heroTitle',   t.heroTitle,   true);
+  set('heroSubtext', t.heroSubtext, false);
+  set('heroBtn1',    t.heroBtn1,    false);
+  set('heroBtn2',    t.heroBtn2,    false);
+
+  // Quick-nav
+  ['info','test','help','social','chat','blog'].forEach(k => {
+    set('qnav_'+k+'_t', t['qnav_'+k+'_t'], false);
+    set('qnav_'+k+'_p', t['qnav_'+k+'_p'], false);
+  });
+
+  // Challenge section
+  set('challengeSectionTitle', t.challengeTitle,   true);
+  set('challengeSectionSub',   t.challengeSub,     false);
+  set('challengeBtn',          t.challengeBtn,     false);
+  set('challengeDoneMsg',      t.challengeDone,    false);
+
+  // Community section
+  set('communitySectionTitle', t.communityTitle,   true);
+  set('communitySectionSub',   t.communitySub,     false);
+  set('communityPostBtn',      t.communityBtn,     false);
+  const inp = el('communityInput');
+  if (inp) inp.placeholder = t.communityPlaceholder;
+
+  // Lang button active state
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+}
+
+// ===================== INIT ON LOAD =====================
+(function initOnLoad() {
+  if (localStorage.getItem('sucht_dark') === '1') {
+    document.body.classList.add('dark');
+    const btn = document.getElementById('darkToggle');
+    if (btn) btn.textContent = '☀️';
+  }
+  const savedLang = localStorage.getItem('sucht_lang') || 'de';
+  if (savedLang !== 'de') setLang(savedLang);
+  else {
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === 'de'));
+  }
+})();
 
 </script>
 </body>
