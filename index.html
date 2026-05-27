@@ -826,7 +826,7 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
 <text x="340" y="278" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9" fill="rgba(255,255,255,0.6)" letter-spacing="3" style="fill:rgba(255,255,255,0.6);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Segoe UI&quot;, sans-serif;font-size:9px;font-weight:400;text-anchor:middle;dominant-baseline:auto">ERKENNEN. VERSTEHEN. VERÄNDERN.</text>
 
 </svg>
-    <p>Dieses Schulprojekt wurde erstellt, um auf Suchtgefahren durch Schulstress aufmerksam zu machen.</p>
+    <p data-i18n="footerHome">Dieses Schulprojekt wurde erstellt, um auf Suchtgefahren durch Schulstress aufmerksam zu machen.</p>
     <div class="footer-links">
       <a onclick="showSection('home')">Start</a>
       <a onclick="showSection('info')">Info</a>
@@ -840,7 +840,7 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
       <a onclick="showSection('impressum')">Impressum</a>
     </div>
     <br><button class="footer-admin" onclick="showSection('admin')">⚙ Admin</button>
-    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;">Schulprojekt · Aufklärung · Keine medizinische Beratung</p>
+    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;" data-i18n="footerDisclaimer">Schulprojekt · Keine medizinische Beratung</p>
   </footer>
 </section>
 
@@ -1220,10 +1220,10 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
 <circle cx="340" cy="72" r="4" fill="#FF0066"/><circle cx="340" cy="228" r="4" fill="#FF0066"/>
 <text x="340" y="278" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9" fill="rgba(255,255,255,0.6)" letter-spacing="3">ERKENNEN. VERSTEHEN. VERÄNDERN.</text>
 </svg>
-    <p>Alle Artikel wurden sorgfältig für das Safe-Space-Schulprojekt erstellt.</p>
+    <p data-i18n="footerBlog">Alle Artikel wurden sorgfältig für das Safe-Space-Schulprojekt erstellt.</p>
     <div class="footer-links"><a onclick="showSection('home')">Start</a><a onclick="showSection('info')">Info</a><a onclick="showSection('chat')">Chat</a><a onclick="showSection('challenge')">🎯 Challenge</a><a onclick="showSection('community')">📌 Community</a><a onclick="showSection('impressum')">Impressum</a></div>
     <br><button class="footer-admin" onclick="showSection('admin')">⚙ Admin</button>
-    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;">Schulprojekt · Keine medizinische Beratung</p>
+    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;" data-i18n="footerDisclaimer">Schulprojekt · Keine medizinische Beratung</p>
   </footer>
 </section>
 
@@ -1265,10 +1265,10 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
 <circle cx="340" cy="72" r="4" fill="#FF0066"/><circle cx="340" cy="228" r="4" fill="#FF0066"/>
 <text x="340" y="278" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9" fill="rgba(255,255,255,0.6)" letter-spacing="3">ERKENNEN. VERSTEHEN. VERÄNDERN.</text>
 </svg>
-    <p>Kleine Schritte, große Wirkung – jeden Tag eine Challenge.</p>
+    <p data-i18n="footerChallenge">Kleine Schritte, große Wirkung – jeden Tag eine Challenge.</p>
     <div class="footer-links"><a onclick="showSection('home')">Start</a><a onclick="showSection('chat')">Chat</a><a onclick="showSection('blog')">📰 Blog</a><a onclick="showSection('community')">📌 Community</a><a onclick="showSection('impressum')">Impressum</a></div>
     <br><button class="footer-admin" onclick="showSection('admin')">⚙ Admin</button>
-    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;">Schulprojekt · Keine medizinische Beratung</p>
+    <p style="margin-top:1rem;font-size:.75rem;opacity:.4;" data-i18n="footerDisclaimer">Schulprojekt · Keine medizinische Beratung</p>
   </footer>
 </section>
 
@@ -2842,6 +2842,9 @@ const LANG_DATA = {
     footerInfo:'Schulprojekt zur Aufklärung über Suchtgefahren durch Schulstress.',footerTest:'Dieser Test ersetzt keine professionelle Beratung.',
     footerHelp:'Alle aufgeführten Stellen sind seriös und werden von Fachleuten betrieben.',footerChat:'Dieser Chat ist anonym. Deine Nachrichten werden nicht gespeichert.',
     footerSocial:'Folge uns für regelmäßige Updates und Tipps.',footerCommunity:'Gemeinsam sind wir stärker – teile deine Gedanken anonym.',
+    footerHome:'Dieses Schulprojekt wurde erstellt, um auf Suchtgefahren durch Schulstress aufmerksam zu machen.',
+    footerBlog:'Alle Artikel wurden sorgfältig für das Safe-Space-Schulprojekt erstellt.',
+    footerChallenge:'Kleine Schritte, große Wirkung – jeden Tag eine Challenge.',
     footerImpressum:'Schulprojekt zur Aufklärung über Suchtgefahren durch Schulstress.',footerDisclaimer:'Schulprojekt · Keine medizinische Beratung',
     quizBack:'← Zurück',quizNext:'Weiter →',quizEval:'Auswertung →',quizOf:'Frage {n} von {total}',
     resultGreenTitle:'Kein auffälliges Suchtverhalten',
@@ -2924,6 +2927,9 @@ const LANG_DATA = {
     footerInfo:'School project to raise awareness about addiction risks from school stress.',footerTest:'This test does not replace professional counseling.',
     footerHelp:'All listed organizations are reputable and run by professionals.',footerChat:'This chat is anonymous. Your messages are not saved.',
     footerSocial:'Follow us for regular updates and tips.',footerCommunity:'Together we are stronger – share your thoughts anonymously.',
+    footerHome:'This school project was created to raise awareness about addiction risks from school stress.',
+    footerBlog:'All articles were carefully created for the Safe-Space school project.',
+    footerChallenge:'Small steps, big impact – a new challenge every day.',
     footerImpressum:'School project to raise awareness about addiction risks from school stress.',footerDisclaimer:'School project · No medical advice',
     quizBack:'← Back',quizNext:'Next →',quizEval:'Results →',quizOf:'Question {n} of {total}',
     resultGreenTitle:'No significant addictive behavior',
@@ -3038,6 +3044,9 @@ const LANG_DATA = {
     footerInfo:'Okul stresinden kaynaklanan bağımlılık riskleri hakkında farkındalık için okul projesi.',footerTest:'Bu test profesyonel danışmanlığın yerini tutmaz.',
     footerHelp:'Listelenen tüm kuruluşlar güvenilirdir ve profesyoneller tarafından işletilmektedir.',footerChat:'Bu sohbet anonimdir. Mesajlarınız kaydedilmez.',
     footerSocial:'Düzenli güncellemeler ve ipuçları için bizi takip et.',footerCommunity:'Birlikte daha güçlüyüz – düşüncelerini anonim olarak paylaş.',
+    footerHome:'Bu okul projesi, okul stresinden kaynaklanan bağımlılık risklerine dikkat çekmek amacıyla oluşturulmuştur.',
+    footerBlog:'Tüm makaleler Safe-Space okul projesi için özenle oluşturulmuştur.',
+    footerChallenge:'Küçük adımlar, büyük etki – her gün yeni bir görev.',
     footerImpressum:'Okul stresinden kaynaklanan bağımlılık riskleri hakkında farkındalık için okul projesi.',footerDisclaimer:'Okul projesi · Tıbbi tavsiye değil',
     quizBack:'← Geri',quizNext:'İleri →',quizEval:'Sonuçlar →',quizOf:'Soru {n} / {total}',
     resultGreenTitle:'Belirgin bir bağımlılık davranışı yok',
