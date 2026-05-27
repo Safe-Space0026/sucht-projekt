@@ -1932,64 +1932,132 @@ const adminCharts = {};
 function initCharts() {
   if (typeof Chart === 'undefined') {
     document.querySelectorAll('.chart-card canvas').forEach(c => {
-      c.style.display='none';
-      c.insertAdjacentHTML('afterend','<p style="color:var(--text-light);font-size:.82rem;text-align:center;padding:1rem;">Charts nicht verfügbar (kein Internet).</p>');
+      c.style.display = 'none';
+      c.insertAdjacentHTML('afterend', '<p style="color:var(--text-light);font-size:.82rem;text-align:center;padding:1rem;">Charts nicht verfügbar (kein Internet).</p>');
     });
     return;
   }
   ['chartLine','chartDoughnut','chartBar'].forEach(id => {
-    if(adminCharts[id]) { adminCharts[id].destroy(); delete adminCharts[id]; }
+    if (adminCharts[id]) { adminCharts[id].destroy(); delete adminCharts[id]; }
   });
-  const labels = storedVisits.map(d => new Date(d.date).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}));
-  const zeros30 = new Array(30).fill(0);
-  const zeros7  = new Array(7).fill(0);
-
+  const labels30 = buildEmptyDays().map(d => new Date(d.date).toLocaleDateString('de-DE', {day:'2-digit', month:'2-digit'}));
   adminCharts.chartLine = new Chart(document.getElementById('chartLine'), {
-    type:'line',
-    data:{labels,datasets:[{label:'Besucher',data:zeros30,borderColor:'rgba(255,0,102,0.4)',backgroundColor:'rgba(255,0,102,0.04)',borderWidth:2,pointRadius:0,tension:0.4,fill:true}]},
-    options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{grid:{display:false},ticks:{maxTicksLimit:8,font:{size:10}}},y:{min:0,max:10,grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{size:10}}}}}
+    type: 'line',
+    data: { labels: labels30, datasets: [{ label:'Besucher', data: new Array(30).fill(0), borderColor:'rgba(255,0,102,0.8)', backgroundColor:'rgba(255,0,102,0.08)', borderWidth:2, pointRadius:3, tension:0.4, fill:true }] },
+    options: { responsive:true, maintainAspectRatio:true, plugins:{ legend:{display:false} }, scales:{ x:{ grid:{display:false}, ticks:{maxTicksLimit:8,font:{size:10}} }, y:{ min:0, grid:{color:'rgba(0,0,0,0.04)'}, ticks:{font:{size:10},stepSize:1} } } }
   });
-
   adminCharts.chartDoughnut = new Chart(document.getElementById('chartDoughnut'), {
-    type:'doughnut',
-    data:{labels:['Keine Daten'],datasets:[{data:[1],backgroundColor:['#e9ecef'],borderWidth:0}]},
-    options:{responsive:true,cutout:'68%',plugins:{legend:{display:false},tooltip:{enabled:false}}}
+    type: 'doughnut',
+    data: { labels:['Keine Daten'], datasets:[{ data:[1], backgroundColor:['#e9ecef'], borderWidth:0 }] },
+    options: { responsive:true, cutout:'68%', plugins:{ legend:{display:false} } }
   });
-  document.getElementById('doughnutLegend').innerHTML = '<div style="font-size:.78rem;color:var(--text-light);text-align:center;padding:.5rem 0;">Noch keine Traffic-Daten</div>';
-
+  document.getElementById('doughnutLegend').innerHTML = '<div style="font-size:.78rem;color:var(--text-light);text-align:center;padding:.5rem 0;">Lade Daten…</div>';
   adminCharts.chartBar = new Chart(document.getElementById('chartBar'), {
-    type:'bar',
-    data:{labels:['Mo','Di','Mi','Do','Fr','Sa','So'],datasets:[{label:'Besucher',data:zeros7,backgroundColor:'rgba(255,0,102,0.2)',borderRadius:6,borderSkipped:false}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{min:0,max:10,grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{size:10}}}}}
+    type: 'bar',
+    data: { labels:['Mo','Di','Mi','Do','Fr','Sa','So'], datasets:[{ label:'Besucher', data: new Array(7).fill(0), backgroundColor:'rgba(255,0,102,0.2)', borderRadius:6, borderSkipped:false }] },
+    options: { responsive:true, plugins:{ legend:{display:false} }, scales:{ x:{ grid:{display:false}, ticks:{font:{size:11}} }, y:{ min:0, grid:{color:'rgba(0,0,0,0.04)'}, ticks:{font:{size:10},stepSize:1} } } }
   });
-
-  document.getElementById('regionList').innerHTML = '<li style="padding:1.2rem 0;color:var(--text-light);font-size:.85rem;text-align:center;list-style:none;">Noch keine Regionaldaten vorhanden.</li>';
-
-  const pages = [
-    {name:'🏠 Startseite',path:'#home'},
-    {name:'📚 Infobereich',path:'#info'},
-    {name:'✅ Selbsttest',path:'#test'},
-    {name:'🤝 Hilfe & Beratung',path:'#help'},
-    {name:'📱 Social Media',path:'#social'}
-  ];
-  document.getElementById('topPagesTable').innerHTML = pages.map((p,i)=>`
-    <tr>
-      <td style="font-weight:700;color:var(--primary)">${i+1}</td>
-      <td>${p.name}<br><span style="font-size:.75rem;color:var(--text-light);">${p.path}</span></td>
-      <td style="font-weight:700;">0</td>
-      <td style="min-width:100px;"><div class="page-bar"><div class="page-bar-fill" style="width:0%"></div></div></td>
-      <td style="color:var(--text-light);">—</td>
-    </tr>`).join('');
+  document.getElementById('regionList').innerHTML = '<li style="padding:1.2rem 0;color:var(--text-light);font-size:.85rem;text-align:center;list-style:none;">Keine Regionaldaten vorhanden.</li>';
+  document.getElementById('topPagesTable').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:1rem;">Lade Daten…</td></tr>';
 }
 
-function updateKPIs() {
-  document.getElementById('kpiToday').textContent = '0';
-  document.getElementById('kpiWeek').textContent  = '0';
-  document.getElementById('kpiTotal').textContent = '0';
-  document.getElementById('kpiTodayTrend').textContent = '— noch keine Daten';
-  document.getElementById('kpiTodayTrend').className   = 'kpi-trend';
-  document.getElementById('kpiTodayTrend').style.color = 'var(--text-light)';
-  document.getElementById('lastUpdate').textContent = new Date().toLocaleString('de-DE');
+async function updateKPIs() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/page_views?select=created_at,page&order=created_at.asc`,
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+    );
+    if (!res.ok) throw new Error('fetch error ' + res.status);
+    const data = await res.json();
+    const now = new Date();
+    const todayStr = now.toISOString().slice(0, 10);
+    const weekAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
+    const total = data.length;
+    const today = data.filter(v => v.created_at && v.created_at.slice(0, 10) === todayStr).length;
+    const week  = data.filter(v => v.created_at && new Date(v.created_at) >= weekAgo).length;
+    document.getElementById('kpiTotal').textContent = total.toLocaleString('de-DE');
+    document.getElementById('kpiToday').textContent = today;
+    document.getElementById('kpiWeek').textContent  = week;
+    const trendEl = document.getElementById('kpiTodayTrend');
+    if (trendEl) {
+      trendEl.textContent = today > 0 ? `+${today} heute` : 'Heute noch keine Besucher';
+      trendEl.style.color = today > 0 ? 'var(--success)' : 'var(--text-light)';
+    }
+    const lastEl = document.getElementById('lastUpdate');
+    if (lastEl) lastEl.textContent = new Date().toLocaleString('de-DE');
+    const banner = document.getElementById('noDataBanner');
+    if (banner && total > 0) banner.style.display = 'none';
+    updateChartsWithData(data);
+  } catch(e) {
+    console.warn('Analytics-Fehler:', e);
+    const trendEl = document.getElementById('kpiTodayTrend');
+    if (trendEl) { trendEl.textContent = 'Fehler beim Laden'; trendEl.style.color = 'var(--danger)'; }
+  }
+}
+
+function updateChartsWithData(data) {
+  if (typeof Chart === 'undefined' || !data) return;
+  // Line chart: visits per day, last 30 days
+  const days = buildEmptyDays();
+  data.forEach(v => {
+    if (!v.created_at) return;
+    const ds = new Date(v.created_at).toDateString();
+    const d = days.find(x => new Date(x.date).toDateString() === ds);
+    if (d) d.value++;
+  });
+  if (adminCharts.chartLine) {
+    adminCharts.chartLine.data.datasets[0].data = days.map(d => d.value);
+    adminCharts.chartLine.options.scales.y.max = Math.ceil(Math.max(...days.map(d => d.value), 1) * 1.3);
+    adminCharts.chartLine.update();
+  }
+  // Bar chart: visits by weekday, last 4 weeks
+  const wdCounts = [0,0,0,0,0,0,0];
+  const fourWeeksAgo = new Date(Date.now() - 28*24*60*60*1000);
+  data.forEach(v => {
+    if (!v.created_at) return;
+    const d = new Date(v.created_at);
+    if (d >= fourWeeksAgo) wdCounts[(d.getDay()+6)%7]++;
+  });
+  if (adminCharts.chartBar) {
+    adminCharts.chartBar.data.datasets[0].data = wdCounts;
+    adminCharts.chartBar.options.scales.y.max = Math.ceil(Math.max(...wdCounts, 1) * 1.3);
+    adminCharts.chartBar.update();
+  }
+  // Doughnut: visits per page
+  const pageCounts = {};
+  data.forEach(v => { const p = v.page || '/'; pageCounts[p] = (pageCounts[p] || 0) + 1; });
+  const entries = Object.entries(pageCounts).sort((a, b) => b[1] - a[1]);
+  if (entries.length > 0 && adminCharts.chartDoughnut) {
+    const colors = ['#FF0066','#FF6600','#6600FF','#00AAFF','#00CC66','#FFAA00','#CC0052'];
+    const top = entries.slice(0, 6);
+    const otherSum = entries.slice(6).reduce((s, [,v]) => s + v, 0);
+    if (otherSum > 0) top.push(['Sonstige', otherSum]);
+    adminCharts.chartDoughnut.data.labels = top.map(([k]) => k);
+    adminCharts.chartDoughnut.data.datasets[0].data = top.map(([,v]) => v);
+    adminCharts.chartDoughnut.data.datasets[0].backgroundColor = top.map((_, i) => colors[i % colors.length]);
+    adminCharts.chartDoughnut.update();
+    const total = data.length;
+    document.getElementById('doughnutLegend').innerHTML = top.map(([k, v], i) => `
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.25rem 0;font-size:.75rem;">
+        <span style="width:12px;height:12px;border-radius:3px;background:${colors[i%colors.length]};flex-shrink:0;"></span>
+        <span style="flex:1;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${k}</span>
+        <strong style="color:var(--primary);">${v}</strong>
+        <span style="color:var(--text-light);">(${Math.round(v/total*100)}%)</span>
+      </div>`).join('');
+  }
+  // Top 5 pages table
+  const top5 = entries.slice(0, 5);
+  const maxC = top5[0] ? top5[0][1] : 1;
+  document.getElementById('topPagesTable').innerHTML = top5.length
+    ? top5.map(([page, count], i) => `
+      <tr>
+        <td style="font-weight:700;color:var(--primary)">${i+1}</td>
+        <td>${page}<br><span style="font-size:.75rem;color:var(--text-light);">${page}</span></td>
+        <td style="font-weight:700;">${count}</td>
+        <td style="min-width:100px;"><div class="page-bar"><div class="page-bar-fill" style="width:${Math.round(count/maxC*100)}%"></div></div></td>
+        <td style="color:var(--text-light);">—</td>
+      </tr>`).join('')
+    : '<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:1rem;">Noch keine Daten vorhanden.</td></tr>';
 }
 
 function simulateRealtime() {
@@ -2127,48 +2195,12 @@ function showMsg(id) {
   setTimeout(() => el.style.display='none', 3000);
 }
 
-async function loadStats() {
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/page_views?select=created_at`, {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`
-      }
-    });
-    if (!res.ok) return;
-    const data = await res.json();
-    const now = new Date();
-    const todayStr = now.toDateString();
-    const weekAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
-
-    const total = data.length;
-    const today = data.filter(v => v.created_at && new Date(v.created_at).toDateString() === todayStr).length;
-    const week  = data.filter(v => v.created_at && new Date(v.created_at) >= weekAgo).length;
-
-    document.getElementById('kpiTotal').textContent = total;
-    document.getElementById('kpiToday').textContent = today;
-    document.getElementById('kpiWeek').textContent  = week;
-
-    const trendEl = document.getElementById('kpiTodayTrend');
-    if (trendEl) {
-      trendEl.textContent = today > 0 ? '+' + today + ' heute' : 'Heute noch keine Besucher';
-      trendEl.style.color = today > 0 ? 'var(--success)' : 'var(--text-light)';
-    }
-    const lastUpdateEl = document.getElementById('lastUpdate');
-    if (lastUpdateEl) lastUpdateEl.textContent = new Date().toLocaleString('de-DE');
-    const banner = document.getElementById('noDataBanner');
-    if (banner && total > 0) banner.style.display = 'none';
-  } catch(e) {
-    // Supabase nicht erreichbar – Standardwerte bleiben
-  }
-}
 
 function initAdmin() {
   _ls.removeItem('sucht_visits');
   _ls.removeItem('sucht_total');
-  updateKPIs();
-  loadStats();
   initCharts();
+  updateKPIs();
   loadSocialInputs();
   loadAdInputs();
   loadSettingsInputs();
