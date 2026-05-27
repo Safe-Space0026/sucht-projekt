@@ -694,14 +694,14 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
 </nav>
 
 <!-- NOTFALL BUTTON (fixed, bottom-left) -->
-<button class="notfall-fab" onclick="openNotfall()">🆘 Notfall-Hilfe</button>
+<button class="notfall-fab" onclick="openNotfall()" data-i18n="notfallFab">🆘 Notfall-Hilfe</button>
 
 <!-- NOTFALL MODAL -->
 <div class="notfall-bg" id="notfallBg" onclick="closeNotfall(event)">
   <div class="notfall-modal">
     <button class="notfall-modal-close" onclick="closeNotfall(true)" aria-label="Schließen">✕</button>
-    <h2>🆘 Notfall-Hilfe</h2>
-    <p>Du bist nicht allein. Hilfe ist kostenlos, anonym und rund um die Uhr erreichbar:</p>
+    <h2 data-i18n="notfallTitle">🆘 Notfall-Hilfe</h2>
+    <p data-i18n="notfallSub">Du bist nicht allein. Hilfe ist kostenlos, anonym und rund um die Uhr erreichbar:</p>
     <div class="notfall-cards">
       <a href="tel:08001110111" class="notfall-card">
         <span class="notfall-num">0800 111 0 111</span>
@@ -849,8 +849,8 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
   <div class="container">
     <div class="section-top">
       <div class="section-header">
-        <h2>📚 Suchtgefahren durch Schulstress</h2>
-        <p>Hintergrundwissen, Warnsignale und warum das Abitur eine kritische Phase ist.</p>
+        <h2 data-i18n="infoTitle">📚 Suchtgefahren durch Schulstress</h2>
+        <p data-i18n="infoSub">Hintergrundwissen, Warnsignale und warum das Abitur eine kritische Phase ist.</p>
       </div>
     </div>
     <div class="section-intro">
@@ -956,8 +956,8 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
   <div class="container">
     <div class="section-top">
       <div class="section-header">
-        <h2>✅ Selbsttest: Wie gefährdet bist du?</h2>
-        <p>Beantworte ehrlich alle 10 Fragen. Die Auswertung ist anonym und hilft dir, deinen Umgang mit Stress einzuschätzen.</p>
+        <h2 data-i18n="testTitle">✅ Selbsttest: Wie gefährdet bist du?</h2>
+        <p data-i18n="testSub">Beantworte ehrlich alle 10 Fragen. Die Auswertung ist anonym und hilft dir, deinen Umgang mit Stress einzuschätzen.</p>
       </div>
     </div>
     <div class="quiz-wrap">
@@ -970,8 +970,8 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
         <p id="resultText" class="result-text"></p>
         <div class="result-tips" id="resultTips"></div>
         <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;">
-          <button class="btn btn-primary" onclick="resetQuiz()">🔄 Test wiederholen</button>
-          <button class="btn btn-outline" style="color:var(--primary);border-color:var(--primary);" onclick="showSection('help')">🤝 Zur Hilfe</button>
+          <button class="btn btn-primary" onclick="resetQuiz()" data-i18n="testRepeat">🔄 Test wiederholen</button>
+          <button class="btn btn-outline" style="color:var(--primary);border-color:var(--primary);" onclick="showSection('help')" data-i18n="testHelp">🤝 Zur Hilfe</button>
         </div>
       </div>
     </div>
@@ -1005,8 +1005,8 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
   <div class="container">
     <div class="section-top">
       <div class="section-header">
-        <h2>🤝 Hilfe &amp; Beratung</h2>
-        <p>Du bist nicht allein. Hier findest du kostenlose, anonyme und professionelle Unterstützung.</p>
+        <h2 data-i18n="helpTitle">🤝 Hilfe &amp; Beratung</h2>
+        <p data-i18n="helpSub">Du bist nicht allein. Hier findest du kostenlose, anonyme und professionelle Unterstützung.</p>
       </div>
     </div>
     <div class="emergency-banner">
@@ -1109,8 +1109,8 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
   <div class="container">
     <div class="section-top">
       <div class="section-header">
-        <h2>📱 Folg uns auf Social Media</h2>
-        <p>Aktuelle Beiträge, Erfahrungsberichte und Tipps zum Thema Safe Space.</p>
+        <h2 data-i18n="socialTitle">📱 Folg uns auf Social Media</h2>
+        <p data-i18n="socialSub">Aktuelle Beiträge, Erfahrungsberichte und Tipps zum Thema Safe Space.</p>
       </div>
     </div>
     <div class="social-grid">
@@ -1158,8 +1158,8 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
   <div class="container">
     <div class="section-top">
       <div class="section-header">
-        <h2>💬 Anonymer Chat</h2>
-        <p>Schreib anonym über Stress und Sucht – eine KI antwortet einfühlsam und informiert.</p>
+        <h2 data-i18n="chatTitle">💬 Anonymer Chat</h2>
+        <p data-i18n="chatSub">Schreib anonym über Stress und Sucht – eine KI antwortet einfühlsam und informiert.</p>
       </div>
     </div>
     <div class="chat-wrapper">
@@ -1180,8 +1180,8 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
         <button class="chat-chip" onclick="sendSuggestion('Wie kann ich Stress abbauen?')">🧘 Stress abbauen</button>
       </div>
       <div class="chat-input-row">
-        <input type="text" class="chat-input" id="chatInput" placeholder="Schreib etwas…" maxlength="500" onkeydown="if(event.key==='Enter'&&!event.shiftKey)sendChat()">
-        <button class="chat-send" id="chatSendBtn" onclick="sendChat()">Senden ➤</button>
+        <input type="text" class="chat-input" id="chatInput" placeholder="Schreib etwas…" maxlength="500" onkeydown="if(event.key==='Enter'&&!event.shiftKey)sendChat()" data-i18n-placeholder="chatPlaceholder">
+        <button class="chat-send" id="chatSendBtn" onclick="sendChat()" data-i18n="chatSend">Senden ➤</button>
       </div>
     </div>
   </div>
@@ -1204,12 +1204,12 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
   <div class="container">
     <div class="section-top">
       <div class="section-header">
-        <h2>📰 Blog &amp; News</h2>
-        <p>Aktuelle Artikel zu Sucht, Stress, Abitur und mentaler Gesundheit.</p>
+        <h2 data-i18n="blogTitle">📰 Blog &amp; News</h2>
+        <p data-i18n="blogSub">Aktuelle Artikel zu Sucht, Stress, Abitur und mentaler Gesundheit.</p>
       </div>
     </div>
     <div class="section-intro">
-      <p>Hier findest du fundierte Artikel rund um die Themen Schulstress, Suchtprävention und mentale Gesundheit – geschrieben für Schülerinnen und Schüler in der Abiturphase.</p>
+      <p data-i18n="blogIntro">Hier findest du fundierte Artikel rund um die Themen Schulstress, Suchtprävention und mentale Gesundheit – geschrieben für Schülerinnen und Schüler in der Abiturphase.</p>
     </div>
     <div class="blog-grid" id="blogGrid"></div>
   </div>
@@ -2512,18 +2512,21 @@ function renderBlog() {
         </a>`;
     }).join('');
   } else {
+    const langT = LANG_DATA[currentLang] || LANG_DATA.de;
+    const catMap = langT.blogCats || {};
+    const readMore = langT.blogReadMore || 'Mehr lesen →';
     grid.innerHTML = BLOG_ARTICLES.map(a => `
       <div class="blog-card" onclick="openBlogModal(${a.id})">
         <div class="blog-img" style="background:${a.bg}">
           <span>${a.emoji}</span>
-          <span class="blog-cat">${a.cat}</span>
+          <span class="blog-cat">${catMap[a.cat] || a.cat}</span>
         </div>
         <div class="blog-body">
           <div class="blog-title">${a.title}</div>
           <div class="blog-excerpt">${a.excerpt}</div>
           <div class="blog-foot">
             <span class="blog-date">📅 ${a.date}</span>
-            <span class="blog-read">Mehr lesen →</span>
+            <span class="blog-read">${readMore}</span>
           </div>
         </div>
       </div>
@@ -2861,7 +2864,19 @@ const LANG_DATA = {
     challengeTitle:'🎯 Tages-Challenge',challengeSub:'Deine heutige Challenge für mehr Wohlbefinden und weniger Stress.',
     challengeBtn:'✅ Challenge erledigt',challengeDone:'🎉 Super gemacht! Du hast heute etwas für dich getan!',
     communityTitle:'📌 Community-Pinnwand',communitySub:'Teile anonym deine Erfahrungen, Gedanken oder Mutmach-Worte.',
-    communityPlaceholder:'Schreib etwas (max. 200 Zeichen)...',communityBtn:'📌 Posten'
+    communityPlaceholder:'Schreib etwas (max. 200 Zeichen)...',communityBtn:'📌 Posten',
+    blogTitle:'📰 Blog & News',blogSub:'Aktuelle Artikel zu Sucht, Stress, Abitur und mentaler Gesundheit.',
+    blogIntro:'Hier findest du fundierte Artikel rund um die Themen Schulstress, Suchtprävention und mentale Gesundheit – geschrieben für Schülerinnen und Schüler in der Abiturphase.',
+    blogReadMore:'Mehr lesen →',
+    infoTitle:'📚 Suchtgefahren durch Schulstress',infoSub:'Hintergrundwissen, Warnsignale und warum das Abitur eine kritische Phase ist.',
+    testTitle:'✅ Selbsttest: Wie gefährdet bist du?',testSub:'Beantworte ehrlich alle 10 Fragen. Die Auswertung ist anonym und hilft dir, deinen Umgang mit Stress einzuschätzen.',
+    testRepeat:'🔄 Test wiederholen',testHelp:'🤝 Zur Hilfe',
+    helpTitle:'🤝 Hilfe & Beratung',helpSub:'Du bist nicht allein. Hier findest du kostenlose, anonyme und professionelle Unterstützung.',
+    chatTitle:'💬 Anonymer Chat',chatSub:'Schreib anonym über Stress und Sucht – eine KI antwortet einfühlsam und informiert.',
+    chatSend:'Senden ➤',chatPlaceholder:'Schreib etwas…',
+    socialTitle:'📱 Folg uns auf Social Media',socialSub:'Aktuelle Beiträge, Erfahrungsberichte und Tipps zum Thema Safe Space.',
+    notfallFab:'🆘 Notfall-Hilfe',notfallTitle:'🆘 Notfall-Hilfe',notfallSub:'Du bist nicht allein. Hilfe ist kostenlos, anonym und rund um die Uhr erreichbar:',
+    blogCats:{STRESS:'STRESS',SUCHT:'SUCHT',HILFE:'HILFE',GESUNDHEIT:'GESUNDHEIT',DIGITAL:'DIGITAL',PRÄVENTION:'PRÄVENTION'}
   },
   en: {
     nav_home:'🏠 Home',nav_info:'📚 Info',nav_test:'✅ Self-Test',nav_help:'🤝 Help',nav_chat:'💬 Chat',
@@ -2882,7 +2897,19 @@ const LANG_DATA = {
     challengeTitle:'🎯 Daily Challenge',challengeSub:'Your daily challenge for more well-being and less stress.',
     challengeBtn:'✅ Challenge done',challengeDone:'🎉 Great job! You did something for yourself today!',
     communityTitle:'📌 Community Board',communitySub:'Anonymously share your experiences, thoughts or encouraging words.',
-    communityPlaceholder:'Write something (max. 200 characters)...',communityBtn:'📌 Post'
+    communityPlaceholder:'Write something (max. 200 characters)...',communityBtn:'📌 Post',
+    blogTitle:'📰 Blog & News',blogSub:'Current articles on addiction, stress, exams and mental health.',
+    blogIntro:'Here you will find well-researched articles on school stress, addiction prevention and mental health – written for students in their final exam phase.',
+    blogReadMore:'Read more →',
+    infoTitle:'📚 Addiction Risks from School Stress',infoSub:'Background knowledge, warning signs and why final exams are a critical phase.',
+    testTitle:'✅ Self-Test: How at risk are you?',testSub:'Answer all 10 questions honestly. The evaluation is anonymous and helps you assess your stress behaviour.',
+    testRepeat:'🔄 Repeat test',testHelp:'🤝 Get help',
+    helpTitle:'🤝 Help & Counseling',helpSub:'You are not alone. Find free, anonymous and professional support here.',
+    chatTitle:'💬 Anonymous Chat',chatSub:'Write anonymously about stress and addiction – an AI responds empathetically and informatively.',
+    chatSend:'Send ➤',chatPlaceholder:'Write something…',
+    socialTitle:'📱 Follow us on Social Media',socialSub:'Current posts, experience reports and tips on the topic of Safe Space.',
+    notfallFab:'🆘 Emergency Help',notfallTitle:'🆘 Emergency Help',notfallSub:'You are not alone. Help is free, anonymous and available around the clock:',
+    blogCats:{STRESS:'STRESS',SUCHT:'ADDICTION',HILFE:'HELP',GESUNDHEIT:'HEALTH',DIGITAL:'DIGITAL',PRÄVENTION:'PREVENTION'}
   },
   tr: {
     nav_home:'🏠 Ana Sayfa',nav_info:'📚 Bilgi',nav_test:'✅ Öz-Test',nav_help:'🤝 Yardım',nav_chat:'💬 Sohbet',
@@ -2903,7 +2930,19 @@ const LANG_DATA = {
     challengeTitle:'🎯 Günlük Görev',challengeSub:'Daha iyi hissetmek için günlük görevin.',
     challengeBtn:'✅ Görevi tamamladım',challengeDone:'🎉 Harika! Bugün kendin için bir şey yaptın!',
     communityTitle:'📌 Topluluk Panosu',communitySub:'Deneyimlerini, düşüncelerini veya teşvik edici sözlerini anonim olarak paylaş.',
-    communityPlaceholder:'Bir şeyler yaz (max. 200 karakter)...',communityBtn:'📌 Gönder'
+    communityPlaceholder:'Bir şeyler yaz (max. 200 karakter)...',communityBtn:'📌 Gönder',
+    blogTitle:'📰 Blog & Haberler',blogSub:'Bağımlılık, stres, sınav ve ruh sağlığı hakkında güncel makaleler.',
+    blogIntro:'Burada okul stresi, bağımlılık önleme ve ruh sağlığı hakkında iyi araştırılmış makaleler bulacaksın – sınav dönemindeki öğrenciler için yazılmıştır.',
+    blogReadMore:'Devamını oku →',
+    infoTitle:'📚 Okul Stresinden Kaynaklanan Bağımlılık Riskleri',infoSub:'Arka plan bilgisi, uyarı işaretleri ve neden sınav döneminin kritik bir aşama olduğu.',
+    testTitle:'✅ Öz-Test: Ne kadar risk altındasın?',testSub:'10 soruyu dürüstçe yanıtla. Değerlendirme anonimdir ve stres davranışını değerlendirmene yardımcı olur.',
+    testRepeat:'🔄 Testi tekrarla',testHelp:'🤝 Yardım al',
+    helpTitle:'🤝 Yardım & Danışmanlık',helpSub:'Yalnız değilsin. Burada ücretsiz, anonim ve profesyonel destek bulabilirsin.',
+    chatTitle:'💬 Anonim Sohbet',chatSub:'Stres ve bağımlılık hakkında anonim olarak yaz – bir yapay zeka empatik ve bilgilendirici şekilde yanıt verir.',
+    chatSend:'Gönder ➤',chatPlaceholder:'Bir şeyler yaz…',
+    socialTitle:'📱 Sosyal Medyada Bizi Takip Et',socialSub:'Güncel gönderiler, deneyim raporları ve Safe Space konusunda ipuçları.',
+    notfallFab:'🆘 Acil Yardım',notfallTitle:'🆘 Acil Yardım',notfallSub:'Yalnız değilsin. Yardım ücretsiz, anonim ve gün boyu erişilebilir:',
+    blogCats:{STRESS:'STRES',SUCHT:'BAĞIMLILIK',HILFE:'YARDIM',GESUNDHEIT:'SAĞLIK',DIGITAL:'DİJİTAL',PRÄVENTION:'ÖNLEME'}
   }
 };
 
@@ -2949,8 +2988,24 @@ function setLang(lang) {
   const inp = el('communityInput');
   if (inp) inp.placeholder = t.communityPlaceholder;
 
+  // data-i18n attribute system (textContent)
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+
+  // data-i18n-placeholder (input placeholders)
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+
   // Lang button active state
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+
+  // Re-render blog so categories and "Mehr lesen" update
+  const grid = document.getElementById('blogGrid');
+  if (grid && grid.children.length > 0) { grid.innerHTML = ''; renderBlog(); }
 }
 
 // ===================== INIT ON LOAD =====================
