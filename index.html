@@ -778,17 +778,17 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
       <button class="btn btn-outline" id="heroBtn2" onclick="showSection('info')">📚 Mehr erfahren</button>
     </div>
     <div class="stats">
-      <div class="stat-card fade-in"><span class="stat-number">42%</span><span class="stat-label">der Abiturienten berichten von erhöhtem Alkoholkonsum in der Prüfungsphase</span></div>
-      <div class="stat-card fade-d1"><span class="stat-number">3h+</span><span class="stat-label">verbringen Schüler täglich auf Social Media – oft als Flucht vor Stress</span></div>
-      <div class="stat-card fade-d2"><span class="stat-number">1 von 5</span><span class="stat-label">Schüler greifen in Stresssituationen zu Energydrinks oder anderen Mitteln</span></div>
-      <div class="stat-card"><span class="stat-number">116 111</span><span class="stat-label">Kostenlose Nummer gegen Kummer – 24/7 für dich da</span></div>
+      <div class="stat-card fade-in"><span class="stat-number">42%</span><span class="stat-label" data-i18n="stat1Label">der Abiturienten berichten von erhöhtem Alkoholkonsum in der Prüfungsphase</span></div>
+      <div class="stat-card fade-d1"><span class="stat-number">3h+</span><span class="stat-label" data-i18n="stat2Label">verbringen Schüler täglich auf Social Media – oft als Flucht vor Stress</span></div>
+      <div class="stat-card fade-d2"><span class="stat-number" data-i18n="stat3Number">1 von 5</span><span class="stat-label" data-i18n="stat3Label">Schüler greifen in Stresssituationen zu Energydrinks oder anderen Mitteln</span></div>
+      <div class="stat-card"><span class="stat-number">116 111</span><span class="stat-label" data-i18n="stat4Label">Kostenlose Nummer gegen Kummer – 24/7 für dich da</span></div>
     </div>
   </div>
   <div class="container">
     <div class="section-top">
       <div class="section-header">
-        <h2>Was findest du hier?</h2>
-        <p>Diese Website wurde erstellt, um Schülerinnen und Schüler aufzuklären und zu unterstützen.</p>
+        <h2 data-i18n="homeFindsH">Was findest du hier?</h2>
+        <p data-i18n="homeFindsP">Diese Website wurde erstellt, um Schülerinnen und Schüler aufzuklären und zu unterstützen.</p>
       </div>
     </div>
     <div class="quick-nav">
@@ -804,9 +804,9 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
     </div>
     <div class="divider"></div>
     <div class="card" style="background:var(--gradient);color:#fff;text-align:center;padding:2.5rem;">
-      <h3 style="font-size:1.5rem;font-weight:800;margin-bottom:.8rem;">Du brauchst sofort Hilfe?</h3>
-      <p style="opacity:.9;margin-bottom:1.3rem;max-width:480px;margin-left:auto;margin-right:auto;">Die <strong>Telefonseelsorge</strong> ist kostenlos, anonym und 24 Stunden erreichbar.</p>
-      <a href="tel:08001110111" class="btn btn-white">📞 0800 111 0 111 – Jetzt anrufen</a>
+      <h3 style="font-size:1.5rem;font-weight:800;margin-bottom:.8rem;" data-i18n="homeNotfallH">Du brauchst sofort Hilfe?</h3>
+      <p style="opacity:.9;margin-bottom:1.3rem;max-width:480px;margin-left:auto;margin-right:auto;" data-i18n-html="homeNotfallP">Die <strong>Telefonseelsorge</strong> ist kostenlos, anonym und 24 Stunden erreichbar.</p>
+      <a href="tel:08001110111" class="btn btn-white" data-i18n="homeNotfallBtn">📞 0800 111 0 111 – Jetzt anrufen</a>
     </div>
   </div>
   <footer>
@@ -2786,6 +2786,12 @@ const LANG_DATA = {
     heroTitle:'Sucht durch<br><span style="text-decoration:underline;text-decoration-color:rgba(255,255,255,.5)">Schulstress</span><br>erkennen &amp; handeln',
     heroSubtext:'Der Druck durch das Abitur kann gefährlich werden. Lerne Warnsignale zu erkennen, mache den Selbsttest und finde Hilfe – bevor es zu spät ist.',
     heroBtn1:'✅ Zum Selbsttest',heroBtn2:'📚 Mehr erfahren',
+    stat1Label:'der Abiturienten berichten von erhöhtem Alkoholkonsum in der Prüfungsphase',
+    stat2Label:'verbringen Schüler täglich auf Social Media – oft als Flucht vor Stress',
+    stat3Number:'1 von 5',stat3Label:'Schüler greifen in Stresssituationen zu Energydrinks oder anderen Mitteln',
+    stat4Label:'Kostenlose Nummer gegen Kummer – 24/7 für dich da',
+    homeFindsH:'Was findest du hier?',homeFindsP:'Diese Website wurde erstellt, um Schülerinnen und Schüler aufzuklären und zu unterstützen.',
+    homeNotfallH:'Du brauchst sofort Hilfe?',homeNotfallP:'Die <strong>Telefonseelsorge</strong> ist kostenlos, anonym und 24 Stunden erreichbar.',homeNotfallBtn:'📞 0800 111 0 111 – Jetzt anrufen',
     qnav_info_t:'Infobereich',qnav_info_p:'Erfahre alles über Suchtverhalten, Warnsignale und wie Schulstress zur Sucht führen kann.',
     qnav_test_t:'Selbsttest',qnav_test_p:'10 Fragen, die zeigen, ob dein Verhalten problematisch ist – mit sofortiger Auswertung.',
     qnav_help_t:'Hilfe & Beratung',qnav_help_p:'Kostenlose Hotlines, Online-Beratung und echte Anlaufstellen für Jugendliche in Deutschland.',
@@ -2871,6 +2877,12 @@ const LANG_DATA = {
     heroTitle:'Recognize &amp; Act on<br><span style="text-decoration:underline;text-decoration-color:rgba(255,255,255,.5)">School Stress</span><br>Addiction',
     heroSubtext:'Exam pressure can be dangerous. Learn to recognize warning signs, take the self-test and find help – before it\'s too late.',
     heroBtn1:'✅ Take Self-Test',heroBtn2:'📚 Learn More',
+    stat1Label:'of Abitur graduates report increased alcohol consumption during exam periods',
+    stat2Label:'hours+ students spend on social media daily – often as an escape from stress',
+    stat3Number:'1 in 5',stat3Label:'of students reach for energy drinks or other substances in stressful situations',
+    stat4Label:'Free helpline – available 24/7 for you',
+    homeFindsH:'What will you find here?',homeFindsP:'This website was created to educate and support students.',
+    homeNotfallH:'Do you need help right now?',homeNotfallP:'The <strong>crisis line</strong> is free of charge, anonymous and available 24 hours.',homeNotfallBtn:'📞 0800 111 0 111 – Call now',
     qnav_info_t:'Information',qnav_info_p:'Learn everything about addictive behavior, warning signs and how school stress can lead to addiction.',
     qnav_test_t:'Self-Test',qnav_test_p:'10 questions showing whether your behavior is problematic – with instant evaluation.',
     qnav_help_t:'Help & Counseling',qnav_help_p:'Free hotlines, online counseling and real contact points for young people in Germany.',
@@ -2988,6 +3000,12 @@ const LANG_DATA = {
     heroTitle:'<span style="text-decoration:underline;text-decoration-color:rgba(255,255,255,.5)">Okul Stresi</span><br>ile Bağımlılığı<br>Tanı &amp; Harekete Geç',
     heroSubtext:'Sınav baskısı tehlikeli olabilir. Uyarı işaretlerini tanımayı öğren, öz-testi yap ve yardım bul – iş işten geçmeden önce.',
     heroBtn1:'✅ Öz-Teste Git',heroBtn2:'📚 Daha Fazla',
+    stat1Label:'Abitur mezunlarının sınav döneminde artan alkol tüketimi bildirme oranı',
+    stat2Label:'saat+ öğrencilerin günlük sosyal medyada geçirdiği süre – çoğunlukla stresten kaçmak için',
+    stat3Number:'5\'te 1',stat3Label:'öğrencinin stresli durumlarda enerji içeceğine veya başka maddelere başvurma oranı',
+    stat4Label:'Ücretsiz yardım hattı – 7/24 senin için burada',
+    homeFindsH:'Burada ne bulacaksın?',homeFindsP:'Bu web sitesi öğrencileri bilinçlendirmek ve desteklemek amacıyla oluşturulmuştur.',
+    homeNotfallH:'Hemen yardıma mı ihtiyacın var?',homeNotfallP:'<strong>Kriz hattı</strong> ücretsiz, anonim ve günde 24 saat erişilebilirdir.',homeNotfallBtn:'📞 0800 111 0 111 – Şimdi ara',
     qnav_info_t:'Bilgi Alanı',qnav_info_p:'Bağımlılık davranışı ve okul stresinin bağımlılığa nasıl yol açabileceği hakkında her şeyi öğren.',
     qnav_test_t:'Öz-Test',qnav_test_p:'Davranışının sorunlu olup olmadığını gösteren 10 soru – anında değerlendirme ile.',
     qnav_help_t:'Yardım & Danışmanlık',qnav_help_p:'Almanya\'daki gençler için ücretsiz hatlar, online danışmanlık ve gerçek destek noktaları.',
