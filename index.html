@@ -1415,7 +1415,7 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
           </div>
         </div>
         <div class="kpi-grid">
-          <div class="kpi-card kpi-purple"><div class="kpi-icon">👁️</div><div class="kpi-value" id="kpiToday">0</div><div class="kpi-label">Besucher heute</div><div class="kpi-trend" id="kpiTodayTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
+          <div class="kpi-card kpi-purple"><div class="kpi-icon">👁️</div><div class="kpi-value" id="kpiToday">0</div><div class="kpi-label">Besucher gestern</div><div class="kpi-trend" id="kpiTodayTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
           <div class="kpi-card kpi-blue"><div class="kpi-icon">📅</div><div class="kpi-value" id="kpiWeek">0</div><div class="kpi-label">Besucher diese Woche</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
           <div class="kpi-card kpi-green"><div class="kpi-icon">🌍</div><div class="kpi-value" id="kpiTotal">0</div><div class="kpi-label">Views (14 Tage)</div><div class="kpi-trend" id="kpiTotalTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
           <div class="kpi-card kpi-orange"><div class="kpi-icon">👤</div><div class="kpi-value" id="kpiUnique">0</div><div class="kpi-label">Unique Visitors (14 Tage)</div><div class="kpi-trend" id="kpiUniqueTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
@@ -1987,17 +1987,15 @@ async function updateKPIs() {
     if (uniqueEl) uniqueEl.textContent = ghData.uniques.toLocaleString('de-DE');
 
     // Besucher heute (falls noch keine Daten für heute → gestern als Fallback)
-    const todayData = ghData.views.find(v => v.timestamp.slice(0,10) === todayStr);
     const yesterdayData = ghData.views.find(v => v.timestamp.slice(0,10) === yesterdayStr);
-    const todayCount = todayData ? todayData.count : (yesterdayData ? yesterdayData.count : 0);
+    const yesterdayCount = yesterdayData ? yesterdayData.count : 0;
     const kpiTodayEl = document.getElementById('kpiToday');
-    if (kpiTodayEl) kpiTodayEl.textContent = todayCount;
+    if (kpiTodayEl) kpiTodayEl.textContent = yesterdayCount;
 
-    // Trend Text unter "Besucher heute"
     const trendEl = document.getElementById('kpiTodayTrend');
     if (trendEl) {
-      trendEl.textContent = todayCount > 0 ? '+' + todayCount + ' heute' : 'Heute noch keine Daten';
-      trendEl.style.color = todayCount > 0 ? 'var(--success)' : 'var(--text-light)';
+      trendEl.textContent = yesterdayCount > 0 ? '+' + yesterdayCount + ' gestern' : 'Gestern keine Besucher';
+      trendEl.style.color = yesterdayCount > 0 ? 'var(--success)' : 'var(--text-light)';
     }
 
     // Besucher diese Woche (letzte 7 Tage)
