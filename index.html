@@ -260,6 +260,12 @@ footer svg{display:block;margin:0 auto .8rem;}
   .container{padding:1.5rem 1rem;}
   .back-to-top{right:1rem;}
 }
+@media(max-width:768px){
+  #social{display:none;}
+  #social.active{display:block !important;}
+  .social-grid{grid-template-columns:1fr;}
+  .social-card{padding:1.2rem;}
+}
 @media(max-width:400px){
   .stat-number{font-size:clamp(1.4rem,5vw,2.2rem);}
   .stat-card{padding:1rem;}
@@ -1115,10 +1121,10 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
         <div class="embed-placeholder" id="igPlaceholder">
           <div class="p-icon">📸</div>
           <h4>Instagram-Profil</h4>
-          <p id="igPlaceholderText">Noch kein Kanal verbunden.<br>Im Admin-Bereich eintragen.</p>
+          <p id="igPlaceholderText">Profil: <strong>@safe.space0026</strong><br>Klicke unten zum Öffnen.</p>
         </div>
         <div id="igEmbedWrap" style="display:none;margin-bottom:1rem;"></div>
-        <a id="igProfileLink" href="https://www.instagram.com" target="_blank" class="help-link">📸 Instagram öffnen →</a>
+        <a id="igProfileLink" href="https://www.instagram.com/safe.space0026" target="_blank" rel="noopener noreferrer" class="help-link">📸 Instagram öffnen →</a>
       </div>
     </div>
   </div>
