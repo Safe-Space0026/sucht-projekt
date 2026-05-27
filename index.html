@@ -1378,8 +1378,7 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
         <button class="admin-nav-btn ads-off" id="adsToggleBtn" onclick="toggleAdsBtn()">Werbung AUS</button>
       </div>
       <div class="admin-topbar-right">
-        <span style="font-size:.82rem;color:var(--text-light);"><span class="realtime-dot"></span><span id="realtimeCount">0</span> aktive Besucher</span>
-        <span class="admin-badge">Admin</span>
+<span class="admin-badge">Admin</span>
         <button class="logout-btn" onclick="doLogout()">Abmelden</button>
       </div>
     </div>
@@ -2060,9 +2059,6 @@ function updateChartsWithData(data) {
     : '<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:1rem;">Noch keine Daten vorhanden.</td></tr>';
 }
 
-function simulateRealtime() {
-  document.getElementById('realtimeCount').textContent = Math.floor(Math.random()*4);
-}
 
 // ===== SOCIAL (admin) =====
 function loadSocialInputs() {
@@ -2208,8 +2204,6 @@ function initAdmin() {
   const t = document.getElementById('adsToggle');
   if (t) t.checked = adsEnabled;
   updateAdsToggleBtn();
-  setInterval(simulateRealtime, 5000);
-  simulateRealtime();
 }
 
 // ===================== CHAT =====================
