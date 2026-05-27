@@ -6,21 +6,32 @@ const SUPABASE_URL = 'https://fpvxuchllckgdrgakkow.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_EVvCBWmOyqFb5zCQ11ELNA_SATj5QX_';
 
 async function trackPageView() {
+  const sessionKey = 'ss_counted';
+  const counted = localStorage.getItem(sessionKey);
+  const expiry = counted ? parseInt(counted) : 0;
+  if (Date.now() < expiry) return;
+
   const page = window.location.pathname || '/';
-  await fetch(`${SUPABASE_URL}/rest/v1/page_views`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`
-    },
-    body: JSON.stringify({
-      page: page,
-      user_agent: navigator.userAgent,
-      referrer: document.referrer || 'direkt',
-      created_at: new Date().toISOString()
-    })
-  });
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/page_views`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      },
+      body: JSON.stringify({
+        page: page,
+        user_agent: navigator.userAgent,
+        referrer: document.referrer || 'direkt'
+      })
+    });
+    if (res.ok) {
+      localStorage.setItem(sessionKey, Date.now() + 30 * 60 * 1000);
+    }
+  } catch(e) {
+    console.warn('Tracking fehlgeschlagen:', e);
+  }
 }
 
 trackPageView();
@@ -1406,8 +1417,8 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
         <div class="kpi-grid">
           <div class="kpi-card kpi-purple"><div class="kpi-icon">👁️</div><div class="kpi-value" id="kpiToday">0</div><div class="kpi-label">Besucher heute</div><div class="kpi-trend" id="kpiTodayTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
           <div class="kpi-card kpi-blue"><div class="kpi-icon">📅</div><div class="kpi-value" id="kpiWeek">0</div><div class="kpi-label">Besucher diese Woche</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
-          <div class="kpi-card kpi-green"><div class="kpi-icon">🌍</div><div class="kpi-value" id="kpiTotal">0</div><div class="kpi-label">Gesamtbesucher</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
-          <div class="kpi-card kpi-orange"><div class="kpi-icon">⏱️</div><div class="kpi-value">0:00</div><div class="kpi-label">Ø Verweildauer (min)</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
+          <div class="kpi-card kpi-green"><div class="kpi-icon">🌍</div><div class="kpi-value" id="kpiTotal">0</div><div class="kpi-label">Views (14 Tage)</div><div class="kpi-trend" id="kpiTotalTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
+          <div class="kpi-card kpi-orange"><div class="kpi-icon">👤</div><div class="kpi-value" id="kpiUnique">0</div><div class="kpi-label">Unique Visitors (14 Tage)</div><div class="kpi-trend" id="kpiUniqueTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
           <div class="kpi-card kpi-red"><div class="kpi-icon">🚪</div><div class="kpi-value">0%</div><div class="kpi-label">Absprungrate</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
         </div>
         <div class="chart-row">
@@ -1961,6 +1972,33 @@ function initCharts() {
 }
 
 async function updateKPIs() {
+  // Load GitHub traffic data (traffic.json written daily by GitHub Action)
+  try {
+    const trafficRes = await fetch('data/traffic.json');
+    if (trafficRes.ok) {
+      const traffic = await trafficRes.json();
+      const count   = traffic.count   ?? 0;
+      const uniques = traffic.uniques ?? 0;
+      document.getElementById('kpiTotal').textContent  = count.toLocaleString('de-DE');
+      document.getElementById('kpiUnique').textContent = uniques.toLocaleString('de-DE');
+      const totalTrend  = document.getElementById('kpiTotalTrend');
+      const uniqueTrend = document.getElementById('kpiUniqueTrend');
+      if (totalTrend)  { totalTrend.textContent  = 'GitHub · letzte 14 Tage'; totalTrend.style.color  = 'var(--success)'; }
+      if (uniqueTrend) { uniqueTrend.textContent = 'GitHub · letzte 14 Tage'; uniqueTrend.style.color = 'var(--success)'; }
+    } else {
+      document.getElementById('kpiTotal').textContent  = '—';
+      document.getElementById('kpiUnique').textContent = '—';
+      const totalTrend  = document.getElementById('kpiTotalTrend');
+      const uniqueTrend = document.getElementById('kpiUniqueTrend');
+      if (totalTrend)  { totalTrend.textContent  = 'Daten werden morgen verfügbar'; totalTrend.style.color  = 'var(--text-light)'; }
+      if (uniqueTrend) { uniqueTrend.textContent = 'Daten werden morgen verfügbar'; uniqueTrend.style.color = 'var(--text-light)'; }
+    }
+  } catch(e) {
+    document.getElementById('kpiTotal').textContent  = '—';
+    document.getElementById('kpiUnique').textContent = '—';
+  }
+
+  // Load Supabase data for today / this week counts and charts
   try {
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/page_views?select=created_at,page&order=created_at.asc`,
@@ -1971,10 +2009,8 @@ async function updateKPIs() {
     const now = new Date();
     const todayStr = now.toISOString().slice(0, 10);
     const weekAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
-    const total = data.length;
     const today = data.filter(v => v.created_at && v.created_at.slice(0, 10) === todayStr).length;
     const week  = data.filter(v => v.created_at && new Date(v.created_at) >= weekAgo).length;
-    document.getElementById('kpiTotal').textContent = total.toLocaleString('de-DE');
     document.getElementById('kpiToday').textContent = today;
     document.getElementById('kpiWeek').textContent  = week;
     const trendEl = document.getElementById('kpiTodayTrend');
@@ -1985,7 +2021,7 @@ async function updateKPIs() {
     const lastEl = document.getElementById('lastUpdate');
     if (lastEl) lastEl.textContent = new Date().toLocaleString('de-DE');
     const banner = document.getElementById('noDataBanner');
-    if (banner && total > 0) banner.style.display = 'none';
+    if (banner && data.length > 0) banner.style.display = 'none';
     updateChartsWithData(data);
   } catch(e) {
     console.warn('Analytics-Fehler:', e);
