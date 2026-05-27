@@ -1973,80 +1973,59 @@ function initCharts() {
 
 async function updateKPIs() {
   try {
-  const ghRes = await fetch('/sucht-projekt/data/traffic.json');
-  if (ghRes.ok) {
+    const ghRes = await fetch('/sucht-projekt/data/traffic.json');
+    if (!ghRes.ok) throw new Error('traffic.json nicht gefunden');
     const ghData = await ghRes.json();
+
+    const todayStr = new Date().toISOString().slice(0,10);
+    const yesterdayStr = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+
+    // Gesamt-Views und Unique Visitors
     const totalEl = document.getElementById('kpiTotal');
     const uniqueEl = document.getElementById('kpiUnique');
     if (totalEl) totalEl.textContent = ghData.count.toLocaleString('de-DE');
     if (uniqueEl) uniqueEl.textContent = ghData.uniques.toLocaleString('de-DE');
-    const todayStr = new Date().toISOString().slice(0,10);
+
+    // Besucher heute (falls noch keine Daten für heute → gestern als Fallback)
     const todayData = ghData.views.find(v => v.timestamp.slice(0,10) === todayStr);
-    const todayCount = todayData ? todayData.count : 0;
+    const yesterdayData = ghData.views.find(v => v.timestamp.slice(0,10) === yesterdayStr);
+    const todayCount = todayData ? todayData.count : (yesterdayData ? yesterdayData.count : 0);
+    const kpiTodayEl = document.getElementById('kpiToday');
+    if (kpiTodayEl) kpiTodayEl.textContent = todayCount;
+
+    // Trend Text unter "Besucher heute"
     const trendEl = document.getElementById('kpiTodayTrend');
     if (trendEl) {
-      trendEl.textContent = todayCount > 0 ? '+' + todayCount + ' heute' : 'Heute noch keine Besucher';
+      trendEl.textContent = todayCount > 0 ? '+' + todayCount + ' heute' : 'Heute noch keine Daten';
       trendEl.style.color = todayCount > 0 ? 'var(--success)' : 'var(--text-light)';
     }
-  }
-} catch(e) {
-  console.warn('GitHub Traffic fetch fehlgeschlagen:', e);
-}
-  // Load GitHub traffic data (traffic.json written daily by GitHub Action)
-  try {
-    const trafficRes = await fetch('data/traffic.json');
-    if (trafficRes.ok) {
-      const traffic = await trafficRes.json();
-      const count   = traffic.count   ?? 0;
-      const uniques = traffic.uniques ?? 0;
-      document.getElementById('kpiTotal').textContent  = count.toLocaleString('de-DE');
-      document.getElementById('kpiUnique').textContent = uniques.toLocaleString('de-DE');
-      const totalTrend  = document.getElementById('kpiTotalTrend');
-      const uniqueTrend = document.getElementById('kpiUniqueTrend');
-      if (totalTrend)  { totalTrend.textContent  = 'GitHub · letzte 14 Tage'; totalTrend.style.color  = 'var(--success)'; }
-      if (uniqueTrend) { uniqueTrend.textContent = 'GitHub · letzte 14 Tage'; uniqueTrend.style.color = 'var(--success)'; }
-    } else {
-      document.getElementById('kpiTotal').textContent  = '—';
-      document.getElementById('kpiUnique').textContent = '—';
-      const totalTrend  = document.getElementById('kpiTotalTrend');
-      const uniqueTrend = document.getElementById('kpiUniqueTrend');
-      if (totalTrend)  { totalTrend.textContent  = 'Daten werden morgen verfügbar'; totalTrend.style.color  = 'var(--text-light)'; }
-      if (uniqueTrend) { uniqueTrend.textContent = 'Daten werden morgen verfügbar'; uniqueTrend.style.color = 'var(--text-light)'; }
-    }
-  } catch(e) {
-    document.getElementById('kpiTotal').textContent  = '—';
-    document.getElementById('kpiUnique').textContent = '—';
-  }
 
-  // Load Supabase data for today / this week counts and charts
-  try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/page_views?select=created_at,page&order=created_at.asc`,
-      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
-    );
-    if (!res.ok) throw new Error('fetch error ' + res.status);
-    const data = await res.json();
-    const now = new Date();
-    const todayStr = now.toISOString().slice(0, 10);
-    const weekAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
-    const today = data.filter(v => v.created_at && v.created_at.slice(0, 10) === todayStr).length;
-    const week  = data.filter(v => v.created_at && new Date(v.created_at) >= weekAgo).length;
-    document.getElementById('kpiToday').textContent = today;
-    document.getElementById('kpiWeek').textContent  = week;
-    const trendEl = document.getElementById('kpiTodayTrend');
-    if (trendEl) {
-      trendEl.textContent = today > 0 ? `+${today} heute` : 'Heute noch keine Besucher';
-      trendEl.style.color = today > 0 ? 'var(--success)' : 'var(--text-light)';
-    }
+    // Besucher diese Woche (letzte 7 Tage)
+    const weekAgo = new Date(Date.now() - 7 * 86400000).toISOString().slice(0,10);
+    const weekCount = ghData.views
+      .filter(v => v.timestamp.slice(0,10) >= weekAgo)
+      .reduce((sum, v) => sum + v.count, 0);
+    const kpiWeekEl = document.getElementById('kpiWeek');
+    if (kpiWeekEl) kpiWeekEl.textContent = weekCount.toLocaleString('de-DE');
+
+    // Letztes Update
     const lastEl = document.getElementById('lastUpdate');
     if (lastEl) lastEl.textContent = new Date().toLocaleString('de-DE');
+
+    // noDataBanner verstecken
     const banner = document.getElementById('noDataBanner');
-    if (banner && data.length > 0) banner.style.display = 'none';
-    updateChartsWithData(data);
+    if (banner && ghData.count > 0) banner.style.display = 'none';
+
+    // Charts mit GitHub Daten befüllen
+    updateChartsWithData(ghData.views.map(v => ({ timestamp: v.timestamp, created_at: v.timestamp })));
+
   } catch(e) {
     console.warn('Analytics-Fehler:', e);
     const trendEl = document.getElementById('kpiTodayTrend');
-    if (trendEl) { trendEl.textContent = 'Fehler beim Laden'; trendEl.style.color = 'var(--danger)'; }
+    if (trendEl) {
+      trendEl.textContent = 'Daten werden um 12:00 Uhr aktualisiert';
+      trendEl.style.color = 'var(--text-light)';
+    }
   }
 }
 
