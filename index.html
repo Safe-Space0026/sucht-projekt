@@ -1972,6 +1972,26 @@ function initCharts() {
 }
 
 async function updateKPIs() {
+  try {
+  const ghRes = await fetch('/sucht-projekt/data/traffic.json');
+  if (ghRes.ok) {
+    const ghData = await ghRes.json();
+    const totalEl = document.getElementById('kpiTotal');
+    const uniqueEl = document.getElementById('kpiUnique');
+    if (totalEl) totalEl.textContent = ghData.count.toLocaleString('de-DE');
+    if (uniqueEl) uniqueEl.textContent = ghData.uniques.toLocaleString('de-DE');
+    const todayStr = new Date().toISOString().slice(0,10);
+    const todayData = ghData.views.find(v => v.timestamp.slice(0,10) === todayStr);
+    const todayCount = todayData ? todayData.count : 0;
+    const trendEl = document.getElementById('kpiTodayTrend');
+    if (trendEl) {
+      trendEl.textContent = todayCount > 0 ? '+' + todayCount + ' heute' : 'Heute noch keine Besucher';
+      trendEl.style.color = todayCount > 0 ? 'var(--success)' : 'var(--text-light)';
+    }
+  }
+} catch(e) {
+  console.warn('GitHub Traffic fetch fehlgeschlagen:', e);
+}
   // Load GitHub traffic data (traffic.json written daily by GitHub Action)
   try {
     const trafficRes = await fetch('data/traffic.json');
