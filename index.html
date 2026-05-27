@@ -1688,36 +1688,42 @@ function extractYtId(input) {
 
 // ===== QUIZ =====
 const questions = [
-  {text:"Greifst du während intensiver Lernphasen zu Energydrinks oder Koffeinprodukten?",opts:["Nie","Manchmal (1–2×/Woche)","Oft (3–4×/Woche)","Fast täglich"]},
-  {text:"Nutzt du Alkohol, Gaming oder Social Media, um Schulstress oder Prüfungsangst zu vergessen?",opts:["Nie","Manchmal","Häufig","Fast immer"]},
-  {text:"Wie viele Stunden verbringst du täglich auf Social Media – auch während Lernphasen?",opts:["Unter 1 Stunde","1–2 Stunden","3–4 Stunden","Mehr als 4 Stunden"]},
-  {text:"Hast du das Gefühl, ohne Handy oder bestimmte Mittel nicht lernen oder entspannen zu können?",opts:["Nein, gar nicht","Gelegentlich","Oft","Fast immer"]},
-  {text:"Schläfst du wegen Lernen oder Medienkonsum regelmäßig weniger als 6 Stunden pro Nacht?",opts:["Nein","Selten (1–2×/Monat)","Manchmal (1–2×/Woche)","Häufig / fast täglich"]},
-  {text:"Vernachlässigst du Freundschaften oder Hobbys aufgrund von Stress oder Medienkonsum?",opts:["Nein","Selten","Manchmal","Oft / sehr oft"]},
-  {text:"Wirst du unruhig oder gereizt, wenn du dein Handy nicht nutzen kannst?",opts:["Nein, gar nicht","Selten und nur leicht","Manchmal spürbar","Ja, deutlich / sehr oft"]},
-  {text:"Hast du schon versucht, deinen Konsum zu reduzieren – aber hattest Schwierigkeiten dabei?",opts:["Nie nötig gehabt","Einmal, es gelang gut","Versucht, aber schwer","Oft versucht, meistens gescheitert"]},
-  {text:"Denkst du häufig an Ablenkungen (Gaming, Social Media), wenn du eigentlich lernen solltest?",opts:["Nein","Gelegentlich","Häufig","Fast ständig"]},
-  {text:"Beeinflussen Stress und dein Umgang damit deine Leistungen oder dein Wohlbefinden negativ?",opts:["Nein, gar nicht","Leicht, aber ok","Ja, merklich","Ja, sehr stark"]}
+  {text:"Greifst du während intensiver Lernphasen zu Energydrinks oder Koffeinprodukten?",opts:["Nie","Manchmal (1–2×/Woche)","Oft (3–4×/Woche)","Fast täglich"],i18n:{en:{text:"Do you reach for energy drinks or caffeine products during intense study periods?",opts:["Never","Sometimes (1–2×/week)","Often (3–4×/week)","Almost daily"]},tr:{text:"Yoğun çalışma dönemlerinde enerji içeceği veya kafein ürünlerine başvuruyor musun?",opts:["Asla","Bazen (haftada 1–2×)","Sık (haftada 3–4×)","Neredeyse her gün"]}}},
+  {text:"Nutzt du Alkohol, Gaming oder Social Media, um Schulstress oder Prüfungsangst zu vergessen?",opts:["Nie","Manchmal","Häufig","Fast immer"],i18n:{en:{text:"Do you use alcohol, gaming or social media to forget school stress or exam anxiety?",opts:["Never","Sometimes","Often","Almost always"]},tr:{text:"Okul stresini veya sınav kaygısını unutmak için alkol, oyun veya sosyal medya kullanıyor musun?",opts:["Asla","Bazen","Sık sık","Neredeyse her zaman"]}}},
+  {text:"Wie viele Stunden verbringst du täglich auf Social Media – auch während Lernphasen?",opts:["Unter 1 Stunde","1–2 Stunden","3–4 Stunden","Mehr als 4 Stunden"],i18n:{en:{text:"How many hours do you spend on social media per day – even during study periods?",opts:["Under 1 hour","1–2 hours","3–4 hours","More than 4 hours"]},tr:{text:"Çalışma dönemlerinde bile günde kaç saat sosyal medyada zaman harcıyorsun?",opts:["1 saatten az","1–2 saat","3–4 saat","4 saatten fazla"]}}},
+  {text:"Hast du das Gefühl, ohne Handy oder bestimmte Mittel nicht lernen oder entspannen zu können?",opts:["Nein, gar nicht","Gelegentlich","Oft","Fast immer"],i18n:{en:{text:"Do you feel like you can't study or relax without your phone or certain substances?",opts:["No, not at all","Occasionally","Often","Almost always"]},tr:{text:"Telefonsuz veya belirli maddeler olmadan çalışamayacağını ya da dinlenemeyeceğini hissediyor musun?",opts:["Hayır, hiç","Arada bir","Sık sık","Neredeyse her zaman"]}}},
+  {text:"Schläfst du wegen Lernen oder Medienkonsum regelmäßig weniger als 6 Stunden pro Nacht?",opts:["Nein","Selten (1–2×/Monat)","Manchmal (1–2×/Woche)","Häufig / fast täglich"],i18n:{en:{text:"Do you regularly sleep less than 6 hours per night due to studying or media use?",opts:["No","Rarely (1–2×/month)","Sometimes (1–2×/week)","Often / almost daily"]},tr:{text:"Çalışma veya medya kullanımı nedeniyle düzenli olarak gecede 6 saatten az uyuyor musun?",opts:["Hayır","Nadiren (ayda 1–2×)","Bazen (haftada 1–2×)","Sık sık / neredeyse her gün"]}}},
+  {text:"Vernachlässigst du Freundschaften oder Hobbys aufgrund von Stress oder Medienkonsum?",opts:["Nein","Selten","Manchmal","Oft / sehr oft"],i18n:{en:{text:"Do you neglect friendships or hobbies due to stress or media use?",opts:["No","Rarely","Sometimes","Often / very often"]},tr:{text:"Stres veya medya kullanımı nedeniyle arkadaşlıkları veya hobileri ihmal ediyor musun?",opts:["Hayır","Nadiren","Bazen","Sık sık / çok sık"]}}},
+  {text:"Wirst du unruhig oder gereizt, wenn du dein Handy nicht nutzen kannst?",opts:["Nein, gar nicht","Selten und nur leicht","Manchmal spürbar","Ja, deutlich / sehr oft"],i18n:{en:{text:"Do you become restless or irritable when you can't use your phone?",opts:["No, not at all","Rarely and only slightly","Sometimes noticeably","Yes, clearly / very often"]},tr:{text:"Telefonunu kullanamadığında huzursuz veya sinirli oluyor musun?",opts:["Hayır, hiç","Nadiren ve sadece hafifçe","Bazen fark edilir şekilde","Evet, açıkça / çok sık"]}}},
+  {text:"Hast du schon versucht, deinen Konsum zu reduzieren – aber hattest Schwierigkeiten dabei?",opts:["Nie nötig gehabt","Einmal, es gelang gut","Versucht, aber schwer","Oft versucht, meistens gescheitert"],i18n:{en:{text:"Have you tried to reduce your usage – but had difficulties?",opts:["Never needed to","Once, it worked well","Tried, but difficult","Often tried, mostly failed"]},tr:{text:"Kullanımını azaltmaya çalıştın mı ama güçlük yaşadın mı?",opts:["Hiç ihtiyaç duymadım","Bir kez, iyi gitti","Denedim ama zor","Sık denedim, çoğunlukla başarısız oldum"]}}},
+  {text:"Denkst du häufig an Ablenkungen (Gaming, Social Media), wenn du eigentlich lernen solltest?",opts:["Nein","Gelegentlich","Häufig","Fast ständig"],i18n:{en:{text:"Do you frequently think about distractions (gaming, social media) when you should be studying?",opts:["No","Occasionally","Often","Almost constantly"]},tr:{text:"Çalışman gerektiğinde sık sık dikkat dağıtıcı şeyler (oyun, sosyal medya) hakkında mı düşünüyorsun?",opts:["Hayır","Arada bir","Sık sık","Neredeyse sürekli"]}}},
+  {text:"Beeinflussen Stress und dein Umgang damit deine Leistungen oder dein Wohlbefinden negativ?",opts:["Nein, gar nicht","Leicht, aber ok","Ja, merklich","Ja, sehr stark"],i18n:{en:{text:"Do stress and your way of dealing with it negatively affect your performance or wellbeing?",opts:["No, not at all","Slightly, but ok","Yes, noticeably","Yes, very strongly"]},tr:{text:"Stres ve bununla başa çıkma şeklin performansını veya iyiliğini olumsuz etkiliyor mu?",opts:["Hayır, hiç","Hafifçe, ama tamam","Evet, fark edilir şekilde","Evet, çok güçlü"]}}}
 ];
 let curQ = 0, answers = new Array(10).fill(null);
 const emojis = ['😌','🤔','😟','😰'];
 
 function renderQuiz() {
   const d = document.getElementById('quizDisplay');
-  d.innerHTML = questions.map((q,i) => `
+  const t = LANG_DATA[currentLang] || LANG_DATA.de;
+  d.innerHTML = questions.map((q,i) => {
+    const qL = (currentLang !== 'de' && q.i18n && q.i18n[currentLang]) ? q.i18n[currentLang] : null;
+    const qText = qL ? qL.text : q.text;
+    const qOpts = qL ? qL.opts : q.opts;
+    return `
     <div class="quiz-q${i===0?' visible':''}" id="q${i}">
-      <h3><span class="q-num">${i+1}</span>${q.text}</h3>
+      <h3><span class="q-num">${i+1}</span>${qText}</h3>
       <div class="quiz-opts">
-        ${q.opts.map((o,j) => `<button class="quiz-opt${answers[i]===j?' selected':''}" onclick="selectAns(${i},${j})">${emojis[j]} ${o}</button>`).join('')}
+        ${qOpts.map((o,j) => `<button class="quiz-opt${answers[i]===j?' selected':''}" onclick="selectAns(${i},${j})">${emojis[j]} ${o}</button>`).join('')}
       </div>
       <div class="quiz-nav">
-        <button class="btn btn-outline" style="color:var(--primary);border-color:var(--primary);${i===0?'visibility:hidden':''}" onclick="prevQ()">← Zurück</button>
-        <span class="quiz-counter">Frage ${i+1} von ${questions.length}</span>
+        <button class="btn btn-outline" style="color:var(--primary);border-color:var(--primary);${i===0?'visibility:hidden':''}" onclick="prevQ()">${t.quizBack||'← Zurück'}</button>
+        <span class="quiz-counter">${(t.quizOf||'Frage {n} von {total}').replace('{n}',i+1).replace('{total}',questions.length)}</span>
         ${i<questions.length-1
-          ? `<button class="btn btn-primary" onclick="nextQ()" id="nextBtn${i}" ${answers[i]===null?'disabled style="opacity:.5;cursor:not-allowed"':''}>Weiter →</button>`
-          : `<button class="btn btn-primary" onclick="showResult()" id="nextBtn${i}" ${answers[i]===null?'disabled style="opacity:.5;cursor:not-allowed"':''}>Auswertung →</button>`}
+          ? `<button class="btn btn-primary" onclick="nextQ()" id="nextBtn${i}" ${answers[i]===null?'disabled style="opacity:.5;cursor:not-allowed"':''}>${t.quizNext||'Weiter →'}</button>`
+          : `<button class="btn btn-primary" onclick="showResult()" id="nextBtn${i}" ${answers[i]===null?'disabled style="opacity:.5;cursor:not-allowed"':''}>${t.quizEval||'Auswertung →'}</button>`}
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function selectAns(qi, ai) {
@@ -1739,19 +1745,23 @@ function prevQ() { if(curQ>0) showQ(curQ-1); }
 
 function showResult() {
   const total = answers.reduce((s,a) => s+(a||0), 0);
+  const t = LANG_DATA[currentLang] || LANG_DATA.de;
   let level, emoji, title, text, tips;
   if(total<=9){
-    level='green';emoji='✅';title='Kein auffälliges Suchtverhalten';
-    text='Dein Ergebnis zeigt keine besorgniserregenden Anzeichen. Du scheinst einen gesunden Umgang mit Stress zu haben.';
-    tips='<h4>✅ Deine Tipps:</h4><ul><li>Behalte deinen gesunden Lebensstil bei</li><li>Achte weiterhin auf 7–9h Schlaf und regelmäßige Bewegung</li><li>Sprich mit Freunden über gesunden Stressabbau</li></ul>';
+    level='green';emoji='✅';
+    title=t.resultGreenTitle||'Kein auffälliges Suchtverhalten';
+    text=t.resultGreenText||'Dein Ergebnis zeigt keine besorgniserregenden Anzeichen. Du scheinst einen gesunden Umgang mit Stress zu haben.';
+    tips=t.resultGreenTips||'<h4>✅ Deine Tipps:</h4><ul><li>Behalte deinen gesunden Lebensstil bei</li><li>Achte weiterhin auf 7–9h Schlaf und regelmäßige Bewegung</li><li>Sprich mit Freunden über gesunden Stressabbau</li></ul>';
   } else if(total<=19){
-    level='yellow';emoji='⚠️';title='Erste Warnsignale erkennbar';
-    text='Dein Ergebnis zeigt erste Anzeichen, die Aufmerksamkeit verdienen. Noch keine ausgewachsene Sucht – aber du solltest deinen Umgang mit Stress bewusster betrachten.';
-    tips='<h4>⚠️ Deine Tipps:</h4><ul><li>Führe 1 Woche ein Konsum-Tagebuch – Bewusstsein ist der erste Schritt</li><li>Ersetze eine Stressreaktion durch Sport oder Atemübungen</li><li>Setze dir klare Screen-Time-Limits (z.B. kein Handy nach 22 Uhr)</li><li>Erwäge ein anonymes Beratungsgespräch</li></ul>';
+    level='yellow';emoji='⚠️';
+    title=t.resultYellowTitle||'Erste Warnsignale erkennbar';
+    text=t.resultYellowText||'Dein Ergebnis zeigt erste Anzeichen, die Aufmerksamkeit verdienen. Noch keine ausgewachsene Sucht – aber du solltest deinen Umgang mit Stress bewusster betrachten.';
+    tips=t.resultYellowTips||'<h4>⚠️ Deine Tipps:</h4><ul><li>Führe 1 Woche ein Konsum-Tagebuch – Bewusstsein ist der erste Schritt</li><li>Ersetze eine Stressreaktion durch Sport oder Atemübungen</li><li>Setze dir klare Screen-Time-Limits (z.B. kein Handy nach 22 Uhr)</li><li>Erwäge ein anonymes Beratungsgespräch</li></ul>';
   } else {
-    level='red';emoji='🆘';title='Bitte suche dir Hilfe';
-    text='Dein Ergebnis zeigt deutliche Anzeichen. Das ist kein Grund zur Panik, aber ein klares Signal: Hol dir professionelle Unterstützung – das ist Mut, nicht Schwäche.';
-    tips='<h4>🆘 Deine nächsten Schritte:</h4><ul><li><strong>Heute noch:</strong> Ruf die Telefonseelsorge an: <strong>0800 111 0 111</strong></li><li><strong>Für Jugendliche:</strong> Nummer gegen Kummer: <strong>116 111</strong></li><li>Sprich mit Eltern oder dem Schulberater</li><li>Besuche drugcom.de für Online-Beratung</li></ul>';
+    level='red';emoji='🆘';
+    title=t.resultRedTitle||'Bitte suche dir Hilfe';
+    text=t.resultRedText||'Dein Ergebnis zeigt deutliche Anzeichen. Das ist kein Grund zur Panik, aber ein klares Signal: Hol dir professionelle Unterstützung – das ist Mut, nicht Schwäche.';
+    tips=t.resultRedTips||'<h4>🆘 Deine nächsten Schritte:</h4><ul><li><strong>Heute noch:</strong> Ruf die Telefonseelsorge an: <strong>0800 111 0 111</strong></li><li><strong>Für Jugendliche:</strong> Nummer gegen Kummer: <strong>116 111</strong></li><li>Sprich mit Eltern oder dem Schulberater</li><li>Besuche drugcom.de für Online-Beratung</li></ul>';
   }
   document.getElementById('quizDisplay').style.display='none';
   const r = document.getElementById('quizResult');
@@ -2315,165 +2325,79 @@ function sendSuggestion(text) {
 function initChat() {
   const box = document.getElementById('chatMessages');
   if (box.children.length > 0) return;
+  const t = LANG_DATA[currentLang] || LANG_DATA.de;
   setTimeout(() => {
-    appendChatMsg('Hallo! 👋 Ich bin der Safe-Space-Bot. Du kannst anonym mit mir über Stress, Sucht oder alles sprechen, was dich beschäftigt. <strong>Wie geht es dir heute?</strong>', 'bot');
+    appendChatMsg(t.chatWelcome || 'Hallo! 👋 Ich bin der Safe-Space-Bot. Du kannst anonym mit mir über Stress, Sucht oder alles sprechen, was dich beschäftigt. <strong>Wie geht es dir heute?</strong>', 'bot');
   }, 300);
 }
 
 // ===================== BLOG =====================
 const BLOG_ARTICLES = [
   {
-    id: 1,
-    emoji: '🧠',
-    bg: 'linear-gradient(135deg,#e8f4fd,#d1ecf1)',
-    cat: 'STRESS',
+    id: 1, emoji: '🧠', bg: 'linear-gradient(135deg,#e8f4fd,#d1ecf1)', cat: 'STRESS',
     title: 'Stressbewältigung im Abitur',
     excerpt: 'Prüfungsdruck, Zeitdruck, Erwartungsdruck – wie du gesund durch die Abiturphase kommst.',
     date: '15. Mai 2025',
-    content: `
-      <h3>Warum Stress im Abitur so belastend ist</h3>
-      <p>Das Abitur ist für viele Schülerinnen und Schüler die stressigste Phase ihrer Schulzeit. Hohe Erwartungen von Eltern, Lehrern und der eigenen Person können sich zu einem erdrückenden Druck aufstauen.</p>
-      <div class="highlight">💡 Wusstest du? Moderater Stress kann die Leistung sogar verbessern – aber chronischer Stress schadet Körper und Geist.</div>
-      <h3>Praktische Strategien gegen Prüfungsstress</h3>
-      <ul>
-        <li><strong>Pomodoro-Technik:</strong> 25 Minuten konzentriert lernen, 5 Minuten Pause.</li>
-        <li><strong>Bewegung:</strong> Schon 20 Minuten Spaziergang täglich reduziert Cortisol (Stresshormon) messbar.</li>
-        <li><strong>Zeitplanung:</strong> Erstelle einen realistischen Lernplan – und plane bewusst Freizeit ein.</li>
-        <li><strong>Schlaf nicht opfern:</strong> Im Schlaf wird das Gelernte im Gedächtnis gefestigt.</li>
-        <li><strong>Soziale Kontakte:</strong> Isolation verstärkt Stress – halte den Kontakt zu Freunden aufrecht.</li>
-      </ul>
-      <h3>Wann Stress zur Gefahr wird</h3>
-      <p>Wenn Schlafstörungen, anhaltende Reizbarkeit, körperliche Beschwerden oder Panikattacken auftreten, solltest du professionelle Hilfe suchen. Die Telefonseelsorge (0800 111 0 111) ist kostenlos erreichbar.</p>
-    `
+    content: `<h3>Warum Stress im Abitur so belastend ist</h3><p>Das Abitur ist für viele Schülerinnen und Schüler die stressigste Phase ihrer Schulzeit. Hohe Erwartungen von Eltern, Lehrern und der eigenen Person können sich zu einem erdrückenden Druck aufstauen.</p><div class="highlight">💡 Wusstest du? Moderater Stress kann die Leistung sogar verbessern – aber chronischer Stress schadet Körper und Geist.</div><h3>Praktische Strategien gegen Prüfungsstress</h3><ul><li><strong>Pomodoro-Technik:</strong> 25 Minuten konzentriert lernen, 5 Minuten Pause.</li><li><strong>Bewegung:</strong> Schon 20 Minuten Spaziergang täglich reduziert Cortisol messbar.</li><li><strong>Zeitplanung:</strong> Erstelle einen realistischen Lernplan – und plane bewusst Freizeit ein.</li><li><strong>Schlaf nicht opfern:</strong> Im Schlaf wird das Gelernte im Gedächtnis gefestigt.</li><li><strong>Soziale Kontakte:</strong> Isolation verstärkt Stress – halte den Kontakt zu Freunden aufrecht.</li></ul><h3>Wann Stress zur Gefahr wird</h3><p>Wenn Schlafstörungen, anhaltende Reizbarkeit, körperliche Beschwerden oder Panikattacken auftreten, solltest du professionelle Hilfe suchen. Die Telefonseelsorge (0800 111 0 111) ist kostenlos erreichbar.</p>`,
+    i18n:{
+      en:{title:'Stress Management in Final Exams',excerpt:'Exam pressure, time pressure, expectation pressure – how to stay healthy through the final exam phase.',date:'May 15, 2025',content:`<h3>Why stress during final exams is so burdensome</h3><p>The final exams are for many students the most stressful phase of their school years. High expectations from parents, teachers and yourself can build up into overwhelming pressure.</p><div class="highlight">💡 Did you know? Moderate stress can actually improve performance – but chronic stress damages both body and mind.</div><h3>Practical strategies against exam stress</h3><ul><li><strong>Pomodoro Technique:</strong> 25 minutes focused studying, 5 minutes break.</li><li><strong>Exercise:</strong> Even 20 minutes of walking daily measurably reduces cortisol (the stress hormone).</li><li><strong>Time planning:</strong> Create a realistic study plan – and consciously plan leisure time.</li><li><strong>Don't sacrifice sleep:</strong> During sleep, what you've learned is consolidated in memory.</li><li><strong>Social contacts:</strong> Isolation amplifies stress – maintain contact with friends.</li></ul><h3>When stress becomes dangerous</h3><p>If sleep disorders, persistent irritability, physical complaints or panic attacks occur, you should seek professional help. The Telefonseelsorge (0800 111 0 111) is available for free.</p>`},
+      tr:{title:'Sınavlarda Stres Yönetimi',excerpt:'Sınav baskısı, zaman baskısı, beklenti baskısı – final sınavı dönemini sağlıklı geçirmenin yolları.',date:'15 Mayıs 2025',content:`<h3>Sınav döneminde stres neden bu kadar bunaltıcı?</h3><p>Final sınavları pek çok öğrenci için okul hayatının en stresli dönemidir. Ebeveynlerden, öğretmenlerden ve kendinizden gelen yüksek beklentiler ezici bir baskı haline gelebilir.</p><div class="highlight">💡 Biliyor muydun? Orta düzeyde stres performansı artırabilir – ancak kronik stres hem bedeni hem zihni zedeler.</div><h3>Sınav stresine karşı pratik stratejiler</h3><ul><li><strong>Pomodoro Tekniği:</strong> 25 dakika odaklı çalışma, 5 dakika mola.</li><li><strong>Egzersiz:</strong> Günde yalnızca 20 dakika yürüyüş kortizol seviyesini ölçülebilir şekilde düşürür.</li><li><strong>Zaman planlaması:</strong> Gerçekçi bir çalışma planı oluştur – ve bilinçli olarak boş zaman planla.</li><li><strong>Uykudan ödün verme:</strong> Uyku sırasında öğrenilen bilgiler hafızada pekişir.</li><li><strong>Sosyal ilişkiler:</strong> Yalnızlık stresi artırır – arkadaşlarınla iletişimi sürdür.</li></ul><h3>Stres ne zaman tehlikeli olur?</h3><p>Uyku bozuklukları, süregelen sinirlilik, bedensel şikayetler veya panik ataklar yaşanıyorsa profesyonel yardım aranmalıdır. Telefonseelsorge (0800 111 0 111) ücretsiz ulaşılabilir.</p>`}
+    }
   },
   {
-    id: 2,
-    emoji: '🔍',
-    bg: 'linear-gradient(135deg,#fff0f5,#fce4ec)',
-    cat: 'SUCHT',
+    id: 2, emoji: '🔍', bg: 'linear-gradient(135deg,#fff0f5,#fce4ec)', cat: 'SUCHT',
     title: 'Anzeichen von Suchtverhalten erkennen',
     excerpt: 'Wie erkennst du, ob du oder jemand aus deinem Umfeld ein Suchtproblem entwickelt?',
     date: '10. Mai 2025',
-    content: `
-      <h3>Was ist Sucht?</h3>
-      <p>Sucht ist ein zwanghaftes Verlangen nach einer Substanz oder einem Verhalten, trotz negativer Konsequenzen. Das Gehirn wird auf Belohnung konditioniert – ähnlich wie ein Reflex, der sich immer stärker einprägt.</p>
-      <h3>Frühwarnsignale</h3>
-      <ul>
-        <li>Du brauchst die Substanz/das Verhalten, um dich "normal" zu fühlen</li>
-        <li>Du denkst häufig daran, auch wenn du es nicht willst</li>
-        <li>Du vernachlässigst andere Aktivitäten und soziale Kontakte</li>
-        <li>Du versteckst deinen Konsum oder lügst darüber</li>
-        <li>Versuche aufzuhören scheitern immer wieder</li>
-        <li>Entzugssymptome bei Abstinenz (Unruhe, Reizbarkeit, Schlafprobleme)</li>
-      </ul>
-      <div class="highlight">⚠️ Sucht ist keine Charakterschwäche – sie ist eine Erkrankung, die behandelt werden kann.</div>
-      <h3>Was tun?</h3>
-      <p>Wenn du Anzeichen bei dir oder anderen erkennst: Sprich mit jemandem dem du vertraust, oder ruf die BZgA-Hotline an: <strong>0800 1 31 20 00</strong> (kostenlos, anonym).</p>
-    `
+    content: `<h3>Was ist Sucht?</h3><p>Sucht ist ein zwanghaftes Verlangen nach einer Substanz oder einem Verhalten, trotz negativer Konsequenzen. Das Gehirn wird auf Belohnung konditioniert – ähnlich wie ein Reflex, der sich immer stärker einprägt.</p><h3>Frühwarnsignale</h3><ul><li>Du brauchst die Substanz/das Verhalten, um dich "normal" zu fühlen</li><li>Du denkst häufig daran, auch wenn du es nicht willst</li><li>Du vernachlässigst andere Aktivitäten und soziale Kontakte</li><li>Du versteckst deinen Konsum oder lügst darüber</li><li>Versuche aufzuhören scheitern immer wieder</li><li>Entzugssymptome bei Abstinenz (Unruhe, Reizbarkeit, Schlafprobleme)</li></ul><div class="highlight">⚠️ Sucht ist keine Charakterschwäche – sie ist eine Erkrankung, die behandelt werden kann.</div><h3>Was tun?</h3><p>Wenn du Anzeichen bei dir oder anderen erkennst: Sprich mit jemandem dem du vertraust, oder ruf die BZgA-Hotline an: <strong>0800 1 31 20 00</strong> (kostenlos, anonym).</p>`,
+    i18n:{
+      en:{title:'Recognizing Signs of Addictive Behavior',excerpt:'How do you recognize whether you or someone you know is developing an addiction problem?',date:'May 10, 2025',content:`<h3>What is addiction?</h3><p>Addiction is a compulsive craving for a substance or behavior, despite negative consequences. The brain is conditioned toward reward – similar to a reflex that imprints itself more and more strongly.</p><h3>Early warning signs</h3><ul><li>You need the substance/behavior to feel "normal"</li><li>You think about it frequently, even when you don't want to</li><li>You neglect other activities and social contacts</li><li>You hide your usage or lie about it</li><li>Attempts to stop repeatedly fail</li><li>Withdrawal symptoms during abstinence (restlessness, irritability, sleep problems)</li></ul><div class="highlight">⚠️ Addiction is not a character weakness – it is a condition that can be treated.</div><h3>What to do?</h3><p>If you recognize signs in yourself or others: Talk to someone you trust, or call the BZgA hotline: <strong>0800 1 31 20 00</strong> (free, anonymous).</p>`},
+      tr:{title:'Bağımlılık Belirtilerini Tanımak',excerpt:'Sende veya çevrende bir bağımlılık sorununun gelişip gelişmediğini nasıl anlarsın?',date:'10 Mayıs 2025',content:`<h3>Bağımlılık nedir?</h3><p>Bağımlılık, olumsuz sonuçlara rağmen bir madde veya davranışa yönelik zorlayıcı bir istemdir. Beyin, giderek daha güçlü yerleşen bir ödül sistemiyle koşullanır.</p><h3>Erken uyarı işaretleri</h3><ul><li>Kendini "normal" hissetmek için maddeye/davranışa ihtiyaç duyuyorsun</li><li>İstemesen de sık sık aklına geliyor</li><li>Diğer aktiviteleri ve sosyal ilişkileri ihmal ediyorsun</li><li>Kullanımını gizliyor ya da hakkında yalan söylüyorsun</li><li>Bırakma girişimleri defalarca başarısız oluyor</li><li>Devamsızlık sırasında yoksunluk belirtileri (huzursuzluk, sinirlilik, uyku sorunları)</li></ul><div class="highlight">⚠️ Bağımlılık bir karakter zayıflığı değil – tedavi edilebilen bir hastalıktır.</div><h3>Ne yapmalı?</h3><p>Sende veya başkasında belirtiler fark edersen: Güvendiğin biriyle konuş ya da BZgA hattını ara: <strong>0800 1 31 20 00</strong> (ücretsiz, anonim).</p>`}
+    }
   },
   {
-    id: 3,
-    emoji: '🤝',
-    bg: 'linear-gradient(135deg,#f0fff4,#d4edda)',
-    cat: 'HILFE',
+    id: 3, emoji: '🤝', bg: 'linear-gradient(135deg,#f0fff4,#d4edda)', cat: 'HILFE',
     title: 'Wie du professionelle Hilfe findest',
     excerpt: 'Der erste Schritt zur Hilfe ist oft der schwerste. Wir zeigen dir, wo du anonym Unterstützung bekommst.',
     date: '5. Mai 2025',
-    content: `
-      <h3>Warum viele zögern, Hilfe zu suchen</h3>
-      <p>Scham, Angst vor Stigmatisierung oder die Sorge, nicht ernst genommen zu werden – viele Jugendliche warten zu lange. Dabei gilt: Je früher Hilfe, desto besser die Chancen.</p>
-      <h3>Kostenlose Anlaufstellen</h3>
-      <ul>
-        <li>🟢 <strong>Telefonseelsorge:</strong> 0800 111 0 111 – 24/7, kostenlos, anonym</li>
-        <li>🟢 <strong>Nummer gegen Kummer:</strong> 116 111 – speziell für Jugendliche</li>
-        <li>🟢 <strong>BZgA-Suchthotline:</strong> 0800 1 31 20 00 – für Suchtfragen</li>
-        <li>🟢 <strong>Online-Chat:</strong> nummergegenkummer.de – für alle die lieber schreiben</li>
-      </ul>
-      <div class="highlight">💙 Hilfe zu suchen ist ein Zeichen von Stärke – nicht von Schwäche.</div>
-      <h3>Der erste Schritt</h3>
-      <p>Ruf einfach an – du musst noch nichts entschieden haben. Du kannst einfach erzählen, wie es dir geht. Die Berater/-innen urteilen nicht und sind zur Schweigepflicht verpflichtet.</p>
-    `
+    content: `<h3>Warum viele zögern, Hilfe zu suchen</h3><p>Scham, Angst vor Stigmatisierung oder die Sorge, nicht ernst genommen zu werden – viele Jugendliche warten zu lange. Dabei gilt: Je früher Hilfe, desto besser die Chancen.</p><h3>Kostenlose Anlaufstellen</h3><ul><li>🟢 <strong>Telefonseelsorge:</strong> 0800 111 0 111 – 24/7, kostenlos, anonym</li><li>🟢 <strong>Nummer gegen Kummer:</strong> 116 111 – speziell für Jugendliche</li><li>🟢 <strong>BZgA-Suchthotline:</strong> 0800 1 31 20 00 – für Suchtfragen</li><li>🟢 <strong>Online-Chat:</strong> nummergegenkummer.de – für alle die lieber schreiben</li></ul><div class="highlight">💙 Hilfe zu suchen ist ein Zeichen von Stärke – nicht von Schwäche.</div><h3>Der erste Schritt</h3><p>Ruf einfach an – du musst noch nichts entschieden haben. Du kannst einfach erzählen, wie es dir geht. Die Berater/-innen urteilen nicht und sind zur Schweigepflicht verpflichtet.</p>`,
+    i18n:{
+      en:{title:'How to Find Professional Help',excerpt:'The first step toward help is often the hardest. We show you where to get anonymous support.',date:'May 5, 2025',content:`<h3>Why many people hesitate to seek help</h3><p>Shame, fear of stigmatization or the worry of not being taken seriously – many young people wait too long. The earlier the help, the better the chances.</p><h3>Free contact points</h3><ul><li>🟢 <strong>Telefonseelsorge:</strong> 0800 111 0 111 – 24/7, free, anonymous</li><li>🟢 <strong>Nummer gegen Kummer:</strong> 116 111 – especially for young people</li><li>🟢 <strong>BZgA Addiction Hotline:</strong> 0800 1 31 20 00 – for addiction questions</li><li>🟢 <strong>Online Chat:</strong> nummergegenkummer.de – for those who prefer to write</li></ul><div class="highlight">💙 Seeking help is a sign of strength – not weakness.</div><h3>The first step</h3><p>Just call – you don't have to have decided anything yet. You can simply tell them how you're doing. The counselors don't judge and are bound by confidentiality.</p>`},
+      tr:{title:'Profesyonel Yardım Nasıl Bulunur',excerpt:'Yardıma ilk adım atmak çoğu zaman en zor olanıdır. Anonim destek alabileceğin yerleri sana gösteriyoruz.',date:'5 Mayıs 2025',content:`<h3>Pek çok kişi neden yardım aramakta tereddüt eder?</h3><p>Utanç, damgalanma korkusu ya da ciddiye alınmama endişesi – pek çok genç çok uzun bekler. Yardım ne kadar erken alınırsa şanslar o kadar iyidir.</p><h3>Ücretsiz destek noktaları</h3><ul><li>🟢 <strong>Telefonseelsorge:</strong> 0800 111 0 111 – 7/24, ücretsiz, anonim</li><li>🟢 <strong>Nummer gegen Kummer:</strong> 116 111 – özellikle gençler için</li><li>🟢 <strong>BZgA Bağımlılık Hattı:</strong> 0800 1 31 20 00 – bağımlılık soruları için</li><li>🟢 <strong>Online Sohbet:</strong> nummergegenkummer.de – yazmayı tercih edenler için</li></ul><div class="highlight">💙 Yardım aramak güç göstergesidir – zayıflık değil.</div><h3>İlk adım</h3><p>Sadece ara – henüz hiçbir şey kararlaştırmak zorunda değilsin. Nasıl hissettiğini anlatabilirsin. Danışmanlar yargılamaz ve gizlilik yükümlülüğüne bağlıdır.</p>`}
+    }
   },
   {
-    id: 4,
-    emoji: '😴',
-    bg: 'linear-gradient(135deg,#f3e8ff,#e8d5f5)',
-    cat: 'GESUNDHEIT',
+    id: 4, emoji: '😴', bg: 'linear-gradient(135deg,#f3e8ff,#e8d5f5)', cat: 'GESUNDHEIT',
     title: 'Schlaf und schulische Leistung',
     excerpt: 'Warum ausreichend Schlaf wichtiger ist als eine weitere Stunde Lernen – und was die Wissenschaft sagt.',
     date: '28. April 2025',
-    content: `
-      <h3>Was passiert im Schlaf?</h3>
-      <p>Im Schlaf verarbeitet das Gehirn das Gelernte und überträgt es vom Kurzzeit- ins Langzeitgedächtnis. Wer schläft, lernt effizienter als wer durchmacht.</p>
-      <div class="highlight">🔬 Studie: Jugendliche, die 8 Stunden schlafen, schneiden in Prüfungen im Schnitt eine Note besser ab als Gleichaltrige mit 6 Stunden Schlaf.</div>
-      <h3>Konsequenzen von Schlafmangel</h3>
-      <ul>
-        <li>Konzentration und Reaktionszeit sinken stark</li>
-        <li>Emotionale Instabilität und erhöhte Reizbarkeit</li>
-        <li>Geschwächtes Immunsystem</li>
-        <li>Erhöhtes Risiko für Depressionen und Angststörungen</li>
-        <li>Craving nach Zucker und Koffein steigt</li>
-      </ul>
-      <h3>Besserer Schlaf in Prüfungsphasen</h3>
-      <ul>
-        <li>Handy 60 Minuten vor dem Schlafen weglegen (Blaulicht hemmt Melatonin)</li>
-        <li>Feste Schlafens- und Aufwachzeiten – auch am Wochenende</li>
-        <li>Kein Koffein nach 15 Uhr</li>
-        <li>Schlafzimmer kühl und dunkel halten</li>
-      </ul>
-    `
+    content: `<h3>Was passiert im Schlaf?</h3><p>Im Schlaf verarbeitet das Gehirn das Gelernte und überträgt es vom Kurzzeit- ins Langzeitgedächtnis. Wer schläft, lernt effizienter als wer durchmacht.</p><div class="highlight">🔬 Studie: Jugendliche, die 8 Stunden schlafen, schneiden in Prüfungen im Schnitt eine Note besser ab als Gleichaltrige mit 6 Stunden Schlaf.</div><h3>Konsequenzen von Schlafmangel</h3><ul><li>Konzentration und Reaktionszeit sinken stark</li><li>Emotionale Instabilität und erhöhte Reizbarkeit</li><li>Geschwächtes Immunsystem</li><li>Erhöhtes Risiko für Depressionen und Angststörungen</li><li>Craving nach Zucker und Koffein steigt</li></ul><h3>Besserer Schlaf in Prüfungsphasen</h3><ul><li>Handy 60 Minuten vor dem Schlafen weglegen (Blaulicht hemmt Melatonin)</li><li>Feste Schlafens- und Aufwachzeiten – auch am Wochenende</li><li>Kein Koffein nach 15 Uhr</li><li>Schlafzimmer kühl und dunkel halten</li></ul>`,
+    i18n:{
+      en:{title:'Sleep and Academic Performance',excerpt:'Why adequate sleep is more important than another hour of studying – and what science says.',date:'April 28, 2025',content:`<h3>What happens during sleep?</h3><p>During sleep, the brain processes what you've learned and transfers it from short-term to long-term memory. Those who sleep learn more efficiently than those who pull all-nighters.</p><div class="highlight">🔬 Study: Teenagers who sleep 8 hours perform on average one grade better in exams than peers who sleep 6 hours.</div><h3>Consequences of sleep deprivation</h3><ul><li>Concentration and reaction time drop sharply</li><li>Emotional instability and increased irritability</li><li>Weakened immune system</li><li>Increased risk of depression and anxiety disorders</li><li>Cravings for sugar and caffeine increase</li></ul><h3>Better sleep during exam periods</h3><ul><li>Put your phone away 60 minutes before sleeping (blue light inhibits melatonin)</li><li>Fixed sleep and wake times – even on weekends</li><li>No caffeine after 3 PM</li><li>Keep bedroom cool and dark</li></ul>`},
+      tr:{title:'Uyku ve Akademik Başarı',excerpt:'Yeterli uykunun neden bir saat daha çalışmaktan daha önemli olduğu – ve bilim ne diyor.',date:'28 Nisan 2025',content:`<h3>Uyku sırasında ne olur?</h3><p>Uyku sırasında beyin öğrenilenleri işler ve kısa süreli bellekten uzun süreli belleğe aktarır. Uyuyanlar, geceyi uyumadan geçirenlerden daha verimli öğrenir.</p><div class="highlight">🔬 Araştırma: Günde 8 saat uyuyan gençler, 6 saat uyuyan yaşıtlarından sınavlarda ortalama bir not daha yüksek alıyor.</div><h3>Uyku yoksunluğunun sonuçları</h3><ul><li>Konsantrasyon ve tepki süresi ciddi ölçüde düşer</li><li>Duygusal dengesizlik ve artan sinirlilik</li><li>Zayıflamış bağışıklık sistemi</li><li>Depresyon ve anksiyete bozukluğu riski artar</li><li>Şeker ve kafein isteği artar</li></ul><h3>Sınav dönemlerinde daha iyi uyku</h3><ul><li>Uyumadan 60 dakika önce telefonu bırak (mavi ışık melatonini engeller)</li><li>Hafta sonları da sabit uyku ve uyanma saatleri</li><li>Saat 15:00'ten sonra kafein alma</li><li>Yatak odasını serin ve karanlık tut</li></ul>`}
+    }
   },
   {
-    id: 5,
-    emoji: '📱',
-    bg: 'linear-gradient(135deg,#fff8e1,#ffecb3)',
-    cat: 'DIGITAL',
+    id: 5, emoji: '📱', bg: 'linear-gradient(135deg,#fff8e1,#ffecb3)', cat: 'DIGITAL',
     title: 'Soziale Medien und Suchtgefahr',
     excerpt: 'Instagram, TikTok & Co. nutzen gezielte Mechanismen um dich süchtig zu machen – hier erfährst du wie.',
     date: '20. April 2025',
-    content: `
-      <h3>Wie Social Media süchtig macht</h3>
-      <p>Soziale Medien sind so designed, dass sie das Belohnungssystem im Gehirn aktivieren – jedes Like, jeder Kommentar löst einen Dopaminschub aus. Dieses Prinzip ist dem Spielautomaten nachempfunden.</p>
-      <ul>
-        <li><strong>Infinite Scroll:</strong> Kein natürliches Ende – du scrollst endlos</li>
-        <li><strong>Variable Belohnung:</strong> Manchmal kommen viele Likes, manchmal keine – das ist suchtfördernd</li>
-        <li><strong>FOMO (Fear of Missing Out):</strong> Angst, etwas zu verpassen hält dich online</li>
-        <li><strong>Benachrichtigungen:</strong> Unterbrechen deinen Fokus und locken dich zurück</li>
-      </ul>
-      <div class="highlight">⏱️ Durchschnittlich entsperren Jugendliche ihr Handy 80–100 Mal pro Tag.</div>
-      <h3>Gesünderer Umgang</h3>
-      <ul>
-        <li>Lege feste "Social-Media-Zeiten" fest (z.B. nur abends 30 min)</li>
-        <li>Schalte Benachrichtigungen aus</li>
-        <li>Nutze die Bildschirmzeit-Funktion deines Handys</li>
-        <li>Lösche Apps, die du nicht wirklich brauchst</li>
-      </ul>
-    `
+    content: `<h3>Wie Social Media süchtig macht</h3><p>Soziale Medien sind so designed, dass sie das Belohnungssystem im Gehirn aktivieren – jedes Like, jeder Kommentar löst einen Dopaminschub aus. Dieses Prinzip ist dem Spielautomaten nachempfunden.</p><ul><li><strong>Infinite Scroll:</strong> Kein natürliches Ende – du scrollst endlos</li><li><strong>Variable Belohnung:</strong> Manchmal kommen viele Likes, manchmal keine – das ist suchtfördernd</li><li><strong>FOMO (Fear of Missing Out):</strong> Angst, etwas zu verpassen hält dich online</li><li><strong>Benachrichtigungen:</strong> Unterbrechen deinen Fokus und locken dich zurück</li></ul><div class="highlight">⏱️ Durchschnittlich entsperren Jugendliche ihr Handy 80–100 Mal pro Tag.</div><h3>Gesünderer Umgang</h3><ul><li>Lege feste "Social-Media-Zeiten" fest (z.B. nur abends 30 min)</li><li>Schalte Benachrichtigungen aus</li><li>Nutze die Bildschirmzeit-Funktion deines Handys</li><li>Lösche Apps, die du nicht wirklich brauchst</li></ul>`,
+    i18n:{
+      en:{title:'Social Media and Addiction Risk',excerpt:'Instagram, TikTok & Co. use targeted mechanisms to make you addicted – find out how.',date:'April 20, 2025',content:`<h3>How social media creates addiction</h3><p>Social media is designed to activate the brain's reward system – every like, every comment triggers a dopamine rush. This principle is modeled on slot machines.</p><ul><li><strong>Infinite Scroll:</strong> No natural end – you scroll endlessly</li><li><strong>Variable Reward:</strong> Sometimes many likes come, sometimes none – this promotes addiction</li><li><strong>FOMO (Fear of Missing Out):</strong> Fear of missing something keeps you online</li><li><strong>Notifications:</strong> Interrupt your focus and lure you back</li></ul><div class="highlight">⏱️ On average, teenagers unlock their phones 80–100 times per day.</div><h3>Healthier usage</h3><ul><li>Set fixed "social media times" (e.g., only evenings for 30 min)</li><li>Turn off notifications</li><li>Use the screen time feature on your phone</li><li>Delete apps you don't really need</li></ul>`},
+      tr:{title:'Sosyal Medya ve Bağımlılık Riski',excerpt:'Instagram, TikTok ve diğerleri seni bağımlı kılmak için hedefli mekanizmalar kullanıyor – nasıl olduğunu öğren.',date:'20 Nisan 2025',content:`<h3>Sosyal medya bağımlılığa nasıl yol açar?</h3><p>Sosyal medya, beynin ödül sistemini etkinleştirmek için tasarlanmıştır – her beğeni, her yorum bir dopamin patlamasına neden olur. Bu ilke slot makinelerini model alır.</p><ul><li><strong>Sonsuz Kaydırma:</strong> Doğal bir son yok – sonsuza dek kaydırırsın</li><li><strong>Değişken Ödül:</strong> Bazen çok beğeni gelir, bazen hiç – bu bağımlılığı körükler</li><li><strong>FOMO:</strong> Bir şeyi kaçırma korkusu seni çevrimiçi tutar</li><li><strong>Bildirimler:</strong> Odağını böler ve seni geri çeker</li></ul><div class="highlight">⏱️ Gençler ortalama olarak günde 80–100 kez telefonunu açıyor.</div><h3>Daha sağlıklı kullanım</h3><ul><li>Belirli "sosyal medya zamanları" belirle (ör. yalnızca akşamları 30 dk)</li><li>Bildirimleri kapat</li><li>Telefonundaki ekran süresi özelliğini kullan</li><li>Gerçekten ihtiyaç duymadığın uygulamaları sil</li></ul>`}
+    }
   },
   {
-    id: 6,
-    emoji: '✍️',
-    bg: 'linear-gradient(135deg,#e8f5e9,#c8e6c9)',
-    cat: 'TIPPS',
+    id: 6, emoji: '✍️', bg: 'linear-gradient(135deg,#e8f5e9,#c8e6c9)', cat: 'TIPPS',
     title: '10 Tipps für die Abiturphase',
     excerpt: 'Bewährte Strategien von der Lernorganisation bis zur Entspannung, damit du gut durchs Abi kommst.',
     date: '15. April 2025',
-    content: `
-      <h3>10 Tipps für eine gesunde Abiturphase</h3>
-      <ul>
-        <li><strong>1. Realistische Ziele setzen:</strong> Nicht alles perfekt machen wollen – "gut genug" ist oft gut genug.</li>
-        <li><strong>2. Lernplan erstellen:</strong> Visualisiere den verbleibenden Stoff und teile ihn in Tagesportionen auf.</li>
-        <li><strong>3. Aktives Lernen:</strong> Stoff erklären, Karteikarten, Mind-Maps – nicht nur passiv lesen.</li>
-        <li><strong>4. Pausen planen:</strong> Alle 45–60 Minuten 10 Minuten Pause – das steigert die Effizienz.</li>
-        <li><strong>5. Ausreichend schlafen:</strong> 7–9 Stunden sind im Abitur keine Verschwendung, sondern Investition.</li>
-        <li><strong>6. Regelmäßig essen:</strong> Gehirn braucht Glukose – keine Crash-Diäten während Prüfungen.</li>
-        <li><strong>7. Sport treiben:</strong> 3x die Woche 30 Minuten Bewegung reduziert Stress nachweislich.</li>
-        <li><strong>8. Soziale Kontakte:</strong> Lerngruppen können motivieren – aber auch Ablenkung sein. Balance finden.</li>
-        <li><strong>9. Vorbereitung auf den Prüfungstag:</strong> Outfit, Frühstück und Weg am Vorabend planen.</li>
-        <li><strong>10. Selbstmitgefühl:</strong> Wenn es mal nicht klappt – das ist normal. Du bist mehr als dein Abitur.</li>
-      </ul>
-      <div class="highlight">🌟 Das Abitur ist wichtig – aber deine Gesundheit ist es mehr. Kümmere dich gut um dich.</div>
-    `
+    content: `<h3>10 Tipps für eine gesunde Abiturphase</h3><ul><li><strong>1. Realistische Ziele setzen:</strong> Nicht alles perfekt machen wollen – "gut genug" ist oft gut genug.</li><li><strong>2. Lernplan erstellen:</strong> Visualisiere den verbleibenden Stoff und teile ihn in Tagesportionen auf.</li><li><strong>3. Aktives Lernen:</strong> Stoff erklären, Karteikarten, Mind-Maps – nicht nur passiv lesen.</li><li><strong>4. Pausen planen:</strong> Alle 45–60 Minuten 10 Minuten Pause – das steigert die Effizienz.</li><li><strong>5. Ausreichend schlafen:</strong> 7–9 Stunden sind im Abitur keine Verschwendung, sondern Investition.</li><li><strong>6. Regelmäßig essen:</strong> Gehirn braucht Glukose – keine Crash-Diäten während Prüfungen.</li><li><strong>7. Sport treiben:</strong> 3x die Woche 30 Minuten Bewegung reduziert Stress nachweislich.</li><li><strong>8. Soziale Kontakte:</strong> Lerngruppen können motivieren – aber auch Ablenkung sein. Balance finden.</li><li><strong>9. Vorbereitung auf den Prüfungstag:</strong> Outfit, Frühstück und Weg am Vorabend planen.</li><li><strong>10. Selbstmitgefühl:</strong> Wenn es mal nicht klappt – das ist normal. Du bist mehr als dein Abitur.</li></ul><div class="highlight">🌟 Das Abitur ist wichtig – aber deine Gesundheit ist es mehr. Kümmere dich gut um dich.</div>`,
+    i18n:{
+      en:{title:'10 Tips for the Final Exam Phase',excerpt:'Proven strategies from study organization to relaxation, so you get through the exams well.',date:'April 15, 2025',content:`<h3>10 tips for a healthy exam phase</h3><ul><li><strong>1. Set realistic goals:</strong> Don't try to make everything perfect – "good enough" is often good enough.</li><li><strong>2. Create a study plan:</strong> Visualize the remaining material and divide it into daily portions.</li><li><strong>3. Active learning:</strong> Explain material, use flashcards, mind-maps – don't just passively read.</li><li><strong>4. Plan breaks:</strong> 10 minutes break every 45–60 minutes – this increases efficiency.</li><li><strong>5. Get enough sleep:</strong> 7–9 hours during finals is not a waste, but an investment.</li><li><strong>6. Eat regularly:</strong> The brain needs glucose – no crash diets during exams.</li><li><strong>7. Exercise:</strong> 30 minutes of movement 3× a week demonstrably reduces stress.</li><li><strong>8. Social contacts:</strong> Study groups can motivate – but also distract. Find balance.</li><li><strong>9. Prepare for exam day:</strong> Plan outfit, breakfast and route the evening before.</li><li><strong>10. Self-compassion:</strong> When things don't work out – that's normal. You are more than your grades.</li></ul><div class="highlight">🌟 The exams are important – but your health is more. Take good care of yourself.</div>`},
+      tr:{title:'Final Sınavı Dönemi için 10 İpucu',excerpt:'Çalışma organizasyonundan dinlenmeye kadar kanıtlanmış stratejiler, sınavları iyi geçirmen için.',date:'15 Nisan 2025',content:`<h3>Sağlıklı bir sınav dönemi için 10 ipucu</h3><ul><li><strong>1. Gerçekçi hedefler koy:</strong> Her şeyi mükemmel yapmaya çalışma – "yeterince iyi" çoğu zaman yeterlidir.</li><li><strong>2. Çalışma planı oluştur:</strong> Kalan konuları görselleştir ve günlük porsiyonlara böl.</li><li><strong>3. Aktif öğrenme:</strong> Konuyu anlat, kartlar ve zihin haritaları kullan.</li><li><strong>4. Mola planla:</strong> Her 45–60 dakikada 10 dakika mola – bu verimliliği artırır.</li><li><strong>5. Yeterince uyu:</strong> Sınavlarda 7–9 saat uyumak israf değil, yatırımdır.</li><li><strong>6. Düzenli ye:</strong> Beyin glikoza ihtiyaç duyar – sınavlar sırasında aşırı diyet yapma.</li><li><strong>7. Spor yap:</strong> Haftada 3 kez 30 dakika hareket etmek stresi kanıtlanmış şekilde azaltır.</li><li><strong>8. Sosyal ilişkiler:</strong> Çalışma grupları motive edebilir – ama aynı zamanda dikkat dağıtabilir. Denge bul.</li><li><strong>9. Sınav günü için hazırlık yap:</strong> Kıyafeti, kahvaltıyı ve rotayı bir gece önceden planla.</li><li><strong>10. Öz şefkat:</strong> İşler yolunda gitmezse – bu normaldir. Sen sınavından daha fazlasısın.</li></ul><div class="highlight">🌟 Sınav önemlidir – ama sağlığın daha önemlidir. Kendine iyi bak.</div>`}
+    }
   }
 ];
 
@@ -2515,31 +2439,37 @@ function renderBlog() {
     const langT = LANG_DATA[currentLang] || LANG_DATA.de;
     const catMap = langT.blogCats || {};
     const readMore = langT.blogReadMore || 'Mehr lesen →';
-    grid.innerHTML = BLOG_ARTICLES.map(a => `
+    grid.innerHTML = BLOG_ARTICLES.map(a => {
+      const aL = (currentLang !== 'de' && a.i18n && a.i18n[currentLang]) ? a.i18n[currentLang] : null;
+      const aTitle   = aL ? aL.title   : a.title;
+      const aExcerpt = aL ? aL.excerpt : a.excerpt;
+      const aDate    = aL ? aL.date    : a.date;
+      return `
       <div class="blog-card" onclick="openBlogModal(${a.id})">
         <div class="blog-img" style="background:${a.bg}">
           <span>${a.emoji}</span>
           <span class="blog-cat">${catMap[a.cat] || a.cat}</span>
         </div>
         <div class="blog-body">
-          <div class="blog-title">${a.title}</div>
-          <div class="blog-excerpt">${a.excerpt}</div>
+          <div class="blog-title">${aTitle}</div>
+          <div class="blog-excerpt">${aExcerpt}</div>
           <div class="blog-foot">
-            <span class="blog-date">📅 ${a.date}</span>
+            <span class="blog-date">📅 ${aDate}</span>
             <span class="blog-read">${readMore}</span>
           </div>
         </div>
       </div>
-    `).join('');
+    `;}).join('');
   }
 }
 
 function openBlogModal(id) {
   const art = BLOG_ARTICLES.find(a => a.id === id);
   if (!art) return;
-  document.getElementById('blogModalTitle').textContent = art.title;
-  document.getElementById('blogModalMeta').textContent = '📅 ' + art.date + '  ·  ' + art.cat;
-  document.getElementById('blogModalBody').innerHTML = art.content;
+  const artL = (currentLang !== 'de' && art.i18n && art.i18n[currentLang]) ? art.i18n[currentLang] : null;
+  document.getElementById('blogModalTitle').textContent = artL ? artL.title : art.title;
+  document.getElementById('blogModalMeta').textContent = '📅 ' + (artL ? artL.date : art.date) + '  ·  ' + art.cat;
+  document.getElementById('blogModalBody').innerHTML = artL ? artL.content : art.content;
   const bg = document.getElementById('blogModalBg');
   bg.classList.add('open');
   bg.scrollTop = 0;
@@ -2719,9 +2649,11 @@ const CHALLENGES = [
 ];
 
 function initChallenge() {
+  const t = LANG_DATA[currentLang] || LANG_DATA.de;
+  const challenges = t.challenges || CHALLENGES;
   const start = new Date(new Date().getFullYear(), 0, 1);
-  const dayIdx = Math.floor((new Date() - start) / 86400000) % CHALLENGES.length;
-  const ch = CHALLENGES[dayIdx];
+  const dayIdx = Math.floor((new Date() - start) / 86400000) % challenges.length;
+  const ch = challenges[dayIdx];
   const displayDay = (dayIdx % 30) + 1;
   const el = id => document.getElementById(id);
   if (el('challengeEmoji')) el('challengeEmoji').textContent = ch.emoji;
@@ -2876,7 +2808,24 @@ const LANG_DATA = {
     chatSend:'Senden ➤',chatPlaceholder:'Schreib etwas…',
     socialTitle:'📱 Folg uns auf Social Media',socialSub:'Aktuelle Beiträge, Erfahrungsberichte und Tipps zum Thema Safe Space.',
     notfallFab:'🆘 Notfall-Hilfe',notfallTitle:'🆘 Notfall-Hilfe',notfallSub:'Du bist nicht allein. Hilfe ist kostenlos, anonym und rund um die Uhr erreichbar:',
-    blogCats:{STRESS:'STRESS',SUCHT:'SUCHT',HILFE:'HILFE',GESUNDHEIT:'GESUNDHEIT',DIGITAL:'DIGITAL',PRÄVENTION:'PRÄVENTION'}
+    blogCats:{STRESS:'STRESS',SUCHT:'SUCHT',HILFE:'HILFE',GESUNDHEIT:'GESUNDHEIT',DIGITAL:'DIGITAL',PRÄVENTION:'PRÄVENTION'},
+    quizBack:'← Zurück',quizNext:'Weiter →',quizEval:'Auswertung →',quizOf:'Frage {n} von {total}',
+    resultGreenTitle:'Kein auffälliges Suchtverhalten',
+    resultGreenText:'Dein Ergebnis zeigt keine besorgniserregenden Anzeichen. Du scheinst einen gesunden Umgang mit Stress zu haben.',
+    resultGreenTips:'<h4>✅ Deine Tipps:</h4><ul><li>Behalte deinen gesunden Lebensstil bei</li><li>Achte weiterhin auf 7–9h Schlaf und regelmäßige Bewegung</li><li>Sprich mit Freunden über gesunden Stressabbau</li></ul>',
+    resultYellowTitle:'Erste Warnsignale erkennbar',
+    resultYellowText:'Dein Ergebnis zeigt erste Anzeichen, die Aufmerksamkeit verdienen. Noch keine ausgewachsene Sucht – aber du solltest deinen Umgang mit Stress bewusster betrachten.',
+    resultYellowTips:'<h4>⚠️ Deine Tipps:</h4><ul><li>Führe 1 Woche ein Konsum-Tagebuch – Bewusstsein ist der erste Schritt</li><li>Ersetze eine Stressreaktion durch Sport oder Atemübungen</li><li>Setze dir klare Screen-Time-Limits (z.B. kein Handy nach 22 Uhr)</li><li>Erwäge ein anonymes Beratungsgespräch</li></ul>',
+    resultRedTitle:'Bitte suche dir Hilfe',
+    resultRedText:'Dein Ergebnis zeigt deutliche Anzeichen. Das ist kein Grund zur Panik, aber ein klares Signal: Hol dir professionelle Unterstützung – das ist Mut, nicht Schwäche.',
+    resultRedTips:'<h4>🆘 Deine nächsten Schritte:</h4><ul><li><strong>Heute noch:</strong> Ruf die Telefonseelsorge an: <strong>0800 111 0 111</strong></li><li><strong>Für Jugendliche:</strong> Nummer gegen Kummer: <strong>116 111</strong></li><li>Sprich mit Eltern oder dem Schulberater</li><li>Besuche drugcom.de für Online-Beratung</li></ul>',
+    chatWelcome:'Hallo! 👋 Ich bin der Safe-Space-Bot. Du kannst anonym mit mir über Stress, Sucht oder alles sprechen, was dich beschäftigt. <strong>Wie geht es dir heute?</strong>',
+    chatChips:[
+      {label:'😰 Schulstress', msg:'Ich habe starken Schulstress'},
+      {label:'❓ Anzeichen erkennen', msg:'Was sind Anzeichen von Sucht?'},
+      {label:'🤝 Hilfe finden', msg:'Ich brauche Hilfe, wo kann ich mich melden?'},
+      {label:'🧘 Stress abbauen', msg:'Wie kann ich Stress abbauen?'}
+    ]
   },
   en: {
     nav_home:'🏠 Home',nav_info:'📚 Info',nav_test:'✅ Self-Test',nav_help:'🤝 Help',nav_chat:'💬 Chat',
@@ -2909,7 +2858,56 @@ const LANG_DATA = {
     chatSend:'Send ➤',chatPlaceholder:'Write something…',
     socialTitle:'📱 Follow us on Social Media',socialSub:'Current posts, experience reports and tips on the topic of Safe Space.',
     notfallFab:'🆘 Emergency Help',notfallTitle:'🆘 Emergency Help',notfallSub:'You are not alone. Help is free, anonymous and available around the clock:',
-    blogCats:{STRESS:'STRESS',SUCHT:'ADDICTION',HILFE:'HELP',GESUNDHEIT:'HEALTH',DIGITAL:'DIGITAL',PRÄVENTION:'PREVENTION'}
+    blogCats:{STRESS:'STRESS',SUCHT:'ADDICTION',HILFE:'HELP',GESUNDHEIT:'HEALTH',DIGITAL:'DIGITAL',PRÄVENTION:'PREVENTION'},
+    quizBack:'← Back',quizNext:'Next →',quizEval:'Results →',quizOf:'Question {n} of {total}',
+    resultGreenTitle:'No significant addictive behavior',
+    resultGreenText:'Your result shows no concerning signs. You seem to have a healthy way of dealing with stress.',
+    resultGreenTips:'<h4>✅ Your tips:</h4><ul><li>Keep up your healthy lifestyle</li><li>Continue to ensure 7–9h of sleep and regular exercise</li><li>Talk to friends about healthy stress relief</li></ul>',
+    resultYellowTitle:'First warning signs detected',
+    resultYellowText:'Your result shows early signs that deserve attention. Not a full-blown addiction yet – but you should take a more conscious look at how you handle stress.',
+    resultYellowTips:'<h4>⚠️ Your tips:</h4><ul><li>Keep a consumption diary for 1 week – awareness is the first step</li><li>Replace a stress reaction with sport or breathing exercises</li><li>Set clear screen-time limits (e.g. no phone after 10 pm)</li><li>Consider an anonymous counseling session</li></ul>',
+    resultRedTitle:'Please seek help',
+    resultRedText:'Your result shows clear signs. This is no reason to panic, but a clear signal: get professional support – that takes courage, not weakness.',
+    resultRedTips:'<h4>🆘 Your next steps:</h4><ul><li><strong>Today:</strong> Call the crisis line: <strong>0800 111 0 111</strong></li><li><strong>For young people:</strong> Nummer gegen Kummer: <strong>116 111</strong></li><li>Talk to parents or your school counselor</li><li>Visit drugcom.de for online counseling</li></ul>',
+    chatWelcome:'Hello! 👋 I am the Safe-Space-Bot. You can talk to me anonymously about stress, addiction, or anything that is on your mind. <strong>How are you doing today?</strong>',
+    chatChips:[
+      {label:'😰 School stress', msg:'I have a lot of school stress'},
+      {label:'❓ Recognize signs', msg:'What are signs of addiction?'},
+      {label:'🤝 Find help', msg:'I need help, where can I turn?'},
+      {label:'🧘 Reduce stress', msg:'How can I reduce stress?'}
+    ],
+    challenges:[
+      {emoji:'🚶',text:'Take a 10-minute walk outside today.'},
+      {emoji:'✍️',text:'Write down 3 things you are grateful for today.'},
+      {emoji:'💧',text:'Drink at least 2 liters of water today.'},
+      {emoji:'📵',text:'Put your phone away for 1 hour and do something without a screen.'},
+      {emoji:'😴',text:'Go to bed by 10:30 pm tonight – not later.'},
+      {emoji:'🧘',text:'Try a 5-minute breathing exercise: inhale 4 counts, hold 4, exhale 4.'},
+      {emoji:'🎵',text:'Listen to your favorite song and let yourself fully enjoy it.'},
+      {emoji:'🌿',text:'Spend at least 15 minutes in nature or by a window with plants.'},
+      {emoji:'📖',text:'Read 10 pages of a book – not on a screen.'},
+      {emoji:'🤝',text:'Write a kind message to someone who is important to you.'},
+      {emoji:'🍎',text:'Eat at least one portion of fruit or vegetables today.'},
+      {emoji:'🎨',text:'Draw, color, or craft – be creative without a goal for 15 minutes.'},
+      {emoji:'🚫',text:'No social media until lunchtime today. Notice how it feels.'},
+      {emoji:'💪',text:'Do 10 push-ups or 20 squats – just get started!'},
+      {emoji:'🗣️',text:'Talk to someone about how you are really feeling.'},
+      {emoji:'🧹',text:'Clean up your desk or room – a tidy space helps your mind.'},
+      {emoji:'⭐',text:'Write down one thing you achieved today, no matter how small.'},
+      {emoji:'🌅',text:'Watch the sunrise or sunset today – without your phone.'},
+      {emoji:'🤸',text:'Stretch for 10 minutes – especially your back and shoulders.'},
+      {emoji:'📝',text:'Plan your next study session in detail: what, when, for how long.'},
+      {emoji:'😄',text:'Watch or read something funny and laugh out loud.'},
+      {emoji:'🕯️',text:'Take 10 minutes to sit quietly – no music, no phone, just breathe.'},
+      {emoji:'🍵',text:'Brew yourself a calming tea and enjoy it without multitasking.'},
+      {emoji:'📞',text:'Call a family member or friend you haven\'t spoken to in a while.'},
+      {emoji:'🌊',text:'Take a cold shower for 30 seconds – it refreshes body and mind.'},
+      {emoji:'🎯',text:'Set one realistic learning goal for today and stick to it.'},
+      {emoji:'🏃',text:'Do 20 minutes of exercise – anything, just move!'},
+      {emoji:'💤',text:'Take a 20-minute power nap if you feel exhausted.'},
+      {emoji:'🫂',text:'Give someone who matters to you a hug today.'},
+      {emoji:'🌙',text:'Put your phone away 1 hour before sleeping tonight.'}
+    ]
   },
   tr: {
     nav_home:'🏠 Ana Sayfa',nav_info:'📚 Bilgi',nav_test:'✅ Öz-Test',nav_help:'🤝 Yardım',nav_chat:'💬 Sohbet',
@@ -2942,7 +2940,56 @@ const LANG_DATA = {
     chatSend:'Gönder ➤',chatPlaceholder:'Bir şeyler yaz…',
     socialTitle:'📱 Sosyal Medyada Bizi Takip Et',socialSub:'Güncel gönderiler, deneyim raporları ve Safe Space konusunda ipuçları.',
     notfallFab:'🆘 Acil Yardım',notfallTitle:'🆘 Acil Yardım',notfallSub:'Yalnız değilsin. Yardım ücretsiz, anonim ve gün boyu erişilebilir:',
-    blogCats:{STRESS:'STRES',SUCHT:'BAĞIMLILIK',HILFE:'YARDIM',GESUNDHEIT:'SAĞLIK',DIGITAL:'DİJİTAL',PRÄVENTION:'ÖNLEME'}
+    blogCats:{STRESS:'STRES',SUCHT:'BAĞIMLILIK',HILFE:'YARDIM',GESUNDHEIT:'SAĞLIK',DIGITAL:'DİJİTAL',PRÄVENTION:'ÖNLEME'},
+    quizBack:'← Geri',quizNext:'İleri →',quizEval:'Sonuçlar →',quizOf:'Soru {n} / {total}',
+    resultGreenTitle:'Belirgin bir bağımlılık davranışı yok',
+    resultGreenText:'Sonucun endişe verici bir işaret göstermiyor. Stresle sağlıklı bir şekilde başa çıkıyor gibi görünüyorsun.',
+    resultGreenTips:'<h4>✅ Tavsiyeler:</h4><ul><li>Sağlıklı yaşam tarzını sürdür</li><li>7–9 saat uyku ve düzenli egzersize devam et</li><li>Arkadaşlarınla sağlıklı stres azaltma yollarını konuş</li></ul>',
+    resultYellowTitle:'İlk uyarı işaretleri görülüyor',
+    resultYellowText:'Sonucun dikkat edilmesi gereken ilk belirtiler gösteriyor. Henüz tam bir bağımlılık değil – ama stresi nasıl yönettiğine daha bilinçli bakmalısın.',
+    resultYellowTips:'<h4>⚠️ Tavsiyeler:</h4><ul><li>1 hafta boyunca tüketim günlüğü tut – farkındalık ilk adımdır</li><li>Bir stres tepkisini spor veya nefes egzersizleriyle değiştir</li><li>Net ekran süresi sınırları belirle (örn. saat 22\'den sonra telefon yok)</li><li>Anonim bir danışma görüşmesi yapmayı düşün</li></ul>',
+    resultRedTitle:'Lütfen yardım ara',
+    resultRedText:'Sonucun belirgin işaretler gösteriyor. Paniklemek için sebep yok, ama açık bir sinyal: Profesyonel destek al – bu cesaret ister, zayıflık değil.',
+    resultRedTips:'<h4>🆘 Sonraki adımların:</h4><ul><li><strong>Bugün:</strong> Kriz hattını ara: <strong>0800 111 0 111</strong></li><li><strong>Gençler için:</strong> Nummer gegen Kummer: <strong>116 111</strong></li><li>Ebeveynlerinle veya okul danışmanınla konuş</li><li>Online danışmanlık için drugcom.de\'yi ziyaret et</li></ul>',
+    chatWelcome:'Merhaba! 👋 Ben Safe-Space-Bot\'um. Stres, bağımlılık veya seni meşgul eden her şey hakkında benimle anonim olarak konuşabilirsin. <strong>Bugün nasılsın?</strong>',
+    chatChips:[
+      {label:'😰 Okul stresi', msg:'Yoğun okul stresim var'},
+      {label:'❓ Belirtileri tanı', msg:'Bağımlılığın belirtileri nelerdir?'},
+      {label:'🤝 Yardım bul', msg:'Yardıma ihtiyacım var, nereye başvurabilirim?'},
+      {label:'🧘 Stresi azalt', msg:'Stresi nasıl azaltabilirim?'}
+    ],
+    challenges:[
+      {emoji:'🚶',text:'Bugün 10 dakika açık havada yürüyüş yap.'},
+      {emoji:'✍️',text:'Bugün minnettar olduğun 3 şeyi yaz.'},
+      {emoji:'💧',text:'Bugün en az 2 litre su iç.'},
+      {emoji:'📵',text:'Telefonunu 1 saat kapat ve ekransız bir şey yap.'},
+      {emoji:'😴',text:'Bu gece saat 22:30\'da yat – daha geç değil.'},
+      {emoji:'🧘',text:'5 dakikalık nefes egzersizi dene: 4 sayı nefes al, 4 tut, 4 ver.'},
+      {emoji:'🎵',text:'En sevdiğin şarkıyı dinle ve tam anlamıyla keyfini çıkar.'},
+      {emoji:'🌿',text:'Bugün en az 15 dakika doğada veya bitki yakınında geçir.'},
+      {emoji:'📖',text:'Ekrandan değil, gerçek bir kitaptan 10 sayfa oku.'},
+      {emoji:'🤝',text:'Önem verdiğin birine güzel bir mesaj yaz.'},
+      {emoji:'🍎',text:'Bugün en az bir porsiyon meyve veya sebze ye.'},
+      {emoji:'🎨',text:'Amaçsızca 15 dakika çiz, boya veya el işi yap – yaratıcı ol.'},
+      {emoji:'🚫',text:'Bugün öğlene kadar sosyal medyaya bakma. Nasıl hissettirdiğine dikkat et.'},
+      {emoji:'💪',text:'10 şınav veya 20 squat yap – sadece başla!'},
+      {emoji:'🗣️',text:'Gerçekten nasıl hissettiğini biriyle konuş.'},
+      {emoji:'🧹',text:'Masanı veya odanı topla – düzenli bir alan zihni rahatlatır.'},
+      {emoji:'⭐',text:'Bugün başardığın bir şeyi yaz, ne kadar küçük olursa olsun.'},
+      {emoji:'🌅',text:'Bugün gün doğumunu veya batımını izle – telefonsuz.'},
+      {emoji:'🤸',text:'10 dakika esne – özellikle sırt ve omuzlar.'},
+      {emoji:'📝',text:'Bir sonraki çalışma oturumunu detaylıca planla: ne, ne zaman, ne kadar.'},
+      {emoji:'😄',text:'Komik bir şey izle veya oku ve yüksek sesle gül.'},
+      {emoji:'🕯️',text:'10 dakika sessizce otur – müzik yok, telefon yok, sadece nefes al.'},
+      {emoji:'🍵',text:'Kendine rahatlatıcı bir çay demle ve çok iş yapmadan için.'},
+      {emoji:'📞',text:'Uzun süredir konuşmadığın bir aile üyeni veya arkadaşını ara.'},
+      {emoji:'🌊',text:'30 saniye soğuk duş al – beden ve zihni tazeliyor.'},
+      {emoji:'🎯',text:'Bugün için gerçekçi bir öğrenme hedefi belirle ve ona bağlı kal.'},
+      {emoji:'🏃',text:'20 dakika egzersiz yap – ne olursa olsun, hareket et!'},
+      {emoji:'💤',text:'Yorgun hissediyorsan 20 dakikalık kısa bir uyku al.'},
+      {emoji:'🫂',text:'Bugün önem verdiğin birine sarıl.'},
+      {emoji:'🌙',text:'Bu gece yatmadan 1 saat önce telefonunu bırak.'}
+    ]
   }
 };
 
@@ -3003,9 +3050,30 @@ function setLang(lang) {
   // Lang button active state
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
 
-  // Re-render blog so categories and "Mehr lesen" update
+  // Re-render blog so categories, titles and "Mehr lesen" update
   const grid = document.getElementById('blogGrid');
   if (grid && grid.children.length > 0) { grid.innerHTML = ''; renderBlog(); }
+
+  // Re-render chat suggestion chips
+  const chipsEl = document.getElementById('chatSuggestions');
+  if (chipsEl && t.chatChips) {
+    chipsEl.innerHTML = t.chatChips.map(c =>
+      `<button class="chat-chip" onclick="sendSuggestion('${c.msg.replace(/'/g,"\\\'")}')">${c.label}</button>`
+    ).join('');
+  }
+
+  // Re-render challenge text if section is active
+  const challengeSection = document.getElementById('challenge');
+  if (challengeSection && challengeSection.classList.contains('active')) {
+    initChallenge();
+  }
+
+  // Re-render quiz if test section is active and quiz is still in progress
+  const testSection = document.getElementById('test');
+  if (testSection && testSection.classList.contains('active')) {
+    const qDisplay = document.getElementById('quizDisplay');
+    if (qDisplay && qDisplay.style.display !== 'none') { renderQuiz(); showQ(curQ); }
+  }
 }
 
 // ===================== INIT ON LOAD =====================
