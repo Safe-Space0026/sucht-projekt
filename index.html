@@ -1427,7 +1427,12 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
         </div>
         <div class="chart-row">
           <div class="chart-card"><h4>📊 Besucher nach Wochentag</h4><canvas id="chartBar"></canvas></div>
-          <div class="chart-card"><h4>🧪 Selbsttest Auswertungen</h4><div id="testStatsPanel"><div style="color:var(--text-light);font-size:.85rem;padding:1rem;text-align:center;">Noch keine Tests abgeschlossen.</div></div></div>
+          <div class="chart-card"><h4>🧪 Selbsttest Auswertungen</h4><div id="testStatsPanel">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem;background:linear-gradient(135deg,#fff0f5,#fff8ff);border-radius:10px;margin-bottom:.8rem;border:1px solid rgba(255,0,102,0.15);">
+  <span style="font-size:.9rem;font-weight:600;">🧪 Tests insgesamt (alle Geräte)</span>
+  <strong style="font-size:1.3rem;color:var(--primary);" id="kpiTotalTests">—</strong>
+</div>
+<div style="color:var(--text-light);font-size:.85rem;padding:1rem;text-align:center;">Noch keine Tests abgeschlossen.</div></div></div>
         </div>
         <div class="chart-card" style="margin-bottom:1.2rem;">
           <h4>📰 Blog-News aktualisieren</h4>
@@ -1782,6 +1787,22 @@ function showResult() {
     existing.push(level);
     localStorage.setItem('ss_test_results', JSON.stringify(existing));
   } catch(e) {}
+  // Test-Abschluss als GitHub Issue melden
+  try {
+    fetch('https://api.github.com/repos/Safe-Space0026/sucht-projekt/issues', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ghp_DEIN_TOKEN_HIER'
+      },
+      body: JSON.stringify({
+        title: 'Test abgeschlossen: ' + level,
+        labels: ['test-abschluss'],
+        state: 'closed',
+        body: 'Ergebnis: ' + level + ' | Score: ' + total + ' | ' + new Date().toISOString()
+      })
+    });
+  } catch(e) {}
 }
 function resetQuiz() {
   curQ=0; answers=new Array(10).fill(null);
@@ -2075,6 +2096,14 @@ function updateChartsWithData(data) {
   }
   const testEl = document.getElementById('testStatsPanel');
   if (testEl) {
+    try {
+      const testCountRes = await fetch('/sucht-projekt/data/test_count.json');
+      if (testCountRes.ok) {
+        const testCountData = await testCountRes.json();
+        const totalTestsEl = document.getElementById('kpiTotalTests');
+        if (totalTestsEl) totalTestsEl.textContent = testCountData.total.toLocaleString('de-DE');
+      }
+    } catch(e) {}
     try {
       const raw = localStorage.getItem('ss_test_results');
       const tests = raw ? JSON.parse(raw) : [];

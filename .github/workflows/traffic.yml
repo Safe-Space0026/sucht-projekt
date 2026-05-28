@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   traffic:
@@ -23,7 +24,6 @@ jobs:
                -H "Accept: application/vnd.github+json" \
                https://api.github.com/repos/Safe-Space0026/sucht-projekt/traffic/popular/paths \
                -o data/traffic_pages.json
-          # Gesamtzähler akkumulieren
           if [ -f data/traffic_total.json ]; then
             OLD=$(cat data/traffic_total.json | python3 -c "import sys,json;d=json.load(sys.stdin);print(d.get('total',0))")
           else
@@ -33,10 +33,17 @@ jobs:
           if [ "$NEW" -gt "$OLD" ]; then
             echo "{\"total\": $NEW, \"updated\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}" > data/traffic_total.json
           fi
+      - name: Count test completions from issues
+        run: |
+          COUNT=$(curl -s -H "Authorization: Bearer ${{ secrets.TRAFFIC_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/Safe-Space0026/sucht-projekt/issues?labels=test-abschluss&state=closed&per_page=100" \
+            | python3 -c "import sys,json;print(len(json.load(sys.stdin)))")
+          echo "{\"total\": $COUNT, \"updated\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}" > data/test_count.json
       - name: Commit data
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add data/traffic.json data/traffic_pages.json
-          git diff --staged --quiet || git commit -m "chore: update traffic data"
+          git add data/traffic.json data/traffic_pages.json data/traffic_total.json data/test_count.json
+          git diff --staged --quiet || git commit -m "chore: update traffic and test data"
           git push
