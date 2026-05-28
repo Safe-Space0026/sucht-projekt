@@ -1419,7 +1419,7 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
           <div class="kpi-card kpi-blue"><div class="kpi-icon">📅</div><div class="kpi-value" id="kpiWeek">0</div><div class="kpi-label">Besucher diese Woche</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
           <div class="kpi-card kpi-green"><div class="kpi-icon">🌍</div><div class="kpi-value" id="kpiTotal">0</div><div class="kpi-label">Views (14 Tage)</div><div class="kpi-trend" id="kpiTotalTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
           <div class="kpi-card kpi-orange"><div class="kpi-icon">👤</div><div class="kpi-value" id="kpiUnique">0</div><div class="kpi-label">Unique Visitors (14 Tage)</div><div class="kpi-trend" id="kpiUniqueTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
-          <div class="kpi-card kpi-red"><div class="kpi-icon">🚪</div><div class="kpi-value">0%</div><div class="kpi-label">Absprungrate</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
+          <div class="kpi-card kpi-red"><div class="kpi-icon">🌐</div><div class="kpi-value" id="kpiAllTime">—</div><div class="kpi-label">Besuche gesamt</div><div class="kpi-trend" id="kpiAllTimeTrend" style="color:var(--text-light);">— wird täglich aktualisiert</div></div>
         </div>
         <div class="chart-row">
           <div class="chart-card"><h4>📈 Besucherverlauf – letzte 14 Tage</h4><canvas id="chartLine"></canvas></div>
@@ -1998,6 +1998,21 @@ async function updateKPIs() {
       .reduce((sum, v) => sum + v.count, 0);
     const kpiWeekEl = document.getElementById('kpiWeek');
     if (kpiWeekEl) kpiWeekEl.textContent = weekCount.toLocaleString('de-DE');
+
+    // Gesamt-Besuche aller Zeiten aus traffic_total.json
+    try {
+      const totalRes = await fetch('/sucht-projekt/data/traffic_total.json');
+      if (totalRes.ok) {
+        const totalData = await totalRes.json();
+        const allTimeEl = document.getElementById('kpiAllTime');
+        if (allTimeEl) allTimeEl.textContent = totalData.total.toLocaleString('de-DE');
+        const allTimeTrend = document.getElementById('kpiAllTimeTrend');
+        if (allTimeTrend) {
+          allTimeTrend.textContent = 'Stand: ' + new Date(totalData.updated).toLocaleDateString('de-DE');
+          allTimeTrend.style.color = 'var(--success)';
+        }
+      }
+    } catch(e) {}
 
     // Letztes Update
     const lastEl = document.getElementById('lastUpdate');
