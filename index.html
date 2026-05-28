@@ -1416,7 +1416,7 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
         </div>
         <div class="kpi-grid">
           <div class="kpi-card kpi-purple"><div class="kpi-icon">👁️</div><div class="kpi-value" id="kpiToday">0</div><div class="kpi-label">Besucher gestern</div><div class="kpi-trend" id="kpiTodayTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
-          <div class="kpi-card kpi-blue"><div class="kpi-icon">📅</div><div class="kpi-value" id="kpiWeek">0</div><div class="kpi-label">Besucher diese Woche</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
+          <div class="kpi-card kpi-blue"><div class="kpi-icon">📅</div><div class="kpi-value" id="kpiWeek">0</div><div class="kpi-label">Besucher diese Woche</div><div class="kpi-trend" id="kpiWeekTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
           <div class="kpi-card kpi-green"><div class="kpi-icon">🌍</div><div class="kpi-value" id="kpiTotal">0</div><div class="kpi-label">Views (14 Tage)</div><div class="kpi-trend" id="kpiTotalTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
           <div class="kpi-card kpi-orange"><div class="kpi-icon">👤</div><div class="kpi-value" id="kpiUnique">0</div><div class="kpi-label">Unique Visitors (14 Tage)</div><div class="kpi-trend" id="kpiUniqueTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
           <div class="kpi-card kpi-red"><div class="kpi-icon">🌐</div><div class="kpi-value" id="kpiAllTime">—</div><div class="kpi-label">Besuche gesamt</div><div class="kpi-trend" id="kpiAllTimeTrend" style="color:var(--text-light);">— wird täglich aktualisiert</div></div>
@@ -2019,6 +2019,11 @@ async function updateKPIs() {
       .reduce((sum, v) => sum + v.count, 0);
     const kpiWeekEl = document.getElementById('kpiWeek');
     if (kpiWeekEl) kpiWeekEl.textContent = weekCount.toLocaleString('de-DE');
+    const weekTrendEl = document.getElementById('kpiWeekTrend');
+    if (weekTrendEl) {
+      weekTrendEl.textContent = weekCount > 0 ? weekCount + ' Besuche in 7 Tagen' : 'Keine Besuche diese Woche';
+      weekTrendEl.style.color = weekCount > 0 ? 'var(--success)' : 'var(--text-light)';
+    }
 
     // Gesamt-Besuche aller Zeiten aus traffic_total.json
     try {
@@ -2044,7 +2049,7 @@ async function updateKPIs() {
     if (banner && ghData.count > 0) banner.style.display = 'none';
 
     // Charts mit GitHub Daten befüllen
-    updateChartsWithData(ghData.views.map(v => ({ timestamp: v.timestamp, created_at: v.timestamp })));
+    updateChartsWithData(ghData.views);
 
   } catch(e) {
     console.warn('Analytics-Fehler:', e);
