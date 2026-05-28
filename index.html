@@ -1787,21 +1787,7 @@ function showResult() {
     existing.push(level);
     localStorage.setItem('ss_test_results', JSON.stringify(existing));
   } catch(e) {}
-  // Selbsttest-Ergebnis als GitHub Issue
-  try {
-    fetch('https://api.github.com/repos/Safe-Space0026/sucht-projekt/issues', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer DEIN_ISSUES_TOKEN'
-      },
-      body: JSON.stringify({
-        title: 'selbsttest-auswertung',
-        labels: ['selbsttest'],
-        body: level
-      })
-    });
-  } catch(e) {}
+  fetch('https://api.countapi.xyz/hit/safe-space0026/selbsttest-count').catch(() => {});
 }
 function resetQuiz() {
   curQ=0; answers=new Array(10).fill(null);
@@ -2098,9 +2084,9 @@ function updateChartsWithData(data) {
   }
   const testEl = document.getElementById('testStatsPanel');
   if (testEl) {
-    fetch('/sucht-projekt/data/stats.json')
+    fetch('https://api.countapi.xyz/get/safe-space0026/selbsttest-count')
       .then(r => r.ok ? r.json() : null)
-      .then(d => { if (d) { const el = document.getElementById('kpiTotalTests'); if (el) el.textContent = d.total.toLocaleString('de-DE'); } })
+      .then(d => { if (d) { const el = document.getElementById('kpiTotalTests'); if (el) el.textContent = d.value.toLocaleString('de-DE'); } })
       .catch(() => {});
     try {
       const raw = localStorage.getItem('ss_test_results');
