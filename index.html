@@ -1422,19 +1422,12 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
           <div class="kpi-card kpi-red"><div class="kpi-icon">🚪</div><div class="kpi-value">0%</div><div class="kpi-label">Absprungrate</div><div class="kpi-trend" style="color:var(--text-light);">— noch keine Daten</div></div>
         </div>
         <div class="chart-row">
-          <div class="chart-card"><h4>📈 Besucherverlauf – letzte 30 Tage</h4><canvas id="chartLine"></canvas></div>
-          <div class="chart-card"><h4>🍩 Traffic-Quellen</h4><canvas id="chartDoughnut"></canvas><div style="margin-top:1rem;" id="doughnutLegend"></div></div>
+          <div class="chart-card"><h4>📈 Besucherverlauf – letzte 14 Tage</h4><canvas id="chartLine"></canvas></div>
+          <div class="chart-card"><h4>📅 Tagesgenaue Übersicht – letzte 14 Tage</h4><div id="dailyTable" style="overflow-x:auto;"></div></div>
         </div>
         <div class="chart-row">
           <div class="chart-card"><h4>📊 Besucher nach Wochentag</h4><canvas id="chartBar"></canvas></div>
-          <div class="chart-card"><h4>📍 Besucher nach Region</h4><ul class="region-list" id="regionList"></ul></div>
-        </div>
-        <div class="chart-card" style="margin-bottom:1.2rem;">
-          <h4>🏆 Top 5 meistbesuchte Seiten</h4>
-          <table class="data-table">
-            <thead><tr><th>#</th><th>Seite</th><th>Besuche</th><th>Anteil</th><th>Trend</th></tr></thead>
-            <tbody id="topPagesTable"></tbody>
-          </table>
+          <div class="chart-card"><h4>🧪 Selbsttest Auswertungen</h4><div id="testStatsPanel"><div style="color:var(--text-light);font-size:.85rem;padding:1rem;text-align:center;">Noch keine Tests abgeschlossen.</div></div></div>
         </div>
         <div class="chart-card" style="margin-bottom:1.2rem;">
           <h4>📰 Blog-News aktualisieren</h4>
@@ -1784,6 +1777,11 @@ function showResult() {
   document.getElementById('resultTips').innerHTML=tips;
   document.getElementById('progressBar').style.width='100%';
   smoothScrollIntoView(r);
+  try {
+    const existing = JSON.parse(localStorage.getItem('ss_test_results') || '[]');
+    existing.push(level);
+    localStorage.setItem('ss_test_results', JSON.stringify(existing));
+  } catch(e) {}
 }
 function resetQuiz() {
   curQ=0; answers=new Array(10).fill(null);
@@ -1947,28 +1945,23 @@ function initCharts() {
     });
     return;
   }
-  ['chartLine','chartDoughnut','chartBar'].forEach(id => {
+  ['chartLine','chartBar'].forEach(id => {
     if (adminCharts[id]) { adminCharts[id].destroy(); delete adminCharts[id]; }
   });
-  const labels30 = buildEmptyDays().map(d => new Date(d.date).toLocaleDateString('de-DE', {day:'2-digit', month:'2-digit'}));
+  const labels14 = Array.from({length:14}, (_,i) => {
+    const d = new Date(Date.now() - (13-i)*86400000);
+    return d.toLocaleDateString('de-DE', {day:'2-digit', month:'2-digit'});
+  });
   adminCharts.chartLine = new Chart(document.getElementById('chartLine'), {
     type: 'line',
-    data: { labels: labels30, datasets: [{ label:'Besucher', data: new Array(30).fill(0), borderColor:'rgba(255,0,102,0.8)', backgroundColor:'rgba(255,0,102,0.08)', borderWidth:2, pointRadius:3, tension:0.4, fill:true }] },
+    data: { labels: labels14, datasets: [{ label:'Besucher', data: new Array(14).fill(0), pointRadius:4, borderColor:'rgba(255,0,102,0.8)', backgroundColor:'rgba(255,0,102,0.08)', borderWidth:2, tension:0.4, fill:true }] },
     options: { responsive:true, maintainAspectRatio:true, plugins:{ legend:{display:false} }, scales:{ x:{ grid:{display:false}, ticks:{maxTicksLimit:8,font:{size:10}} }, y:{ min:0, grid:{color:'rgba(0,0,0,0.04)'}, ticks:{font:{size:10},stepSize:1} } } }
   });
-  adminCharts.chartDoughnut = new Chart(document.getElementById('chartDoughnut'), {
-    type: 'doughnut',
-    data: { labels:['Keine Daten'], datasets:[{ data:[1], backgroundColor:['#e9ecef'], borderWidth:0 }] },
-    options: { responsive:true, cutout:'68%', plugins:{ legend:{display:false} } }
-  });
-  document.getElementById('doughnutLegend').innerHTML = '<div style="font-size:.78rem;color:var(--text-light);text-align:center;padding:.5rem 0;">Lade Daten…</div>';
   adminCharts.chartBar = new Chart(document.getElementById('chartBar'), {
     type: 'bar',
     data: { labels:['Mo','Di','Mi','Do','Fr','Sa','So'], datasets:[{ label:'Besucher', data: new Array(7).fill(0), backgroundColor:'rgba(255,0,102,0.2)', borderRadius:6, borderSkipped:false }] },
     options: { responsive:true, plugins:{ legend:{display:false} }, scales:{ x:{ grid:{display:false}, ticks:{font:{size:11}} }, y:{ min:0, grid:{color:'rgba(0,0,0,0.04)'}, ticks:{font:{size:10},stepSize:1} } } }
   });
-  document.getElementById('regionList').innerHTML = '<li style="padding:1.2rem 0;color:var(--text-light);font-size:.85rem;text-align:center;list-style:none;">Keine Regionaldaten vorhanden.</li>';
-  document.getElementById('topPagesTable').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:1rem;">Lade Daten…</td></tr>';
 }
 
 async function updateKPIs() {
@@ -2029,67 +2022,56 @@ async function updateKPIs() {
 
 function updateChartsWithData(data) {
   if (typeof Chart === 'undefined' || !data) return;
-  // Line chart: visits per day, last 30 days
-  const days = buildEmptyDays();
+  const days14 = Array.from({length:14}, (_,i) => {
+    const d = new Date(Date.now() - (13-i)*86400000);
+    return { date: d.toISOString().slice(0,10), label: d.toLocaleDateString('de-DE', {weekday:'short', day:'2-digit', month:'2-digit'}), value: 0 };
+  });
   data.forEach(v => {
-    if (!v.created_at) return;
-    const ds = new Date(v.created_at).toDateString();
-    const d = days.find(x => new Date(x.date).toDateString() === ds);
-    if (d) d.value++;
+    const ts = v.timestamp || v.created_at;
+    if (!ts) return;
+    const ds = ts.slice(0,10);
+    const d = days14.find(x => x.date === ds);
+    if (d) d.value += (v.count !== undefined ? v.count : 1);
   });
   if (adminCharts.chartLine) {
-    adminCharts.chartLine.data.datasets[0].data = days.map(d => d.value);
-    adminCharts.chartLine.options.scales.y.max = Math.ceil(Math.max(...days.map(d => d.value), 1) * 1.3);
+    adminCharts.chartLine.data.labels = days14.map(d => d.label);
+    adminCharts.chartLine.data.datasets[0].data = days14.map(d => d.value);
+    adminCharts.chartLine.options.scales.y.max = Math.ceil(Math.max(...days14.map(d => d.value), 1) * 1.3);
     adminCharts.chartLine.update();
   }
-  // Bar chart: visits by weekday, last 4 weeks
+  const dailyEl = document.getElementById('dailyTable');
+  if (dailyEl) {
+    const maxVal = Math.max(...days14.map(d => d.value), 1);
+    dailyEl.innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:.83rem;"><thead><tr><th style="text-align:left;padding:.4rem .5rem;color:var(--text-light);font-weight:600;border-bottom:2px solid #ffe6f0;">Datum</th><th style="text-align:right;padding:.4rem .5rem;color:var(--text-light);font-weight:600;border-bottom:2px solid #ffe6f0;">Besuche</th><th style="padding:.4rem .5rem;border-bottom:2px solid #ffe6f0;"></th></tr></thead><tbody>' +
+      days14.slice().reverse().map(d => '<tr style="border-bottom:1px solid #fff0f5;"><td style="padding:.4rem .5rem;font-weight:' + (d.value>0?'600':'400') + ';color:' + (d.value>0?'var(--text)':'var(--text-light)') + ';">' + d.label + '</td><td style="text-align:right;padding:.4rem .5rem;font-weight:700;color:' + (d.value>0?'var(--primary)':'var(--text-light)') + ';">' + d.value + '</td><td style="padding:.4rem .5rem;min-width:80px;"><div style="background:#ffe6f0;border-radius:3px;height:6px;overflow:hidden;"><div style="height:100%;background:var(--gradient);border-radius:3px;width:' + Math.round(d.value/maxVal*100) + '%;"></div></div></td></tr>').join('') +
+      '</tbody></table>';
+  }
   const wdCounts = [0,0,0,0,0,0,0];
-  const fourWeeksAgo = new Date(Date.now() - 28*24*60*60*1000);
   data.forEach(v => {
-    if (!v.created_at) return;
-    const d = new Date(v.created_at);
-    if (d >= fourWeeksAgo) wdCounts[(d.getDay()+6)%7]++;
+    const ts = v.timestamp || v.created_at;
+    if (!ts) return;
+    const d = new Date(ts);
+    wdCounts[(d.getDay()+6)%7] += (v.count !== undefined ? v.count : 1);
   });
   if (adminCharts.chartBar) {
     adminCharts.chartBar.data.datasets[0].data = wdCounts;
     adminCharts.chartBar.options.scales.y.max = Math.ceil(Math.max(...wdCounts, 1) * 1.3);
     adminCharts.chartBar.update();
   }
-  // Doughnut: visits per page
-  const pageCounts = {};
-  data.forEach(v => { const p = v.page || '/'; pageCounts[p] = (pageCounts[p] || 0) + 1; });
-  const entries = Object.entries(pageCounts).sort((a, b) => b[1] - a[1]);
-  if (entries.length > 0 && adminCharts.chartDoughnut) {
-    const colors = ['#FF0066','#FF6600','#6600FF','#00AAFF','#00CC66','#FFAA00','#CC0052'];
-    const top = entries.slice(0, 6);
-    const otherSum = entries.slice(6).reduce((s, [,v]) => s + v, 0);
-    if (otherSum > 0) top.push(['Sonstige', otherSum]);
-    adminCharts.chartDoughnut.data.labels = top.map(([k]) => k);
-    adminCharts.chartDoughnut.data.datasets[0].data = top.map(([,v]) => v);
-    adminCharts.chartDoughnut.data.datasets[0].backgroundColor = top.map((_, i) => colors[i % colors.length]);
-    adminCharts.chartDoughnut.update();
-    const total = data.length;
-    document.getElementById('doughnutLegend').innerHTML = top.map(([k, v], i) => `
-      <div style="display:flex;align-items:center;gap:.5rem;margin:.25rem 0;font-size:.75rem;">
-        <span style="width:12px;height:12px;border-radius:3px;background:${colors[i%colors.length]};flex-shrink:0;"></span>
-        <span style="flex:1;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${k}</span>
-        <strong style="color:var(--primary);">${v}</strong>
-        <span style="color:var(--text-light);">(${Math.round(v/total*100)}%)</span>
-      </div>`).join('');
+  const testEl = document.getElementById('testStatsPanel');
+  if (testEl) {
+    try {
+      const raw = localStorage.getItem('ss_test_results');
+      const tests = raw ? JSON.parse(raw) : [];
+      const total = tests.length;
+      const green = tests.filter(t => t === 'green').length;
+      const yellow = tests.filter(t => t === 'yellow').length;
+      const red = tests.filter(t => t === 'red').length;
+      testEl.innerHTML = total === 0
+        ? '<div style="color:var(--text-light);font-size:.85rem;padding:1rem;text-align:center;">Noch keine Tests auf diesem Gerät abgeschlossen.</div>'
+        : '<div style="display:flex;flex-direction:column;gap:.5rem;"><div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem .8rem;background:var(--light-bg);border-radius:8px;"><span style="font-size:.88rem;">🧪 Tests gesamt</span><strong>' + total + '</strong></div><div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem .8rem;background:#e8f8ef;border-radius:8px;"><span style="font-size:.88rem;">✅ Kein Risiko</span><strong style="color:#27AE60;">' + green + ' <span style="font-weight:400;font-size:.8rem;">(' + (total>0?Math.round(green/total*100):0) + '%)</span></strong></div><div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem .8rem;background:#fef9e7;border-radius:8px;"><span style="font-size:.88rem;">⚠️ Warnsignale</span><strong style="color:#F39C12;">' + yellow + ' <span style="font-weight:400;font-size:.8rem;">(' + (total>0?Math.round(yellow/total*100):0) + '%)</span></strong></div><div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem .8rem;background:#fdf0ef;border-radius:8px;"><span style="font-size:.88rem;">🆘 Bitte Hilfe suchen</span><strong style="color:#E74C3C;">' + red + ' <span style="font-weight:400;font-size:.8rem;">(' + (total>0?Math.round(red/total*100):0) + '%)</span></strong></div></div>';
+    } catch(e) { testEl.innerHTML = '<div style="color:var(--text-light);font-size:.85rem;padding:1rem;">Fehler beim Laden.</div>'; }
   }
-  // Top 5 pages table
-  const top5 = entries.slice(0, 5);
-  const maxC = top5[0] ? top5[0][1] : 1;
-  document.getElementById('topPagesTable').innerHTML = top5.length
-    ? top5.map(([page, count], i) => `
-      <tr>
-        <td style="font-weight:700;color:var(--primary)">${i+1}</td>
-        <td>${page}<br><span style="font-size:.75rem;color:var(--text-light);">${page}</span></td>
-        <td style="font-weight:700;">${count}</td>
-        <td style="min-width:100px;"><div class="page-bar"><div class="page-bar-fill" style="width:${Math.round(count/maxC*100)}%"></div></div></td>
-        <td style="color:var(--text-light);">—</td>
-      </tr>`).join('')
-    : '<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:1rem;">Noch keine Daten vorhanden.</td></tr>';
 }
 
 
@@ -2169,44 +2151,23 @@ function resetAll() {
 function exportPDF() {
   const w = window.open('','_blank');
   if (!w) { alert('Bitte Pop-ups für diese Seite erlauben und erneut versuchen.'); return; }
-  w.document.write(`<!DOCTYPE html><html><head><title>Analytics-Bericht</title><style>
-    body{font-family:Arial,sans-serif;padding:2rem;color:#333;max-width:800px;margin:0 auto;}
-    h1{color:#FF0066;border-bottom:3px solid #FF0066;padding-bottom:.5rem;}
-    h2{color:#CC0052;margin-top:1.5rem;font-size:1rem;}
-    .notice{background:#fff0f5;border:2px solid rgba(255,0,102,0.2);border-radius:8px;padding:1rem 1.2rem;margin:1rem 0;color:#CC0052;font-size:.88rem;}
-    .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1rem 0;}
-    .kpi{background:#fff0f5;border-radius:8px;padding:1rem;text-align:center;}
-    .kpi-v{font-size:2rem;font-weight:900;color:#FF0066;}
-    .kpi-l{font-size:.75rem;color:#666;}
-    table{width:100%;border-collapse:collapse;margin-top:.5rem;}
-    th{background:#FF0066;color:#fff;padding:.5rem;text-align:left;font-size:.8rem;}
-    td{padding:.5rem;border-bottom:1px solid #eee;font-size:.85rem;}
-    @media print{body{padding:.5rem;}}
-  </style></head><body>
-    <h1>📊 Analytics-Bericht – Safe Space</h1>
-    <p>Erstellt: ${new Date().toLocaleString('de-DE')}</p>
-    <div class="notice">📭 Noch keine Daten vorhanden – Besucher werden gezählt, sobald die Website online ist.</div>
-    <h2>Wichtigste Kennzahlen</h2>
-    <div class="kpi-row">
-      <div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">Besucher heute</div></div>
-      <div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">Diese Woche</div></div>
-      <div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">Gesamt</div></div>
-    </div>
-    <h2>Traffic-Quellen</h2>
-    <table><tr><th>Quelle</th><th>Anteil</th></tr>
-      <tr><td>Direkt</td><td>—</td></tr><tr><td>Social Media</td><td>—</td></tr>
-      <tr><td>Google</td><td>—</td></tr><tr><td>Sonstige</td><td>—</td></tr>
-    </table>
-    <h2>Top-Seiten</h2>
-    <table><tr><th>Seite</th><th>Besuche</th></tr>
-      <tr><td>Startseite</td><td>0</td></tr><tr><td>Infobereich</td><td>0</td></tr>
-      <tr><td>Selbsttest</td><td>0</td></tr><tr><td>Hilfe &amp; Beratung</td><td>0</td></tr>
-      <tr><td>Social Media</td><td>0</td></tr>
-    </table>
-    <p style="margin-top:2rem;font-size:.75rem;color:#999;">Safe Space | Daten werden erst nach Veröffentlichung gezählt.</p>
-  </body></html>`);
+  const total = document.getElementById('kpiTotal')?.textContent || '—';
+  const unique = document.getElementById('kpiUnique')?.textContent || '—';
+  const week = document.getElementById('kpiWeek')?.textContent || '—';
+  const yesterday = document.getElementById('kpiToday')?.textContent || '—';
+  const dailyHTML = document.getElementById('dailyTable')?.innerHTML || '<p>Keine Daten</p>';
+  let testHTML = '<p style="color:#999;">Noch keine Tests auf diesem Gerät.</p>';
+  try {
+    const tests = JSON.parse(localStorage.getItem('ss_test_results') || '[]');
+    if (tests.length > 0) {
+      const g = tests.filter(t=>t==='green').length;
+      const y = tests.filter(t=>t==='yellow').length;
+      const r = tests.filter(t=>t==='red').length;
+      testHTML = '<table><tr><th>Ergebnis</th><th>Anzahl</th><th>Anteil</th></tr><tr><td>✅ Kein Risiko</td><td>' + g + '</td><td>' + Math.round(g/tests.length*100) + '%</td></tr><tr><td>⚠️ Warnsignale</td><td>' + y + '</td><td>' + Math.round(y/tests.length*100) + '%</td></tr><tr><td>🆘 Bitte Hilfe suchen</td><td>' + r + '</td><td>' + Math.round(r/tests.length*100) + '%</td></tr><tr style="font-weight:bold;"><td>Gesamt</td><td>' + tests.length + '</td><td>100%</td></tr></table>';
+    }
+  } catch(e) {}
+  w.document.write('<!DOCTYPE html><html><head><title>Analytics-Bericht Safe Space</title><style>body{font-family:Arial,sans-serif;padding:2rem;color:#333;max-width:800px;margin:0 auto;}h1{color:#FF0066;border-bottom:3px solid #FF0066;padding-bottom:.5rem;}h2{color:#CC0052;margin-top:1.8rem;font-size:1rem;border-left:3px solid #FF0066;padding-left:.6rem;}.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1rem 0;}.kpi{background:#fff0f5;border-radius:8px;padding:1rem;text-align:center;}.kpi-v{font-size:1.8rem;font-weight:900;color:#FF0066;}.kpi-l{font-size:.72rem;color:#666;margin-top:.2rem;}table{width:100%;border-collapse:collapse;margin-top:.5rem;font-size:.83rem;}th{background:#FF0066;color:#fff;padding:.4rem .6rem;text-align:left;}td{padding:.4rem .6rem;border-bottom:1px solid #eee;}@media print{body{padding:.5rem;}}</style></head><body><h1>📊 Analytics-Bericht – Safe Space</h1><p style="color:#999;font-size:.85rem;">Erstellt: ' + new Date().toLocaleString('de-DE') + ' · Daten via GitHub Traffic API</p><h2>Wichtigste Kennzahlen (letzte 14 Tage)</h2><div class="kpi-row"><div class="kpi"><div class="kpi-v">' + total + '</div><div class="kpi-l">Views gesamt</div></div><div class="kpi"><div class="kpi-v">' + unique + '</div><div class="kpi-l">Unique Visitors</div></div><div class="kpi"><div class="kpi-v">' + week + '</div><div class="kpi-l">Diese Woche</div></div><div class="kpi"><div class="kpi-v">' + yesterday + '</div><div class="kpi-l">Gestern</div></div></div><h2>Besucherverlauf – letzte 14 Tage</h2>' + dailyHTML + '<h2>Selbsttest Auswertungen</h2>' + testHTML + '<p style="margin-top:2.5rem;font-size:.72rem;color:#bbb;border-top:1px solid #eee;padding-top:.8rem;">Safe Space · Profil-Seminar 12 · Daten werden täglich um 12:00 Uhr aktualisiert.</p></body></html>');
   w.document.close();
-  // Safari needs longer delay before print dialog
   var printDelay = /iP(hone|ad|od)|Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent) ? 1200 : 500;
   setTimeout(function() { w.focus(); w.print(); }, printDelay);
 }
