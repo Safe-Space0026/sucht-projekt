@@ -2284,18 +2284,71 @@ const FALLBACK = [
   'Manchmal hilft es einfach alles rauszulassen. Ich bin hier und höre zu.'
 ];
 
+// Kategorienamen passend zur Reihenfolge in BOT_RESPONSES
+const CATEGORY_NAMES = ['stress','sucht','alkohol','cannabis','nikotin','einsamkeit','depression','positiv'];
+
+const CONTEXT_FOLLOWUPS = {
+  stress:      ['Magst du mir mehr erzählen was genau den meisten Druck macht?', 'Was würde dir gerade am meisten helfen — Ablenkung oder jemanden zum Reden?', 'Gibt es einen Moment in der Woche wo der Stress kurz nachlässt?'],
+  sucht:       ['Und wie lange ist das schon so?', 'Was glaubst du — wann hat das angefangen?', 'Gibt es Momente wo du das Gefühl hast die Kontrolle zu haben?'],
+  alkohol:     ['Okay, und wie oft passiert das ungefähr? Täglich oder eher am Wochenende?', 'Was denkst du würde passieren wenn du eine Woche nichts trinkst?', 'Trinkst du eher alleine oder mit anderen?'],
+  cannabis:    ['Und wie oft ungefähr — täglich oder seltener?', 'Was machst du stattdessen wenn du mal nicht kiffst?', 'Hast du schon versucht aufzuhören — was ist dann passiert?'],
+  nikotin:     ['Wie viele pro Tag ungefähr?', 'Gab es schon mal einen Versuch aufzuhören?', 'Was ist der Moment wo du das Verlangen am stärksten spürst?'],
+  einsamkeit:  ['Das ist okay. Manchmal ist es schwer in Worte zu fassen. Wann fühlst du dich am einsamsten?', 'Gibt es irgendjemanden — auch online — mit dem du manchmal redest?', 'Was würde sich anders anfühlen wenn du jemanden hättest dem du vertraust?'],
+  depression:  ['Wie lange ist das schon so?', 'Gibt es irgendeinen Moment am Tag wo es kurz besser wird?', 'Hast du schon mal professionelle Hilfe in Betracht gezogen?'],
+  positiv:     ['Das freut mich wirklich! Was hat konkret geholfen?', 'Gut zu hören. Wie geht es dir gerade in diesem Moment?', 'Super. Was nimmst du dir als nächstes vor?']
+};
+
+const REPEAT_TOPIC_RESPONSES = {
+  stress:     'Du hast das jetzt zweimal erwähnt — das klingt als würde dich der Stress wirklich stark belasten. Was steckt dahinter, glaubst du?',
+  sucht:      'Du sprichst zum zweiten Mal darüber — das zeigt mir dass dich das wirklich beschäftigt. Was ist der Kern davon, wenn du ehrlich bist?',
+  alkohol:    'Du hast Alkohol nochmal angesprochen — ich glaube das ist kein Zufall. Was verbindest du damit?',
+  cannabis:   'Das Thema kommt zum zweiten Mal auf — was glaubst du steckt wirklich dahinter?',
+  nikotin:    'Du hast das nochmal erwähnt. Spürst du selbst dass es dir wichtig ist darüber zu reden?',
+  einsamkeit: 'Du hast das jetzt zweimal erwähnt — das klingt als würde dich das wirklich belasten. Was steckt dahinter?',
+  depression: 'Du sprichst zum zweiten Mal davon — das nimmt mich mit. Hast du jemanden in deinem Leben mit dem du das teilen kannst?',
+  positiv:    'Schön dass es dir gut geht! Was ist heute besonders gut?'
+};
+
+function detectCategory(lower) {
+  for (let i = 0; i < BOT_RESPONSES.length; i++) {
+    if (BOT_RESPONSES[i].keys.some(k => lower.includes(k))) return CATEGORY_NAMES[i];
+  }
+  return null;
+}
+
 function chatBotReply(msg) {
   const lower = msg.toLowerCase();
+
+  // Notfall — immer höchste Priorität
   if (CRISIS_WORDS.some(w => lower.includes(w))) {
     document.getElementById('chatEmergency').classList.add('visible');
     return 'Ich mache mir gerade wirklich Sorgen um dich. Bitte ruf jetzt sofort die Telefonseelsorge an: <strong>0800 111 0 111</strong> — kostenlos, anonym, 24/7. Die hören zu ohne zu urteilen. Du bist nicht allein. 💙';
   }
-  for (const group of BOT_RESPONSES) {
-    if (group.keys.some(k => lower.includes(k))) {
-      const arr = group.answers;
-      return arr[Math.floor(Math.random() * arr.length)];
-    }
+
+  const currentCategory = detectCategory(lower);
+  const lastCategory    = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1].category : null;
+
+  // Verlauf aktualisieren (nach dem wir prev state gelesen haben)
+  chatHistory.push({ msg, category: currentCategory });
+  if (chatHistory.length > 3) chatHistory.shift();
+
+  // Gleiches Thema zweimal in Folge → tiefer nachfragen
+  if (currentCategory && currentCategory === lastCategory && REPEAT_TOPIC_RESPONSES[currentCategory]) {
+    return REPEAT_TOPIC_RESPONSES[currentCategory];
   }
+
+  // Kurze Nachricht ohne Keyword → Kontext aus History verwenden
+  if (!currentCategory && msg.trim().split(/\s+/).length < 4 && lastCategory && CONTEXT_FOLLOWUPS[lastCategory]) {
+    const arr = CONTEXT_FOLLOWUPS[lastCategory];
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  // Standard Keyword-Match
+  if (currentCategory) {
+    const group = BOT_RESPONSES[CATEGORY_NAMES.indexOf(currentCategory)];
+    if (group) return group.answers[Math.floor(Math.random() * group.answers.length)];
+  }
+
   return FALLBACK[Math.floor(Math.random() * FALLBACK.length)];
 }
 
