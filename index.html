@@ -2096,14 +2096,10 @@ function updateChartsWithData(data) {
   }
   const testEl = document.getElementById('testStatsPanel');
   if (testEl) {
-    try {
-      const testCountRes = await fetch('/sucht-projekt/data/test_count.json');
-      if (testCountRes.ok) {
-        const testCountData = await testCountRes.json();
-        const totalTestsEl = document.getElementById('kpiTotalTests');
-        if (totalTestsEl) totalTestsEl.textContent = testCountData.total.toLocaleString('de-DE');
-      }
-    } catch(e) {}
+    fetch('/sucht-projekt/data/test_count.json')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d) { const el = document.getElementById('kpiTotalTests'); if (el) el.textContent = d.total.toLocaleString('de-DE'); } })
+      .catch(() => {});
     try {
       const raw = localStorage.getItem('ss_test_results');
       const tests = raw ? JSON.parse(raw) : [];
