@@ -2199,71 +2199,96 @@ function initAdmin() {
 }
 
 // ===================== CHAT =====================
-const CRISIS_WORDS = ['suizid','suizidgedanken','sterben','töten','umbringen','kein ausweg','nicht mehr leben','lebensmüde','todesgedanken','selbstverletzung','selbstmord','aufgeben alles','will nicht mehr'];
+const CRISIS_WORDS = ['selbstverletzung','ritzen','schneiden','sterben','suizid','umbringen','nicht mehr leben','alles beenden','keinen ausweg','niemand würde es merken','lebensmüde','todesgedanken','selbstmord','will nicht mehr'];
 const chatHistory = [];
 let chatBotBusy = false;
 
 const BOT_RESPONSES = [
   {
-    keys: ['stress','druck','überfordert','überwältigt','prüfung','klausur','abitur','lernen','müde','erschöpft','burnout'],
+    keys: ['stress','stressig','gestresst','druck','abitur','abi','klausur','prüfung','lernen','schule','hausaufgaben','noten','lehrer','versagen','durchfallen','erwartungen','eltern erwartungen'],
     answers: [
-      'Schulstress ist wirklich belastend – du bist damit nicht allein. Viele Abiturientinnen und Abiturienten fühlen sich in dieser Phase überwältigt. Was hilft: kleine Pausen alle 45 Minuten, Bewegung an der frischen Luft und feste Schlafzeiten. Gibt es eine bestimmte Situation, die dich besonders belastet?',
-      'Druck in der Prüfungsphase ist normal, aber er sollte nicht alles überschatten. Versuch, dir täglich einen kleinen Moment nur für dich zu nehmen – ob ein kurzer Spaziergang, Musik oder ein Gespräch mit jemandem dem du vertraust. Was macht dir gerade am meisten Sorgen?',
-      'Erschöpfung ist ein Warnsignal deines Körpers. Ausreichend Schlaf (7–9 Stunden) ist für Gedächtnis und Konzentration genauso wichtig wie Lernen. Hast du in letzter Zeit genug geschlafen?'
+      'Schulstress ist real und du bist damit nicht allein. Viele Schüler fühlen sich genau so. Was hilft: kurze Pausen alle 45 Minuten, danach wieder fokussieren. Was stresst dich gerade am meisten?',
+      'Der Druck vor dem Abitur kann überwältigend sein. Aber denk daran: Eine Prüfung definiert nicht deinen Wert als Mensch. Hast du schon mit jemandem darüber gesprochen?',
+      'Wenn Noten alles zu bestimmen scheinen, vergisst man schnell sich selbst. Was machst du, um abzuschalten?',
+      'Elterndruck und Schulstress gleichzeitig — das ist wirklich viel. Du musst das nicht alleine tragen. Gibt es jemanden in deiner Schule dem du vertraust?',
+      'Manchmal hilft es, den Stress aufzuschreiben. Was würdest du loslassen wollen, wenn du könntest?'
     ]
   },
   {
-    keys: ['sucht','abhängig','süchtig','alkohol','drogen','kiffen','rauchen','nikotin','energydrink','gaming','zocken','social media','instagram','tiktok','handy'],
+    keys: ['sucht','süchtig','abhängig','abhängigkeit','kann nicht aufhören','brauche es','ohne geht nicht'],
     answers: [
-      'Sucht entwickelt sich oft schleichend – es fängt mit "nur einmal" an und wird zur Gewohnheit. Ein erstes Zeichen: Man braucht die Sache, um sich normal zu fühlen. Macht dir etwas Bestimmtes Sorgen?',
-      'Es ist mutig, über Sucht nachzudenken. Sucht ist keine Charakterschwäche, sondern eine Reaktion des Gehirns auf Stress oder Schmerz. Wenn du denkst, dass du oder jemand den du kennst Unterstützung braucht, bin ich hier.',
-      'Besonders Social Media und Gaming können starke Suchtmuster erzeugen – das liegt am Belohnungssystem im Gehirn. Hast du das Gefühl, dass du die Kontrolle über deinen Konsum verlierst?'
+      'Sucht entsteht oft als Flucht vor etwas Schwerem. Das ist keine Schwäche — das ist menschlich. Was glaubst du, wovor du fliehst?',
+      'Der erste Schritt ist zu erkennen dass etwas nicht stimmt — und den hast du schon gemacht indem du hier schreibst. Was möchtest du ändern?',
+      'Abhängigkeit ist eine Krankheit, keine Charakterschwäche. Es gibt Hilfe und du musst nicht alleine damit umgehen. Darf ich dir Beratungsstellen zeigen?',
+      'Viele Menschen kämpfen mit Sucht — auch Jugendliche. Du bist nicht allein. Was wäre der kleinste Schritt den du dir vorstellen könntest?'
     ]
   },
   {
-    keys: ['hilfe','beratung','hotline','therapie','psychologe','psychiater','arzt','melden','wenden'],
+    keys: ['alkohol','trinken','saufen','betrunken','bier','wein','schnaps','party trinken','jeden tag trinken'],
     answers: [
-      'Es ist stark, dass du nach Hilfe fragst. Die <strong>Telefonseelsorge (0800 111 0 111)</strong> ist kostenlos, anonym und rund um die Uhr erreichbar. Für Jugendliche gibt es auch die <strong>Nummer gegen Kummer: 116 111</strong>. Du kannst auch in der Hilfe-Sektion dieser Website Online-Beratungsstellen finden.',
-      'Hilfe zu suchen ist ein Zeichen von Stärke, nicht von Schwäche. In Deutschland gibt es viele kostenlose Anlaufstellen: <strong>Telefonseelsorge: 0800 111 0 111</strong>, <strong>BZgA-Drogenhotline: 0800 1 31 20 00</strong>. Soll ich dir mehr erklären?',
-      'In der Hilfe-Sektion dieser Website findest du Telefonhotlines und Online-Beratung – alles kostenlos und anonym. Die <strong>BZgA-Hotline: 0800 1 31 20 00</strong> ist speziell für Suchtfragen zuständig.'
+      'Alkohol kann sich anfühlen wie eine Lösung — aber er verstärkt Probleme langfristig. Trinkst du um etwas zu vergessen?',
+      'Wenn Alkohol regelmäßig zur Entspannung gebraucht wird, ist das ein Warnsignal. Wie oft trinkst du in der Woche?',
+      'Viele Jugendliche unterschätzen wie schnell Alkohol zur Gewohnheit wird. Was passiert wenn du mal nicht trinkst?',
+      'Alkohol und Stress sind eine gefährliche Kombination. Gibt es andere Wege wie du abschaltest?'
     ]
   },
   {
-    keys: ['traurig','allein','einsam','niemand','versteht','niemand versteht','keiner','schlimm','hoffnungslos','leer','wertlos'],
+    keys: ['kiffen','cannabis','gras','weed','joint','high','bekifft','hasch','dope','rauchen weed'],
     answers: [
-      'Es tut mir leid, dass du dich so fühlst – das klingt wirklich schwer. Einsamkeit und Traurigkeit sind echte Gefühle, die ernst genommen werden sollten. Möchtest du mir mehr erzählen, was gerade passiert?',
-      'Dieses Gefühl, allein zu sein und nicht verstanden zu werden, kann sehr erschöpfend sein. Du verdienst Unterstützung. Gibt es jemanden – Familie, Freunde, einen Lehrer – dem du vertraust?'
+      'Cannabis fühlt sich oft harmlos an, besonders weil es jetzt legaler ist. Aber regelmäßiger Konsum kann Motivation und Gedächtnis beeinflussen. Merkst du Veränderungen bei dir?',
+      'Viele kiffen um Stress zu vergessen — das Problem bleibt aber danach. Was steckt hinter dem Wunsch abzuschalten?',
+      'Wenn kiffen zur täglichen Routine wird, lohnt es sich zu fragen: Warum brauche ich das? Was fehlt sonst?',
+      'Gerade in der Schulzeit kann regelmäßiges Kiffen den Lernfortschritt deutlich bremsen. Hast du das schon bemerkt?'
     ]
   },
   {
-    keys: ['angst','panik','panikattacke','zittern','herzrasen','atmen','hyperventil'],
+    keys: ['rauchen','zigarette','nikotin','vapen','e-zigarette','dampfen','tabak'],
     answers: [
-      'Bei einer Panikattacke hilft die 4-7-8 Technik: 4 Sekunden einatmen, 7 Sekunden halten, 8 Sekunden langsam ausatmen. Das beruhigt das Nervensystem. Bist du gerade in einer Paniksituation?',
-      'Angst ist eine normale Reaktion auf Stress – aber wenn sie dein Leben stark einschränkt, ist professionelle Hilfe wichtig. Die <strong>Telefonseelsorge: 0800 111 0 111</strong> kann auch bei Angst helfen.'
+      'Nikotin ist eine der am stärksten abhängig machenden Substanzen — viele unterschätzen das. Wie hat es bei dir angefangen?',
+      'Vaping wirkt harmloser, aber Nikotin ist Nikotin. Das Gehirn von Jugendlichen reagiert besonders empfindlich darauf. Weißt du seit wann du es brauchst?',
+      'Rauchen als Stresskiller — das kennen viele. Aber der Effekt hält nur kurz an und der Drang wird stärker. Möchtest du aufhören?'
     ]
   },
   {
-    keys: ['schlaf','schlafen','einschlafen','aufwachen','nacht','müde','schläfrig'],
+    keys: ['allein','einsam','niemand','keine freunde','verstehen mich nicht','außenseiter','gemobbt','mobbing','ausgeschlossen'],
     answers: [
-      'Schlafprobleme in der Abiturphase sind häufig. Tipps: Handy 1 Stunde vor dem Schlafen weglegen, feste Schlafzeiten einhalten, kein Koffein nach 16 Uhr. Schlechter Schlaf schadet der Konzentration mehr als ein paar Stunden weniger Lernen.',
-      'Zu wenig Schlaf beeinträchtigt Gedächtnis, Konzentration und Stimmung stark. Versuche, auch in Prüfungsphasen mindestens 7 Stunden zu schlafen – dein Gehirn verarbeitet dann das Gelernte nachts.'
+      'Einsamkeit in einer Welt voller Menschen zu fühlen ist eines der schlimmsten Gefühle. Du bist hier und das zählt. Was macht dich einsam?',
+      'Manchmal fühlt es sich an als ob alle außer einem selbst dazugehören. Das Bild täuscht — viele fühlen sich genauso. Wann hat das angefangen?',
+      'Gemobbt zu werden hinterlässt tiefe Spuren. Das ist nicht deine Schuld. Gibt es einen Erwachsenen dem du vertraust?',
+      'Keine Freunde zu haben ist schmerzhaft. Aber es sagt nichts über deinen Wert aus. Was würde dir helfen?'
+    ]
+  },
+  {
+    keys: ['traurig','depression','depressiv','leer','nichts macht spaß','hoffnungslos','sinnlos','müde von allem','kann nicht mehr','erschöpft','alles sinnlos'],
+    answers: [
+      'Dieses Gefühl der Leere ist real und es verdient ernstgenommen zu werden. Du musst das nicht alleine tragen. Wie lange fühlst du dich schon so?',
+      'Wenn nichts mehr Freude macht ist das ein Zeichen dass deine Seele Hilfe braucht — genau wie ein gebrochener Arm Hilfe braucht. Hast du mit jemandem gesprochen?',
+      'Erschöpfung die nicht weggeht egal wie viel man schläft — das kennen viele die unter Depressionen leiden. Du bist nicht schwach, du bist krank und das ist behandelbar.',
+      'Es ist okay nicht okay zu sein. Aber du solltest das mit jemandem teilen der helfen kann. Die Telefonseelsorge <strong>0800 111 0 111</strong> hört zu — kostenlos und anonym.'
+    ]
+  },
+  {
+    keys: ['besser','geschafft','stolz','danke','hilft','geholfen','heute gut','fortschritt'],
+    answers: [
+      'Das freut mich wirklich zu hören. Kleine Schritte zählen genauso wie große. Was hat dir geholfen?',
+      'Du machst das gut. Auch wenn es sich nicht immer so anfühlt — du bist hier und du versuchst es. Das ist mutig.',
+      'Schön dass es dir besser geht! Was nimmst du dir für die nächste schwierige Situation vor?'
     ]
   }
 ];
 
 const FALLBACK = [
-  'Das klingt wichtig. Kannst du mir mehr darüber erzählen?',
-  'Ich höre dir zu. Was beschäftigt dich gerade am meisten?',
-  'Das ist ein ernstes Thema. Schau auch in unsere Hilfe-Sektion – dort findest du kostenlose Beratung.',
-  'Vielen Dank, dass du das mit mir teilst. Wie geht es dir dabei?',
-  'Ich verstehe, dass es gerade schwierig ist. Wusstest du, dass die Telefonseelsorge (0800 111 0 111) kostenlos und anonym erreichbar ist?'
+  'Ich höre dir zu. Magst du mir mehr erzählen was dich beschäftigt?',
+  'Was auch immer dich hierher gebracht hat — es war der richtige Schritt. Wie geht es dir gerade?',
+  'Du musst hier nichts erklären oder rechtfertigen. Einfach schreiben was dich bewegt.',
+  'Manchmal hilft es einfach alles rauszulassen. Ich bin hier und höre zu.'
 ];
 
 function chatBotReply(msg) {
   const lower = msg.toLowerCase();
   if (CRISIS_WORDS.some(w => lower.includes(w))) {
     document.getElementById('chatEmergency').classList.add('visible');
-    return '🚨 Ich mache mir Sorgen um dich. Bitte ruf jetzt die <strong>Telefonseelsorge an: 0800 111 0 111</strong> – kostenlos, anonym, rund um die Uhr. Du musst das nicht alleine durchstehen. 💙';
+    return 'Ich mache mir gerade wirklich Sorgen um dich. Bitte ruf jetzt sofort die Telefonseelsorge an: <strong>0800 111 0 111</strong> — kostenlos, anonym, 24/7. Die hören zu ohne zu urteilen. Du bist nicht allein. 💙';
   }
   for (const group of BOT_RESPONSES) {
     if (group.keys.some(k => lower.includes(k))) {
@@ -2324,7 +2349,7 @@ function sendChat() {
   appendChatMsg(msg, 'user');
   chatBotBusy = true;
   showTyping();
-  const delay = 800 + Math.random() * 700;
+  const delay = 1000 + Math.random() * 1000;
   setTimeout(() => {
     removeTyping();
     const reply = chatBotReply(msg);
