@@ -1418,7 +1418,7 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
           <div class="kpi-card kpi-purple"><div class="kpi-icon">👁️</div><div class="kpi-value" id="kpiToday">0</div><div class="kpi-label">Besucher gestern</div><div class="kpi-trend" id="kpiTodayTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
           <div class="kpi-card kpi-blue"><div class="kpi-icon">📅</div><div class="kpi-value" id="kpiWeek">0</div><div class="kpi-label">Besucher diese Woche</div><div class="kpi-trend" id="kpiWeekTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
           <div class="kpi-card kpi-green"><div class="kpi-icon">🌍</div><div class="kpi-value" id="kpiTotal">0</div><div class="kpi-label">Views (14 Tage)</div><div class="kpi-trend" id="kpiTotalTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
-          <div class="kpi-card kpi-orange"><div class="kpi-icon">👤</div><div class="kpi-value" id="kpiUnique">0</div><div class="kpi-label">Unique Visitors (14 Tage)</div><div class="kpi-trend" id="kpiUniqueTrend" style="color:var(--text-light);">— noch keine Daten</div></div>
+
           <div class="kpi-card kpi-red"><div class="kpi-icon">🌐</div><div class="kpi-value" id="kpiAllTime">—</div><div class="kpi-label">Besuche gesamt</div><div class="kpi-trend" id="kpiAllTimeTrend" style="color:var(--text-light);">— wird täglich aktualisiert</div></div>
         </div>
         <div class="chart-row">
@@ -1787,19 +1787,18 @@ function showResult() {
     existing.push(level);
     localStorage.setItem('ss_test_results', JSON.stringify(existing));
   } catch(e) {}
-  // Test-Abschluss als GitHub Issue melden
+  // Selbsttest-Ergebnis als GitHub Issue
   try {
     fetch('https://api.github.com/repos/Safe-Space0026/sucht-projekt/issues', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer DEIN_ECHTER_TOKEN'
+        'Authorization': 'Bearer DEIN_ISSUES_TOKEN'
       },
       body: JSON.stringify({
-        title: 'Test abgeschlossen: ' + level,
-        labels: ['test-abschluss'],
-        state: 'closed',
-        body: 'Ergebnis: ' + level + ' | Score: ' + total + ' | ' + new Date().toISOString()
+        title: 'selbsttest-auswertung',
+        labels: ['selbsttest'],
+        body: level
       })
     });
   } catch(e) {}
@@ -1994,11 +1993,9 @@ async function updateKPIs() {
     const todayStr = new Date().toISOString().slice(0,10);
     const yesterdayStr = new Date(Date.now() - 86400000).toISOString().slice(0,10);
 
-    // Gesamt-Views und Unique Visitors
+    // Gesamt-Views (14 Tage)
     const totalEl = document.getElementById('kpiTotal');
-    const uniqueEl = document.getElementById('kpiUnique');
     if (totalEl) totalEl.textContent = ghData.count.toLocaleString('de-DE');
-    if (uniqueEl) uniqueEl.textContent = ghData.uniques.toLocaleString('de-DE');
 
     // Besucher heute (falls noch keine Daten für heute → gestern als Fallback)
     const yesterdayData = ghData.views.find(v => v.timestamp.slice(0,10) === yesterdayStr);
@@ -2101,7 +2098,7 @@ function updateChartsWithData(data) {
   }
   const testEl = document.getElementById('testStatsPanel');
   if (testEl) {
-    fetch('/sucht-projekt/data/test_count.json')
+    fetch('/sucht-projekt/data/stats.json')
       .then(r => r.ok ? r.json() : null)
       .then(d => { if (d) { const el = document.getElementById('kpiTotalTests'); if (el) el.textContent = d.total.toLocaleString('de-DE'); } })
       .catch(() => {});
