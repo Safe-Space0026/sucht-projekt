@@ -1300,10 +1300,33 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
       <p data-i18n="impressumIntro">Hier findest du alle gesetzlich vorgeschriebenen Angaben zum Betreiber dieser Website sowie den Haftungsausschluss.</p>
     </div>
     <div id="impressumContent">
-      <div style="text-align:center;padding:3rem 1rem;background:linear-gradient(135deg,#fff0f5,#fff8f0);border-radius:16px;border:2px dashed rgba(255,0,102,0.3);margin-bottom:2rem;">
-        <div style="font-size:3rem;margin-bottom:1rem;">📋</div>
-        <h3 style="color:var(--primary-dark);font-size:1.2rem;font-weight:800;margin-bottom:.6rem;" data-i18n="impressumPlaceholderH">Impressum wird noch ausgefüllt</h3>
-        <p style="color:var(--text-light);font-size:.9rem;max-width:400px;margin:0 auto;" data-i18n-html="impressumPlaceholderHtml">Der Betreiber der Website kann die Impressumsdaten im <strong style="color:var(--primary);">Admin-Bereich</strong> unter "Impressum" eintragen.</p>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>🏢 Anbieter</h3>
+          <p><strong>Safe-Space</strong></p>
+          <p>Pestalozziweg 5</p>
+          <p>24536 Neumünster</p>
+        </div>
+        <div class="info-card">
+          <h3>📧 Kontakt</h3>
+          <p>E-Mail: <a href="mailto:safe-space0026@gmx.net" style="color:var(--primary);">safe-space0026@gmx.net</a></p>
+        </div>
+        <div class="info-card">
+          <h3>✍️ Verantwortlich für den Inhalt</h3>
+          <p>Juleen Richter, Marje Klein, Trixi Stuhlmacher, Jeremy Haye</p>
+        </div>
+      </div>
+      <div class="info-card" style="margin-bottom:2rem;">
+        <h3>ℹ️ Hinweis</h3>
+        <p>Diese Website ist ein Schulprojekt im Rahmen des Profil-Seminars 12.</p>
+      </div>
+      <div class="warning-box" style="background:linear-gradient(135deg,#f0f4ff,#e8f0ff);border-color:#7395d4;">
+        <h3 style="color:#1a3a6b;">⚠️ Haftungsausschluss</h3>
+        <ul>
+          <li style="color:#1a3a6b;">Dieses Projekt ist ein Schulprojekt zur Aufklärung und ersetzt keine professionelle Beratung.</li>
+          <li style="color:#1a3a6b;">Alle Inhalte wurden nach bestem Wissen erstellt; es wird keine Haftung für Aktualität oder Vollständigkeit übernommen.</li>
+          <li style="color:#1a3a6b;">Externe Links wurden zum Zeitpunkt der Verlinkung geprüft.</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -1354,7 +1377,6 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
         <button class="admin-nav-btn active" data-page="analytics" onclick="showAdminPage('analytics')">📊 Analytics</button>
         <button class="admin-nav-btn" data-page="social" onclick="showAdminPage('social')">📱 Social Media</button>
         <button class="admin-nav-btn" data-page="ads" onclick="showAdminPage('ads')">📣 Werbeanzeigen</button>
-        <button class="admin-nav-btn" data-page="impressum" onclick="showAdminPage('impressum')">📋 Impressum</button>
         <button class="admin-nav-btn" data-page="settings" onclick="showAdminPage('settings')">⚙️ Einstellungen</button>
         <button class="admin-nav-btn ads-off" id="adsToggleBtn" onclick="toggleAdsBtn()">Werbung AUS</button>
       </div>
@@ -1460,21 +1482,6 @@ body.dark .stat-card{background:rgba(0,0,0,.2);}
       </div>
 
       <!-- IMPRESSUM ADMIN -->
-      <div class="admin-page" id="page-impressum">
-        <div class="card">
-          <h3>📋 Impressum verwalten</h3>
-          <p style="color:var(--text-light);font-size:.88rem;margin-bottom:1.5rem;">Diese Daten erscheinen automatisch auf der Impressum-Seite.</p>
-          <div class="form-group"><label>Name / Organisation *</label><input type="text" class="form-input" id="impName" placeholder="z.B. Safe Space Schulprojekt"></div>
-          <div class="form-group"><label>Straße *</label><input type="text" class="form-input" id="impStreet" placeholder="Musterstraße 1"></div>
-          <div class="form-group"><label>PLZ / Ort *</label><input type="text" class="form-input" id="impCity" placeholder="12345 Musterstadt"></div>
-          <div class="form-group"><label>E-Mail *</label><input type="email" class="form-input" id="impEmail" placeholder="kontakt@example.de"></div>
-          <div class="form-group"><label>Telefon *</label><input type="tel" class="form-input" id="impPhone" placeholder="+49 123 456789"></div>
-          <div class="form-group"><label>Verantwortlicher für den Inhalt *</label><input type="text" class="form-input" id="impResponsible" placeholder="Vorname Nachname"></div>
-          <div class="form-group"><label>Zusatztext (optional)</label><textarea class="form-input" id="impExtra" rows="3" placeholder="Weitere Angaben..." style="resize:vertical;min-height:80px;border-radius:10px;font-family:inherit;font-size:.93rem;"></textarea></div>
-          <button class="save-btn" onclick="saveImpressum()">💾 Impressum speichern</button>
-          <div class="save-msg" id="impSaveMsg">✅ Impressum gespeichert!</div>
-        </div>
-      </div>
 
       <!-- SETTINGS -->
       <div class="admin-page" id="page-settings">
@@ -1614,7 +1621,6 @@ function showSection(id) {
     if (id === 'help') setTimeout(initMap, 100);
     if (id === 'challenge') initChallenge();
     if (id === 'community') loadCommunityPosts();
-    if (id === 'impressum') renderImpressum();
   }
 }
 
@@ -1655,7 +1661,6 @@ function loadSettings() {
   if(title) document.title = title;
   adsEnabled = _ls.getItem('sucht_show_ads') === '1';
   applyAdSidebar();
-  renderImpressum();
 }
 
 function extractYtId(input) {
@@ -1799,7 +1804,7 @@ function doLogout() {
   showSection('home');
 }
 
-const pageTitles = {analytics:'Analytics Dashboard',social:'Social-Media-Verwaltung',ads:'Werbeanzeigen',impressum:'Impressum',settings:'Einstellungen'};
+const pageTitles = {analytics:'Analytics Dashboard',social:'Social-Media-Verwaltung',ads:'Werbeanzeigen',settings:'Einstellungen'};
 function showAdminPage(id) {
   document.querySelectorAll('.admin-page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
@@ -1809,66 +1814,6 @@ function showAdminPage(id) {
   document.getElementById('pageTitle').textContent = pageTitles[id];
 }
 
-// ===== IMPRESSUM =====
-function saveImpressum() {
-  _ls.setItem('sucht_imp_name',        document.getElementById('impName').value.trim());
-  _ls.setItem('sucht_imp_street',      document.getElementById('impStreet').value.trim());
-  _ls.setItem('sucht_imp_city',        document.getElementById('impCity').value.trim());
-  _ls.setItem('sucht_imp_email',       document.getElementById('impEmail').value.trim());
-  _ls.setItem('sucht_imp_phone',       document.getElementById('impPhone').value.trim());
-  _ls.setItem('sucht_imp_responsible', document.getElementById('impResponsible').value.trim());
-  _ls.setItem('sucht_imp_extra',       document.getElementById('impExtra').value.trim());
-  renderImpressum();
-  showMsg('impSaveMsg');
-}
-function loadImpressumInputs() {
-  document.getElementById('impName').value        = _ls.getItem('sucht_imp_name')||'';
-  document.getElementById('impStreet').value      = _ls.getItem('sucht_imp_street')||'';
-  document.getElementById('impCity').value        = _ls.getItem('sucht_imp_city')||'';
-  document.getElementById('impEmail').value       = _ls.getItem('sucht_imp_email')||'';
-  document.getElementById('impPhone').value       = _ls.getItem('sucht_imp_phone')||'';
-  document.getElementById('impResponsible').value = _ls.getItem('sucht_imp_responsible')||'';
-  document.getElementById('impExtra').value       = _ls.getItem('sucht_imp_extra')||'';
-}
-function renderImpressum() {
-  const name        = _ls.getItem('sucht_imp_name');
-  const street      = _ls.getItem('sucht_imp_street');
-  const city        = _ls.getItem('sucht_imp_city');
-  const email       = _ls.getItem('sucht_imp_email');
-  const phone       = _ls.getItem('sucht_imp_phone');
-  const responsible = _ls.getItem('sucht_imp_responsible');
-  const extra       = _ls.getItem('sucht_imp_extra');
-  const el          = document.getElementById('impressumContent');
-  if (!el) return;
-  if (!name && !email) {
-    el.innerHTML = '<div style="text-align:center;padding:3rem 1rem;background:linear-gradient(135deg,#fff0f5,#fff8f0);border-radius:16px;border:2px dashed rgba(255,0,102,0.3);margin-bottom:2rem;"><div style="font-size:3rem;margin-bottom:1rem;">📋</div><h3 style="color:var(--primary-dark);font-size:1.2rem;font-weight:800;margin-bottom:.6rem;">Impressum wird noch ausgefüllt</h3><p style="color:var(--text-light);font-size:.9rem;max-width:400px;margin:0 auto;">Der Betreiber kann die Angaben im <strong style="color:var(--primary);">Admin-Bereich</strong> unter "Impressum" eintragen.</p></div>';
-    return;
-  }
-  el.innerHTML = `
-    <div class="info-grid">
-      <div class="info-card"><h3>🏢 Anbieter</h3>
-        ${name   ? `<p><strong>${name}</strong></p>` : ''}
-        ${street ? `<p>${street}</p>` : ''}
-        ${city   ? `<p>${city}</p>`   : ''}
-      </div>
-      <div class="info-card"><h3>📞 Kontakt</h3>
-        ${email ? `<p>E-Mail: <a href="mailto:${email}" style="color:var(--primary);">${email}</a></p>` : ''}
-        ${phone ? `<p>Telefon: ${phone}</p>` : ''}
-      </div>
-      <div class="info-card"><h3>✍️ Verantwortlich für den Inhalt</h3>
-        ${responsible ? `<p>${responsible}</p>` : ''}
-      </div>
-      ${extra ? `<div class="info-card" style="grid-column:1/-1;"><h3>ℹ️ Weitere Angaben</h3><p>${extra}</p></div>` : ''}
-    </div>
-    <div class="warning-box" style="background:linear-gradient(135deg,#f0f4ff,#e8f0ff);border-color:#7395d4;">
-      <h3 style="color:#1a3a6b;">⚠️ Haftungsausschluss</h3>
-      <ul>
-        <li style="color:#1a3a6b;">Dieses Projekt ist ein Schulprojekt zur Aufklärung und ersetzt keine professionelle Beratung.</li>
-        <li style="color:#1a3a6b;">Alle Inhalte wurden nach bestem Wissen erstellt; es wird keine Haftung für Aktualität oder Vollständigkeit übernommen.</li>
-        <li style="color:#1a3a6b;">Externe Links wurden zum Zeitpunkt der Verlinkung geprüft.</li>
-      </ul>
-    </div>`;
-}
 
 // ===== ADS TOGGLE =====
 function toggleAdsBtn() {
@@ -2192,7 +2137,6 @@ function initAdmin() {
   loadSocialInputs();
   loadAdInputs();
   loadSettingsInputs();
-  loadImpressumInputs();
   const t = document.getElementById('adsToggle');
   if (t) t.checked = adsEnabled;
   updateAdsToggleBtn();
