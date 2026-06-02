@@ -12,21 +12,15 @@
     "uniques": 1
   },
   {
-    "path": "/JeremyTH08/sucht-projekt",
-    "title": "Overview",
-    "count": 6,
-    "uniques": 1
-  },
-  {
     "path": "/Safe-Space0026/sucht-projekt/actions",
     "title": "/actions",
     "count": 5,
     "uniques": 1
   },
   {
-    "path": "/JeremyTH08/sucht-projekt/blob/master/index.html",
-    "title": "/blob/master/index.html",
-    "count": 2,
+    "path": "/JeremyTH08/sucht-projekt",
+    "title": "Overview",
+    "count": 4,
     "uniques": 1
   },
   {
@@ -57,6 +51,12 @@
     "path": "/Safe-Space0026/sucht-projekt/blob/master/data/traffic.json",
     "title": "/blob/master/data/traffic.json",
     "count": 2,
+    "uniques": 1
+  },
+  {
+    "path": "/JeremyTH08/sucht-projekt/blob/master/index.html",
+    "title": "/blob/master/index.html",
+    "count": 1,
     "uniques": 1
   }
 ]
