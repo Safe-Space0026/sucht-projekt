@@ -2,30 +2,12 @@
   {
     "path": "/Safe-Space0026/sucht-projekt/actions/workflows/traffic.yml",
     "title": "/actions/workflows/traffic.yml",
-    "count": 7,
+    "count": 3,
     "uniques": 1
   },
   {
     "path": "/Safe-Space0026/sucht-projekt/actions",
     "title": "/actions",
-    "count": 5,
-    "uniques": 1
-  },
-  {
-    "path": "/Safe-Space0026/sucht-projekt",
-    "title": "Overview",
-    "count": 3,
-    "uniques": 1
-  },
-  {
-    "path": "/Safe-Space0026/sucht-projekt/actions/runs/26531661723",
-    "title": "/actions/runs/26531661723",
-    "count": 2,
-    "uniques": 1
-  },
-  {
-    "path": "/Safe-Space0026/sucht-projekt/actions/runs/26531764189",
-    "title": "/actions/runs/26531764189",
     "count": 2,
     "uniques": 1
   },
@@ -42,20 +24,38 @@
     "uniques": 1
   },
   {
-    "path": "/Safe-Space0026/sucht-projekt/blob/master/data/traffic.json",
-    "title": "/blob/master/data/traffic.json",
-    "count": 2,
-    "uniques": 1
-  },
-  {
-    "path": "/Safe-Space0026/sucht-projekt/actions/runs/26531573862",
-    "title": "/actions/runs/26531573862",
+    "path": "/Safe-Space0026/sucht-projekt",
+    "title": "Overview",
     "count": 1,
     "uniques": 1
   },
   {
-    "path": "/Safe-Space0026/sucht-projekt/actions/runs/26531661723/job/78149627017",
-    "title": "/actions/runs/26531661723/job/78149627017",
+    "path": "/Safe-Space0026/sucht-projekt/actions/runs/26531764189",
+    "title": "/actions/runs/26531764189",
+    "count": 1,
+    "uniques": 1
+  },
+  {
+    "path": "/Safe-Space0026/sucht-projekt/actions/runs/26598858004",
+    "title": "/actions/runs/26598858004",
+    "count": 1,
+    "uniques": 1
+  },
+  {
+    "path": "/Safe-Space0026/sucht-projekt/actions/runs/26598858004/job/78376938309",
+    "title": "/actions/runs/26598858004/job/78376938309",
+    "count": 1,
+    "uniques": 1
+  },
+  {
+    "path": "/Safe-Space0026/sucht-projekt/actions/runs/26598858004/usage",
+    "title": "/actions/runs/26598858004/usage",
+    "count": 1,
+    "uniques": 1
+  },
+  {
+    "path": "/Safe-Space0026/sucht-projekt/actions/runs/26598858004/workflow",
+    "title": "/actions/runs/26598858004/workflow",
     "count": 1,
     "uniques": 1
   }
